@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "jest",
+    "start": "node --env-file=.env server.js"
   },
   "author": "",
   "license": "ISC",
