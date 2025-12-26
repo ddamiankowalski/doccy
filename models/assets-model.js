@@ -1,3 +1,7 @@
-class User {}
+const findAll = () => {
+  console.log("finding all assets!");
+};
 
-module.exports = User;
+module.exports = {
+  findAll,
+};
