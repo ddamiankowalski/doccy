@@ -1,17 +1,17 @@
-const postgres = require("postgres");
-
-let connection = null;
+const postgres = require("pg-promise")();
 
 /**
- * Initializes database connection
+ * Options for the database
  */
-const init = async () => {
-  if (connection !== null) {
-    return connection;
-  }
-
-  const connection = postgres({});
-  return connection;
+const opts = {
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || "doccy",
 };
 
-module.exports = { init, connection };
+/**
+ * Database instance
+ */
+const db = postgres(opts);
+
+module.exports = db;
