@@ -1,6 +1,15 @@
 const express = require("express");
-const app = express();
 
+/**
+ * Routes
+ */
+const assets = require("./routes/assets-route.js");
+
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-console.log(PORT);
+app.use("/assets", assets);
+
+app.listen(PORT, () => {
+  console.log(`Restarted the server successfully on port ${PORT}`);
+});
