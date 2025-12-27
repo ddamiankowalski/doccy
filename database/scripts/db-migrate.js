@@ -10,6 +10,11 @@ const parser = require("./db-schema-parser");
  */
 const createTables = async ({ tables }) => {
   tables.forEach(({ name, columns }) => {
+    if (columns.length === 0) {
+      logger.log(`Could not create "${name}" due to lack of column definition`);
+      return;
+    }
+
     const fields = columns.map(({ name, type, ...metadata }) => {
       return `${name}  ${_getTypeQuery(type, metadata)} ${_isPrimary(
         metadata
@@ -70,8 +75,6 @@ const _getTypeQuery = (type, metadata) => {
 };
 
 const _createTable = async (name, fields) => {
-  console.log(fields);
-
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
