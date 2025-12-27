@@ -3,12 +3,33 @@ const logger = require("../../logger/logger");
 const parser = require("./db-schema-parser");
 
 /**
- * Creates a table in postgres database
+ * Creates tables in postgres database
  *
  * @param {*} name
  * @param {*} fields
  */
-const createTable = async (name, fields) => {
+const createTables = async ({ tables }) => {
+  tables.forEach(({ name, columns }) => {
+    console.log(columns);
+    const fields = columns.map(({ name, type }) => {
+      return `${name} ${_getTypeQuery(type)}`;
+    });
+
+    _createTable(name, fields);
+  });
+};
+
+const _getTypeQuery = (type) => {
+  switch (type) {
+    case "varchar":
+      return "VARCHAR(255)";
+  }
+
+  return "VARCHAR(255)";
+};
+
+const _createTable = async (name, fields) => {
+  console.log(fields);
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
@@ -57,9 +78,7 @@ const migrate = async ({ clear = true } = {}) => {
   }
 
   const schema = await parser.parseSchema();
-  console.log(schema);
-
-  await createTable("users", ["id VARCHAR(255)"]);
+  await createTables(schema);
 };
 
 module.exports = { migrate };

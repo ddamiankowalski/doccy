@@ -2,7 +2,25 @@
   "tables": [
     {
       "name": "users",
-      "columns": []
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primaryKey": true,
+          "unique": true,
+          "default": "gen_random_uuid()"
+        },
+        {
+          "name": "first_name",
+          "type": "varchar",
+          "length": 255,
+          "nullable": false,
+          "unique": false,
+          "default": null,
+          "references": null
+        }
+      ]
     }
   ]
 }
