@@ -3,9 +3,13 @@ const { getModel } = require("../models/model");
 /**
  * Creates a new asset
  */
-const create = async () => {
+const create = async (data) => {
+  if (!data) {
+    return;
+  }
+
   const model = getModel("assets");
-  return await model.create({ dupa: "123" });
+  return await model.create(data);
 };
 
 /**
