@@ -2,11 +2,10 @@ const { getModel } = require("../models/model");
 
 /**
  * Creates a new asset
- *
- * @param {*} type
  */
-const create = (type) => {
-  console.log(type);
+const create = async () => {
+  const model = getModel("assets");
+  return await model.create({ dupa: "123" });
 };
 
 /**

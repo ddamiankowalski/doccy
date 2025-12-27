@@ -1,4 +1,5 @@
 const db = require("../database/db");
+const logger = require("../logger/logger");
 
 /**
  * Returns model object that retrieves
@@ -13,6 +14,31 @@ const getModel = (name) => {
      */
     getAll: async () => {
       return await db.query(`SELECT * FROM ${name}`);
+    },
+
+    /**
+     * Creates an entry for a given model
+     *
+     * @param {*} model
+     * @returns
+     */
+    create: async (data) => {
+      const entries = Object.entries(data);
+
+      if (!entries.length) {
+        return await db.query(`INSERT INTO ${name} DEFAULT VALUES;`);
+      }
+
+      const keys = entries.map(([key]) => key).join(", ");
+      const values = entries.map(([value]) => value).join(", ");
+
+      const query = `INSERT INTO ${name} (${keys}) VALUES (${values});`;
+
+      try {
+        return await db.query(query);
+      } catch (err) {
+        logger.log("Could not create entry in database - " + err.message);
+      }
     },
   };
 };
