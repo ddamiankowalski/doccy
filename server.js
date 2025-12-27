@@ -1,6 +1,5 @@
 const express = require("express");
-const a = require("./database/db.js");
-
+const { migrate } = require("./database/scripts/db-scripts.js");
 /**
  * Routes
  */
@@ -14,5 +13,5 @@ app.use("/assets", assets);
 app.listen(PORT, () => {
   console.log(`Restarted the server successfully on port ${PORT}`);
 
-  const b = a.query("SELECT * FROM USERS");
+  migrate();
 });
