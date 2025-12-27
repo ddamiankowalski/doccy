@@ -1,5 +1,6 @@
 const db = require("../db");
 const logger = require("../../logger/logger");
+const parser = require("./db-schema-parser");
 
 /**
  * Creates a table in postgres database
@@ -8,6 +9,9 @@ const logger = require("../../logger/logger");
  * @param {*} fields
  */
 const createTable = async (name, fields) => {
+  const schema = await parser.parseSchema();
+  console.log(schema);
+
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);

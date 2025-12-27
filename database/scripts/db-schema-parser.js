@@ -7,9 +7,7 @@ const logger = require("../../logger/logger");
  */
 const parseSchema = async () => {
   const file = await fs.readFile(path.join(__dirname, "../schema.json"));
-  const parsed = _parse(file);
-
-  console.log(parsed);
+  return _parse(file);
 };
 
 const _parse = (file) => {
