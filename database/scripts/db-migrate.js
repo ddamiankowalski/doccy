@@ -9,9 +9,6 @@ const parser = require("./db-schema-parser");
  * @param {*} fields
  */
 const createTable = async (name, fields) => {
-  const schema = await parser.parseSchema();
-  console.log(schema);
-
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
@@ -58,6 +55,9 @@ const migrate = async ({ clear = true } = {}) => {
   if (clear) {
     await reset();
   }
+
+  const schema = await parser.parseSchema();
+  console.log(schema);
 
   await createTable("users", ["id VARCHAR(255)"]);
 };
