@@ -30,7 +30,7 @@ const getModel = (name) => {
       }
 
       const keys = entries.map(([key]) => key).join(", ");
-      const values = entries.map(([value]) => value).join(", ");
+      const values = entries.map(([_, value]) => `'${value}'`).join(", ");
 
       const query = `INSERT INTO ${name} (${keys}) VALUES (${values});`;
 

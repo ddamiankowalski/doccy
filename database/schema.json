@@ -31,6 +31,12 @@
           "primary": true,
           "unique": true,
           "default": "gen_random_uuid()"
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "length": 255,
+          "nullable": false
         }
       ]
     }
