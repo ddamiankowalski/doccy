@@ -1,4 +1,5 @@
 const express = require("express");
+const a = require("./database/db.js");
 
 /**
  * Routes
@@ -12,4 +13,6 @@ app.use("/assets", assets);
 
 app.listen(PORT, () => {
   console.log(`Restarted the server successfully on port ${PORT}`);
+
+  a.connect();
 });
