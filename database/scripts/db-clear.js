@@ -31,4 +31,5 @@ END $$;
     logger.log(`Could not drop database "${DB_NAME}"`);
   }
 };
+
 module.exports = { reset };

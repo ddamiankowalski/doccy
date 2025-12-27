@@ -7,9 +7,12 @@ const log = (message) => {
   const time = Date.now();
 
   console.log(
-    `[${new Date(time).getUTCHours()}:${new Date(
+    `[${new Date(time).getUTCHours().toString().padStart(2, "0")}:${new Date(
       time
-    ).getUTCMinutes()}]: ${message}`
+    )
+      .getUTCMinutes()
+      .toString()
+      .padStart(2, "0")}]: ${message}`
   );
 };
 
