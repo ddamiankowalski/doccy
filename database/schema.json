@@ -23,7 +23,16 @@
     },
     {
       "name": "assets",
-      "columns": []
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "primary": true,
+          "unique": true,
+          "default": "gen_random_uuid()"
+        }
+      ]
     }
   ]
 }
