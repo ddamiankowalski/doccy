@@ -37,7 +37,10 @@ const getModel = (name) => {
       try {
         return await db.query(query);
       } catch (err) {
-        logger.log("Could not create entry in database - " + err.message);
+        const message = "Could not create entry in database - " + err.message;
+
+        logger.log(message);
+        throw new Error(message);
       }
     },
   };

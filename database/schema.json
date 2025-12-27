@@ -37,6 +37,12 @@
           "type": "varchar",
           "length": 255,
           "nullable": false
+        },
+        {
+          "name": "type",
+          "type": "varchar",
+          "length": 255,
+          "nullable": false
         }
       ]
     }
