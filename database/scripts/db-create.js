@@ -1,4 +1,5 @@
 const db = require("../db");
+const logger = require("../../logger/logger");
 
 /**
  * Creates a table in postgres database
@@ -8,10 +9,10 @@ const db = require("../db");
  */
 const createTable = async (name, fields) => {
   try {
-    console.log(`== CREATING TABLE ${name} ==\n`);
+    logger.log(`Creating table ${name}`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
   } catch (err) {
-    console.log(`== FAILED TO CREATE TABLE ${name} - ${err.message} ==\n`);
+    logger.log(`Failed to create table ${name} - ${err.message}`);
   }
 };
 

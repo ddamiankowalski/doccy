@@ -9,7 +9,7 @@ const log = (message) => {
   console.log(
     `[${new Date(time).getUTCHours()}:${new Date(
       time
-    ).getUTCMinutes()}]: ${message}\n`
+    ).getUTCMinutes()}]: ${message}`
   );
 };
 
