@@ -1,4 +1,5 @@
 const db = require("../db");
+const logger = require("../../logger/logger");
 
 /**
  * Resets the database by droping the database
@@ -6,7 +7,7 @@ const db = require("../db");
  */
 const reset = async () => {
   const DB_NAME = process.env.DB_NAME || "doccy";
-  console.log(`== RESETTING THE DATABASE FOR NAME "${DB_NAME}" ==`);
+  logger.log(`Resetting the database for name "${DB_NAME}"`);
 
   await _drop(DB_NAME);
 };
@@ -27,7 +28,7 @@ BEGIN
 END $$;
       `);
   } catch (err) {
-    console.log(`== COULD NOT DROP DB: ${err.message} ==`);
+    logger.log(`Could not drop database "${DB_NAME}"`);
   }
 };
 module.exports = { reset };
