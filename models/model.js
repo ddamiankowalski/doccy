@@ -1,5 +1,5 @@
 const db = require("../database/db");
-const logger = require("../logger/logger");
+const SystemError = require("../error/system-error");
 
 /**
  * Returns model object that retrieves
@@ -37,10 +37,9 @@ const getModel = (name) => {
       try {
         return await db.query(query);
       } catch (err) {
-        const message = "Could not create entry in database - " + err.message;
-
-        logger.log(message);
-        throw new Error(message);
+        throw new SystemError(
+          "Could not create entry in database - " + err.message
+        );
       }
     },
   };

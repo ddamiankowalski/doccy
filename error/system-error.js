@@ -14,7 +14,7 @@ class SystemError extends Error {
    *
    * @returns error payload as javascript object
    */
-  errorPayload() {
+  get payload() {
     return {
       status: this.status,
       message: this.message,
