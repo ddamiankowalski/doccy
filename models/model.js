@@ -26,16 +26,19 @@ const getModel = (name) => {
       const entries = Object.entries(data);
 
       if (!entries.length) {
-        return await db.query(`INSERT INTO ${name} DEFAULT VALUES;`);
+        return await db.query(
+          `INSERT INTO ${name} DEFAULT VALUES RETURNING *;`
+        );
       }
 
       const keys = entries.map(([key]) => key).join(", ");
       const values = entries.map(([_, value]) => `'${value}'`).join(", ");
 
-      const query = `INSERT INTO ${name} (${keys}) VALUES (${values});`;
+      const query = `INSERT INTO ${name} (${keys}) VALUES (${values}) RETURNING *;`;
 
       try {
-        return await db.query(query);
+        const [created] = await db.query(query);
+        return created;
       } catch (err) {
         throw new SystemError(
           400,
