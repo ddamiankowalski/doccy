@@ -17,6 +17,7 @@ const _parse = (file) => {
     return JSON.parse(file);
   } catch (err) {
     logger.log("Could not parse JSON file - " + err.message);
+    process.exit();
   }
 };
 
