@@ -6,7 +6,7 @@ const logger = require("../../logger/logger");
  * Parses the database schema in JSON format
  */
 const parseSchema = async () => {
-  logger.log("Parsing the DB schema");
+  logger.log("Parsing the database schema");
 
   const file = await fs.readFile(path.join(__dirname, "../schema.json"));
   return _parse(file);
