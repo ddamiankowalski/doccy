@@ -2,6 +2,21 @@ const db = require("../db");
 const logger = require("../../logger/logger");
 
 /**
+ * Creates a table in postgres database
+ *
+ * @param {*} name
+ * @param {*} fields
+ */
+const createTable = async (name, fields) => {
+  try {
+    logger.log(`Creating table "${name}"`);
+    return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
+  } catch (err) {
+    logger.log(`Failed to create table ${name} - ${err.message}`);
+  }
+};
+
+/**
  * Resets the database by droping the database
  * and creating it again
  */
@@ -32,4 +47,15 @@ END $$;
   }
 };
 
-module.exports = { reset };
+/**
+ * Sets up database
+ */
+const migrate = async ({ clear = true } = {}) => {
+  if (clear) {
+    await reset();
+  }
+
+  await createTable("users", ["id VARCHAR(255)"]);
+};
+
+module.exports = { migrate };

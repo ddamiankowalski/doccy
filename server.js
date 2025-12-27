@@ -1,5 +1,5 @@
 const express = require("express");
-const { migrate } = require("./database/scripts/db-scripts.js");
+const { migrate } = require("./database/scripts/db-migrate.js");
 /**
  * Routes
  */
