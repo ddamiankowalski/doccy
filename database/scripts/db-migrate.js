@@ -11,14 +11,39 @@ const parser = require("./db-schema-parser");
 const createTables = async ({ tables }) => {
   tables.forEach(({ name, columns }) => {
     const fields = columns.map(({ name, type, ...metadata }) => {
-      console.log(metadata);
-      return `${name} ${_getTypeQuery(type, metadata)} ${_getDefault(
+      return `${name}  ${_getTypeQuery(type, metadata)} ${_isPrimary(
+        metadata
+      )} ${_isNullable(metadata)} ${_isUnique(metadata)} ${_getDefault(
         metadata
       )}`;
     });
 
     _createTable(name, fields);
   });
+};
+
+const _isPrimary = ({ primary }) => {
+  if (primary) {
+    return "PRIMARY KEY";
+  }
+
+  return "";
+};
+
+const _isUnique = ({ unique }) => {
+  if (!unique) {
+    return "";
+  }
+
+  return "UNIQUE";
+};
+
+const _isNullable = ({ nullable }) => {
+  if (!nullable) {
+    return "NOT NULL";
+  }
+
+  return "";
 };
 
 const _getDefault = (metadata) => {
@@ -40,10 +65,13 @@ const _getTypeQuery = (type, metadata) => {
       return "INT";
   }
 
+  logger.log("Could not get type from schema. Using VARCHAR(255) instead");
   return "VARCHAR(255)";
 };
 
 const _createTable = async (name, fields) => {
+  console.log(fields);
+
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
