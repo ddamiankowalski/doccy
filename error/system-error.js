@@ -1,8 +1,11 @@
 const logger = require("../logger/logger");
 
 class SystemError extends Error {
+  #status = 500;
+
   constructor(status, message = "No message") {
     super(message);
+    this.#status = status;
 
     /**
      * Log message to logger
@@ -16,7 +19,7 @@ class SystemError extends Error {
    */
   get payload() {
     return {
-      status: this.status,
+      status: this.#status,
       message: this.message,
     };
   }

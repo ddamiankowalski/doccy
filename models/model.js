@@ -38,6 +38,7 @@ const getModel = (name) => {
         return await db.query(query);
       } catch (err) {
         throw new SystemError(
+          400,
           "Could not create entry in database - " + err.message
         );
       }
