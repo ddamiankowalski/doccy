@@ -1,4 +1,5 @@
 const express = require("express");
+const logger = require("./logger/logger.js");
 const { migrate } = require("./database/scripts/db-migrate.js");
 
 /**
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use("/assets", assets);
 
 app.listen(PORT, () => {
-  console.log(`Restarted the server successfully on port ${PORT}`);
+  logger.log(`Restarted the server successfully on port ${PORT}`);
 
   migrate();
 });

@@ -1,4 +1,3 @@
-const Assets = require("../models/assets-model");
 const { getModel } = require("../models/model");
 
 /**
@@ -7,7 +6,7 @@ const { getModel } = require("../models/model");
  * @param {*} type
  */
 const create = (type) => {
-  Assets.findAll();
+  console.log(type);
 };
 
 /**
