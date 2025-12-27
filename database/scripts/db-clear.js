@@ -16,7 +16,7 @@ const _create = async (name) => {
   try {
     await db.query(`CREATE DATABASE ${name};`);
   } catch {
-    console.log("== COULD NOT DROP DATABASE ==");
+    console.log("== COULD NOT CREATE DATABASE ==");
   }
 };
 
