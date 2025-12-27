@@ -6,6 +6,7 @@ const db = require("../db");
  */
 const reset = async () => {
   const DB_NAME = process.env.DB_NAME || "doccy";
+  console.log(`== RESETTING THE DATABASE FOR NAME "${DB_NAME}" ==`);
 
   await _drop(DB_NAME);
   await _create(DB_NAME);

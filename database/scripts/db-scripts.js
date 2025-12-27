@@ -1,11 +1,12 @@
 const { createTable } = require("./db-create");
+const { reset } = require("./db-clear");
 
 /**
  * Sets up database
  */
 const migrate = async ({ clear = true } = {}) => {
   if (clear) {
-    console.log("clear!");
+    await reset();
   }
 
   await createTable("users", ["id VARCHAR(255)"]);
