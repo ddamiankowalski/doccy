@@ -9,25 +9,25 @@ const reset = async () => {
   console.log(`== RESETTING THE DATABASE FOR NAME "${DB_NAME}" ==`);
 
   await _drop(DB_NAME);
-  await _create(DB_NAME);
-};
-
-const _create = async (name) => {
-  try {
-    await db.query(`CREATE DATABASE ${name};`);
-  } catch {
-    console.log("== COULD NOT CREATE DATABASE ==");
-  }
 };
 
 /**
  * Drops database
  */
-const _drop = async (name) => {
+const _drop = async () => {
   try {
-    await db.query(`DROP DATABASE ${name};`);
-  } catch {
-    console.log("== COULD NOT DROP DATABASE ==");
+    await db.query(`
+      DO $$ 
+DECLARE 
+    r RECORD;
+BEGIN 
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+        EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
+    END LOOP; 
+END $$;
+      `);
+  } catch (err) {
+    console.log(`== COULD NOT DROP DB: ${err.message} ==`);
   }
 };
 module.exports = { reset };
