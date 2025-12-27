@@ -9,7 +9,7 @@ const logger = require("../../logger/logger");
  */
 const createTable = async (name, fields) => {
   try {
-    logger.log(`Creating table ${name}`);
+    logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
   } catch (err) {
     logger.log(`Failed to create table ${name} - ${err.message}`);
