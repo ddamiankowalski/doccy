@@ -10,26 +10,40 @@ const parser = require("./db-schema-parser");
  */
 const createTables = async ({ tables }) => {
   tables.forEach(({ name, columns }) => {
-    console.log(columns);
-    const fields = columns.map(({ name, type }) => {
-      return `${name} ${_getTypeQuery(type)}`;
+    const fields = columns.map(({ name, type, ...metadata }) => {
+      console.log(metadata);
+      return `${name} ${_getTypeQuery(type, metadata)} ${_getDefault(
+        metadata
+      )}`;
     });
 
     _createTable(name, fields);
   });
 };
 
-const _getTypeQuery = (type) => {
+const _getDefault = (metadata) => {
+  if (!metadata.default) {
+    return "";
+  }
+
+  return `DEFAULT ${metadata.default}`;
+};
+
+const _getTypeQuery = (type, metadata) => {
   switch (type) {
-    case "varchar":
-      return "VARCHAR(255)";
+    case "varchar": {
+      return `VARCHAR(${metadata.length})`;
+    }
+    case "uuid":
+      return "uuid";
+    case "int":
+      return "INT";
   }
 
   return "VARCHAR(255)";
 };
 
 const _createTable = async (name, fields) => {
-  console.log(fields);
   try {
     logger.log(`Creating table "${name}"`);
     return await db.query(`CREATE TABLE ${name} (${fields.join(",")})`);
