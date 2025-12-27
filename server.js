@@ -14,5 +14,5 @@ app.use("/assets", assets);
 app.listen(PORT, () => {
   console.log(`Restarted the server successfully on port ${PORT}`);
 
-  a.connect();
+  const b = a.query("SELECT * FROM USERS");
 });
