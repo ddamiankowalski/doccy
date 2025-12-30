@@ -2,6 +2,10 @@
 
 @import 'tailwindcss';
 
+@theme {
+  --color-mint-500: oklch(0.72 0.11 178);
+}
+
 html {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
