@@ -97,7 +97,7 @@ const reset = async () => {
 /**
  * Drops database
  */
-const _drop = async () => {
+const _drop = async (name) => {
   try {
     await db.query(`
       DO $$ 
@@ -110,7 +110,7 @@ BEGIN
 END $$;
       `);
   } catch (err) {
-    logger.log(`Could not drop database "${DB_NAME}"`);
+    logger.log(`Could not drop database "${name}"`);
   }
 };
 
