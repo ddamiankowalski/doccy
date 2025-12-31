@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FinanceSection } from './components/finance-section/finance-section';
 
 @Component({
-  selector: 'dc-dashboard',
+  selector: 'dc-finance',
   host: {
-    class: 'block p-12 min-h-screen text-white',
+    class: '',
   },
-  template: `i am finance`,
+  template: ` <dc-finance-section title="Assets" value="$1,245,300" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FinanceSection],
 })
 export class Finance {}
