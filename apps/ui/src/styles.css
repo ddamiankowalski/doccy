@@ -13,4 +13,8 @@
 body {
   background-color: theme(colors.charcoal);
   font-family: theme(fontFamily.sans);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: #fff;
 }
