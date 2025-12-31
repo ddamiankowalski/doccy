@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
+import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
 
 @Component({
   selector: 'dc-finance-section',
@@ -20,13 +21,11 @@ import { FinanceTile } from '../finance-tile/finance-tile';
       <dc-finance-tile />
       <dc-finance-tile />
       <dc-finance-tile />
-      <dc-finance-tile />
-      <dc-finance-tile />
-      <dc-finance-tile />
+      <dc-finance-add-tile />
     </div>
   </section>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FinanceTile],
+  imports: [FinanceTile, FinanceAddTile],
 })
 export class FinanceSection {
   public title = input.required<string>();
