@@ -7,7 +7,7 @@ import { HeaderUser } from '../header-user/header-user';
     class: 'w-full',
   },
   imports: [HeaderUser],
-  template: ` <header class="flex justify-between mb-16">
+  template: ` <header class="flex justify-between">
     <div class="flex gap-6">
       <div class="p-2 bg-white text-black rounded-lg w-12"></div>
       <div>

@@ -6,7 +6,10 @@ import { FinanceSection } from './components/finance-section/finance-section';
   host: {
     class: '',
   },
-  template: ` <dc-finance-section title="Assets" value="$1,245,300" />`,
+  template: ` <dc-finance-section title="Assets" value="$1,245,300" /><dc-finance-section
+      title="Assets"
+      value="$1,245,300"
+    /><dc-finance-section title="Assets" value="$1,245,300" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FinanceSection],
 })
