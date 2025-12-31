@@ -7,9 +7,9 @@ import { FinanceSection } from './components/finance-section/finance-section';
     class: '',
   },
   template: ` <dc-finance-section title="Assets" value="$1,245,300" /><dc-finance-section
-      title="Assets"
-      value="$1,245,300"
-    /><dc-finance-section title="Assets" value="$1,245,300" />`,
+      title="Liabilities"
+      value="$361,700"
+    /><dc-finance-section title="Monthly Income" value="$1,245,300" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FinanceSection],
 })
