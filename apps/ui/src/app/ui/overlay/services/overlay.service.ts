@@ -4,14 +4,16 @@ import {
   EnvironmentInjector,
   inject,
   Injectable,
+  outputBinding,
 } from '@angular/core';
-import { ProgressBar } from '../../components/progress-bar/progress-bar';
+import { Modal } from '../components/modal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OverlayService {
   private readonly _id = 'dc-overlay';
+  private _initialized = false;
 
   private _injector = inject(EnvironmentInjector);
   private _appRef = inject(ApplicationRef);
@@ -20,17 +22,33 @@ export class OverlayService {
    * Opens modal
    */
   public openModal(): void {
-    const hostElement = document.getElementById(this._id);
+    const overlay = document.getElementById(this._id);
+    const hostElement = this._createHost();
 
-    if (!hostElement) {
+    if (!overlay) {
       throw new Error('Could not open modal because host was not found');
     }
 
-    const { hostView } = createComponent(ProgressBar, {
+    const ref = createComponent(Modal, {
       environmentInjector: this._injector,
       hostElement,
     });
 
-    this._appRef.attachView(hostView);
+    ref.setInput('ref', ref);
+
+    this._appRef.attachView(ref.hostView);
+    overlay.append(hostElement);
+  }
+
+  private _createHost(): HTMLDivElement {
+    const element = document.createElement('div');
+
+    element.style.position = 'absolute';
+    element.style.top = '0';
+    element.style.left = '0';
+    element.style.width = '100vw';
+    element.style.height = '100vh';
+
+    return element;
   }
 }
