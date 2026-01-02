@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderUser } from '../header-user/header-user';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -26,6 +26,5 @@ import { LucideAngularModule } from 'lucide-angular';
 
     <dc-header-user />
   </header>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {}

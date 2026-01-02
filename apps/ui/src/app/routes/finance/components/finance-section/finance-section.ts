@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
 
@@ -24,7 +24,6 @@ import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
       <dc-finance-add-tile />
     </div>
   </section>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FinanceTile, FinanceAddTile],
 })
 export class FinanceSection {

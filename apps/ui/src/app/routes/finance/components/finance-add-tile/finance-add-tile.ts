@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -19,6 +19,5 @@ import { LucideAngularModule } from 'lucide-angular';
     <span class="text-sm font-medium text-gray-500 group-hover:text-gray-300 transition-colors"
       >Add Asset</span
     >`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FinanceAddTile {}

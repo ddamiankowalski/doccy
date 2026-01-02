@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -27,6 +27,5 @@ import { LucideAngularModule } from 'lucide-angular';
     <p class="text-xs text-gray-500 mt-2">
       <span class="text-emerald-400">+8.2%</span> vs last year
     </p>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FinanceTile {}

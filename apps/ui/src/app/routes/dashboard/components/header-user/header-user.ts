@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'dc-header-user',
@@ -18,6 +18,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <img src="/img/profile.avif" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderUser {}

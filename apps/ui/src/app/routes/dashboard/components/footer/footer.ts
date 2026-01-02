@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'dc-footer',
@@ -13,6 +13,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <button class="cursor-pointer hover:text-white transition-colors">Terms of Service</button>
       <button class="cursor-pointer hover:text-white transition-colors">Help Center</button>
     </nav>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {}

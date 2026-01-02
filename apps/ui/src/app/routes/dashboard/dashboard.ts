@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from './components/header/header';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from './components/footer/footer';
@@ -14,6 +14,5 @@ import { Footer } from './components/footer/footer';
     <router-outlet />
     <dc-footer />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard {}

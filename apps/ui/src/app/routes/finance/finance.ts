@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FinanceSection } from './components/finance-section/finance-section';
 
 @Component({
@@ -10,7 +10,6 @@ import { FinanceSection } from './components/finance-section/finance-section';
       title="Liabilities"
       value="$361,700"
     /><dc-finance-section title="Monthly Income" value="$1,245,300" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FinanceSection],
 })
 export class Finance {}
