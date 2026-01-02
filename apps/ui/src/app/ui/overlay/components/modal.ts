@@ -2,7 +2,13 @@ import { Component, ComponentRef, HostListener, input, OnDestroy, OnInit } from 
 
 @Component({
   selector: 'dc-modal',
-  template: ` <div class="fixed w-full h-full bg-black opacity-50"></div> `,
+  template: `
+    <div
+      animate.enter="fade-in"
+      class="fixed w-full h-full"
+      style="background-color: rgba(0, 0, 0, 0.5);"
+    ></div>
+  `,
 })
 export class Modal implements OnInit, OnDestroy {
   @HostListener('click')

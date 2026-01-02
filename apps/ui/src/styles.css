@@ -11,8 +11,8 @@
 }
 
 html {
-  scrollbar-gutter: stable;
-  overflow-y: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 body::-webkit-scrollbar {
@@ -36,7 +36,6 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 body {
-  scrollbar-gutter: stable;
   background-color: theme(colors.charcoal);
   font-family: theme(fontFamily.sans);
   height: 100vh;
@@ -45,4 +44,18 @@ body {
   overflow-x: hidden;
   color: #fff;
   scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+.fade-in {
+  animation: fade-in 0.3s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
