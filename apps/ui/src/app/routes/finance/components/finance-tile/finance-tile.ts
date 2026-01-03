@@ -37,6 +37,6 @@ export class FinanceTile {
   private _overlay = inject(OverlayService);
 
   public onClick(): void {
-    this._overlay.openModal();
+    this._overlay.openModal({ component: Tile });
   }
 }

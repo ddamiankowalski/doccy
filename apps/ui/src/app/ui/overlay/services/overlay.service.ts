@@ -4,16 +4,19 @@ import {
   EnvironmentInjector,
   inject,
   Injectable,
-  outputBinding,
+  Type,
 } from '@angular/core';
 import { Modal } from '../components/modal';
+
+type ModalConfig<T> = {
+  component: Type<T>;
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class OverlayService {
   private readonly _id = 'dc-overlay';
-  private _initialized = false;
 
   private _injector = inject(EnvironmentInjector);
   private _appRef = inject(ApplicationRef);
@@ -21,7 +24,7 @@ export class OverlayService {
   /**
    * Opens modal
    */
-  public openModal(): void {
+  public openModal<T>(config: ModalConfig<T>): void {
     const overlay = document.getElementById(this._id);
     const hostElement = this._createHost();
 
@@ -35,6 +38,7 @@ export class OverlayService {
     });
 
     ref.setInput('ref', ref);
+    ref.setInput('component', config.component);
 
     this._appRef.attachView(ref.hostView);
     overlay.append(hostElement);
