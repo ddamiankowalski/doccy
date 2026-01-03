@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { HeaderUser } from '../header-user/header-user';
 import { LucideAngularModule } from 'lucide-angular';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dc-header',
@@ -24,12 +26,14 @@ import { Router } from '@angular/router';
       <button
         (click)="onNavClick('finance')"
         class="cursor-pointer hover:text-white transition-colors"
+        [class.text-white]="route() === 'finance'"
       >
         Finance
       </button>
       <button
         (click)="onNavClick('tasks')"
         class="cursor-pointer hover:text-white transition-colors"
+        [class.text-white]="route() === 'tasks'"
       >
         Tasks
       </button>
@@ -40,6 +44,20 @@ import { Router } from '@angular/router';
 })
 export class Header {
   private _router = inject(Router);
+  private _destroyRef = inject(DestroyRef);
+
+  public route = signal<string>(this._router.url.replace('/', ''));
+
+  constructor() {
+    this._router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe((event: NavigationEnd) => {
+        this.route.set(event.urlAfterRedirects.replace('/', ''));
+      });
+  }
 
   public onNavClick(route: string): void {
     this._router.navigate(['/', route]);
