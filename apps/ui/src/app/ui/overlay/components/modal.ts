@@ -28,13 +28,17 @@ import {
   `,
 })
 export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
+  @HostListener('document:keydown.escape')
+  public onKeydownHandler() {
+    this._close();
+  }
+
   public onBackdropClick(ev: MouseEvent): void {
     ev.stopPropagation();
     const element = this._backdropElement();
 
     if (element && ev.target === element.nativeElement) {
-      const ref = this.ref();
-      ref.destroy();
+      this._close();
     }
   }
 
@@ -61,5 +65,10 @@ export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
   public ngOnDestroy(): void {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
+  }
+
+  private _close(): void {
+    const ref = this.ref();
+    ref.destroy();
   }
 }
