@@ -9,11 +9,10 @@ import { LucideAngularModule } from 'lucide-angular';
   },
   template: `
     <div class="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-      <lucide-icon class="h-5 w-5" [name]="icon()"></lucide-icon>
+      <lucide-icon class="h-8 w-8" [name]="icon()"></lucide-icon>
     </div>
 
     <h3 class="text-lg font-semibold text-white mb-2">{{ title() }}</h3>
-
     <p class="text-gray-400 text-sm">{{ description() }}</p>
   `,
 })

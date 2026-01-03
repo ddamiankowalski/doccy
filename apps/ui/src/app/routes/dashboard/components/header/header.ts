@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderUser } from '../header-user/header-user';
 import { LucideAngularModule } from 'lucide-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dc-header',
@@ -20,11 +21,27 @@ import { LucideAngularModule } from 'lucide-angular';
     </div>
 
     <nav class="flex ml-auto mr-24 gap-8 items-center text-sm text-gray-500">
-      <button class="cursor-pointer hover:text-white transition-colors">Finance</button>
-      <button class="cursor-pointer hover:text-white transition-colors">Tasks</button>
+      <button
+        (click)="onNavClick('finance')"
+        class="cursor-pointer hover:text-white transition-colors"
+      >
+        Finance
+      </button>
+      <button
+        (click)="onNavClick('tasks')"
+        class="cursor-pointer hover:text-white transition-colors"
+      >
+        Tasks
+      </button>
     </nav>
 
     <dc-header-user />
   </header>`,
 })
-export class Header {}
+export class Header {
+  private _router = inject(Router);
+
+  public onNavClick(route: string): void {
+    this._router.navigate(['/', route]);
+  }
+}
