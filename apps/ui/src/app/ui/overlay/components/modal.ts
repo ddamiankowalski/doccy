@@ -13,10 +13,11 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Tile } from '../../components/tile/tile';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'dc-modal',
-  imports: [Tile],
+  imports: [Tile, LucideAngularModule],
   template: `
     <div
       animate.enter="fade-in"
@@ -26,13 +27,28 @@ import { Tile } from '../../components/tile/tile';
       (pointerdown)="onBackdropClick($event)"
     >
       <dc-tile>
-        <div class="flex flex-col mb-4 gap-1">
-          @if(title()) {
-          <span class="text-white text-md font-medium">{{ title() }}</span>
-          } @if(description()) {
-          <span class="text-gray-400 text-xs font-medium">{{ description() }}</span>
-          }
-        </div>
+        <header class="flex items-center justify-between mb-4 gap-8">
+          <div class="flex flex-col gap-1">
+            @if(title()) {
+            <span class="text-white text-md font-medium">{{ title() }}</span>
+            } @if(description()) {
+            <span class="text-gray-400 text-xs font-medium">{{ description() }}</span>
+            }
+          </div>
+
+          <button
+            class="group/button flex items-center justify-center h-8 w-8 rounded-full
+         hover:bg-white/10 cursor-pointer transition-colors"
+            (click)="onCloseClick()"
+          >
+            <lucide-icon
+              class="h-5 w-5 text-gray-400
+           group-hover/button:text-white
+           transition-colors"
+              name="x"
+            ></lucide-icon>
+          </button>
+        </header>
 
         <ng-container #container />
       </dc-tile>
@@ -42,6 +58,10 @@ import { Tile } from '../../components/tile/tile';
 export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:keydown.escape')
   public onKeydownHandler() {
+    this._close();
+  }
+
+  public onCloseClick(): void {
     this._close();
   }
 

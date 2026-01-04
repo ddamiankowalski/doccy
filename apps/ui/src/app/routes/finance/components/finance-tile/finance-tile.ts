@@ -3,7 +3,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
-import { InputText } from '../../../../ui/input/input-text/input-text';
+import { FinanceAdd } from '../finance-add/finance-add';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -39,9 +39,9 @@ export class FinanceTile {
 
   public onClick(): void {
     this._overlay.openModal({
-      component: InputText,
-      title: 'Some title',
-      description: 'Some description is here',
+      component: FinanceAdd,
+      title: 'Add new asset',
+      description: 'Create a new asset by filling out all fields',
       closeOnBackdrop: false,
     });
   }
