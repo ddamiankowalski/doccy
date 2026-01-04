@@ -7,7 +7,7 @@ import { Footer } from './components/footer/footer';
   selector: 'dc-dashboard',
   imports: [Header, RouterOutlet, Footer],
   host: {
-    class: 'block p-12 min-h-screen text-white',
+    class: 'block p-4 md:p-12 min-h-screen text-white',
   },
   template: `
     <dc-header />

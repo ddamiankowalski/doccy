@@ -22,7 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
       </div>
     </div>
 
-    <nav class="flex ml-auto mr-24 gap-8 items-center text-sm text-gray-500">
+    <nav class="hidden md:flex ml-auto mr-24 gap-8 items-center text-sm text-gray-500">
       <button
         (click)="onNavClick('finance')"
         class="cursor-pointer hover:text-white transition-colors"
