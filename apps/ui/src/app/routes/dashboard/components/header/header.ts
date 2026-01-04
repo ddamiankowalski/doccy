@@ -40,7 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
       <button
         (click)="onNavClick('documents')"
         class="cursor-pointer hover:text-white transition-colors"
-        [class.text-white]="route() === 'tasks'"
+        [class.text-white]="route() === 'documents'"
       >
         Documents
       </button>
