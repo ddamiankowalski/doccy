@@ -10,6 +10,9 @@ import { Modal } from '../components/modal';
 
 type ModalConfig<T> = {
   component: Type<T>;
+  title?: string;
+  description?: string;
+  closeOnBackdrop?: boolean;
 };
 
 @Injectable({
@@ -24,7 +27,12 @@ export class OverlayService {
   /**
    * Opens modal
    */
-  public openModal<T>(config: ModalConfig<T>): void {
+  public openModal<T>({
+    component,
+    title = undefined,
+    description = undefined,
+    closeOnBackdrop = true,
+  }: ModalConfig<T>): void {
     const overlay = document.getElementById(this._id);
     const hostElement = this._createHost();
 
@@ -38,7 +46,11 @@ export class OverlayService {
     });
 
     ref.setInput('ref', ref);
-    ref.setInput('component', config.component);
+    ref.setInput('component', component);
+
+    ref.setInput('title', title);
+    ref.setInput('description', description);
+    ref.setInput('closeOnBackdrop', closeOnBackdrop);
 
     this._appRef.attachView(ref.hostView);
     overlay.append(hostElement);

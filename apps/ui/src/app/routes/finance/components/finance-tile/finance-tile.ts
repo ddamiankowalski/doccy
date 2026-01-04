@@ -3,6 +3,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
+import { InputText } from '../../../../ui/input/input-text/input-text';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -37,6 +38,11 @@ export class FinanceTile {
   private _overlay = inject(OverlayService);
 
   public onClick(): void {
-    this._overlay.openModal({ component: Tile });
+    this._overlay.openModal({
+      component: InputText,
+      title: 'Some title',
+      description: 'Some description is here',
+      closeOnBackdrop: false,
+    });
   }
 }
