@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Dashboard } from './routes/dashboard/dashboard';
 import { Finance } from './routes/finance/finance';
 import { Tasks } from './routes/tasks/tasks';
+import { Documents } from './routes/documents/documents';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,10 @@ export const routes: Routes = [
       {
         path: 'tasks',
         component: Tasks,
+      },
+      {
+        path: 'documents',
+        component: Documents,
       },
     ],
   },

@@ -37,6 +37,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
       >
         Tasks
       </button>
+      <button
+        (click)="onNavClick('tasks')"
+        class="cursor-pointer hover:text-white transition-colors"
+        [class.text-white]="route() === 'tasks'"
+      >
+        Documents
+      </button>
     </nav>
 
     <dc-header-user />
