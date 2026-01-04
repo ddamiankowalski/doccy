@@ -1,15 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
-import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
-import { FinanceAdd } from '../finance-add/finance-add';
 
 @Component({
   selector: 'dc-finance-tile',
   imports: [LucideAngularModule, Tile, ProgressBar],
   template: `
-    <dc-tile (click)="onClick()">
+    <dc-tile>
       <div class="flex justify-between items-start mb-4">
         <div
           class="flex justify-center items-center min-w-9 min-h-9 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors"
@@ -34,15 +32,4 @@ import { FinanceAdd } from '../finance-add/finance-add';
     </dc-tile>
   `,
 })
-export class FinanceTile {
-  private _overlay = inject(OverlayService);
-
-  public onClick(): void {
-    this._overlay.openModal({
-      component: FinanceAdd,
-      title: 'Add new asset',
-      description: 'Create a new asset by filling out all fields',
-      closeOnBackdrop: false,
-    });
-  }
-}
+export class FinanceTile {}

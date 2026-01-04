@@ -1,6 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
+import { FinanceAdd } from '../finance-add/finance-add';
+import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 
 @Component({
   selector: 'dc-finance-section',
@@ -21,7 +23,7 @@ import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
       <dc-finance-tile />
       <dc-finance-tile />
       <dc-finance-tile />
-      <dc-finance-add-tile />
+      <dc-finance-add-tile (click)="onAddClick()" />
     </div>
   </section>`,
   imports: [FinanceTile, FinanceAddTile],
@@ -30,4 +32,15 @@ export class FinanceSection {
   public title = input.required<string>();
 
   public value = input.required<string>();
+
+  private _overlay = inject(OverlayService);
+
+  public onAddClick(): void {
+    this._overlay.openModal({
+      component: FinanceAdd,
+      title: 'Add new asset',
+      description: 'Create a new asset by filling out all fields',
+      closeOnBackdrop: false,
+    });
+  }
 }
