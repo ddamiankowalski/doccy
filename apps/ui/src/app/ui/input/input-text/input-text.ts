@@ -4,14 +4,18 @@ import { FormValueControl } from '@angular/forms/signals';
 @Component({
   selector: 'dc-input-text',
   host: {
-    class: 'block h-full w-full relative',
+    class: 'flex flex-col h-full w-full relative gap-2',
   },
   template: `
+    @if(label()) {
+    <label class="text-white text-xs leading-none" [for]="id()">{{ label() }}</label>
+    }
+
     <input
       #inputEl
       [id]="id()"
       [value]="value()"
-      placeholder="This is some placeholder"
+      [placeholder]="placeholder()"
       (input)="onInput()"
       class="bg-charcoal-light
         w-full
@@ -20,7 +24,7 @@ import { FormValueControl } from '@angular/forms/signals';
         px-3 py-2 
         text-white/50
         hover:text-white
-        text-sm
+        text-xs
         focus:outline-none 
         focus:ring-3
         focus:ring-offset-1
@@ -37,6 +41,7 @@ export class InputText implements FormValueControl<string> {
 
   public id = input<string>();
   public label = input<string>();
+  public placeholder = input<string>();
 
   public onInput(): void {
     const input = this._input();

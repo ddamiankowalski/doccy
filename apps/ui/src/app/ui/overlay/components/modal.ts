@@ -26,32 +26,34 @@ import { LucideAngularModule } from 'lucide-angular';
       #backdrop
       (pointerdown)="onBackdropClick($event)"
     >
-      <dc-tile>
-        <header class="flex items-center justify-between mb-4 gap-8">
-          <div class="flex flex-col gap-2">
-            @if(title()) {
-            <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
-            } @if(description()) {
-            <span class="text-gray-400 text-sm font-medium">{{ description() }}</span>
-            }
-          </div>
+      <div class="w-[min(30rem,100vw)] min-h-0">
+        <dc-tile>
+          <header class="flex items-start justify-between mb-6 gap-8">
+            <div class="flex flex-col gap-2">
+              @if(title()) {
+              <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
+              } @if(description()) {
+              <span class="text-gray-400 text-xs font-medium">{{ description() }}</span>
+              }
+            </div>
 
-          <button
-            class="group/button flex items-center justify-center h-8 w-8 rounded-full
+            <button
+              class="group/button flex items-center justify-center h-8 w-8 rounded-full
          hover:bg-white/10 cursor-pointer transition-colors"
-            (click)="onCloseClick()"
-          >
-            <lucide-icon
-              class="h-5 w-5 text-gray-400
+              (click)="onCloseClick()"
+            >
+              <lucide-icon
+                class="h-5 w-5 text-gray-400
            group-hover/button:text-white
            transition-colors"
-              name="x"
-            ></lucide-icon>
-          </button>
-        </header>
+                name="x"
+              ></lucide-icon>
+            </button>
+          </header>
 
-        <ng-container #container />
-      </dc-tile>
+          <ng-container #container />
+        </dc-tile>
+      </div>
     </div>
   `,
 })

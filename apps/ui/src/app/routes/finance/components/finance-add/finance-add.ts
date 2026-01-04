@@ -3,7 +3,16 @@ import { InputText } from '../../../../ui/input/input-text/input-text';
 
 @Component({
   selector: 'dc-finance-add',
+  host: {
+    class: 'min-w-[30rem]',
+  },
   imports: [InputText],
-  template: ` <dc-input-text label="I am label" /> `,
+  template: `
+    <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
+      <dc-input-text label="First name" placeholder="Enter first name" />
+      <dc-input-text label="First name" placeholder="Enter first name" />
+      <dc-input-text label="First name" placeholder="Enter first name" />
+    </fieldset>
+  `,
 })
 export class FinanceAdd {}
