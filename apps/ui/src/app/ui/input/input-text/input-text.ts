@@ -7,12 +7,6 @@ import { FormValueControl } from '@angular/forms/signals';
     class: 'block h-full w-full relative',
   },
   template: `
-    @if(label()) {
-    <label class="text-white/50 text-xs absolute top-[-50%] translate-y-1/2 bg" [for]="id()">{{
-      label()
-    }}</label>
-    }
-
     <input
       #inputEl
       [id]="id()"
@@ -20,13 +14,13 @@ import { FormValueControl } from '@angular/forms/signals';
       placeholder="This is some placeholder"
       (input)="onInput()"
       class="bg-charcoal-light
-      w-full
+        w-full
         border border-white/50 
         rounded-md
-        px-2 py-2 
+        px-3 py-2 
         text-white/50
         hover:text-white
-        text-xs
+        text-sm
         focus:outline-none 
         focus:ring-3
         focus:ring-offset-1

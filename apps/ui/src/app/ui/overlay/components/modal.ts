@@ -28,11 +28,11 @@ import { LucideAngularModule } from 'lucide-angular';
     >
       <dc-tile>
         <header class="flex items-center justify-between mb-4 gap-8">
-          <div class="flex flex-col gap-1">
+          <div class="flex flex-col gap-2">
             @if(title()) {
-            <span class="text-white text-md font-medium">{{ title() }}</span>
+            <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
             } @if(description()) {
-            <span class="text-gray-400 text-xs font-medium">{{ description() }}</span>
+            <span class="text-gray-400 text-sm font-medium">{{ description() }}</span>
             }
           </div>
 
