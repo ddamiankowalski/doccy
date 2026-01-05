@@ -24,13 +24,20 @@ export type SelectOption = {
   selector: 'dc-input-select',
   imports: [NgClass, LucideAngularModule],
   host: {
-    tabindex: '0',
-    class: `
-        flex
+    class: `flex flex-col h-full w-full relative gap-2`,
+  },
+  template: `
+    @if(label()) {
+    <label class="text-white text-xs leading-none">{{ label() }}</label>
+    }
+
+    <div
+      tabindex="0"
+      class="flex
         justify-between
         items-center
         group/select relative mt-auto bg-charcoal-light
-        h-[2.125rem]
+        h-8.5
         cursor-pointer
         w-full
         border border-white/50
@@ -43,45 +50,45 @@ export type SelectOption = {
         focus:ring-offset-1
         focus:text-white
         focus:ring-white/20
-        transition`,
-  },
-  template: `
-    <span
-      [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
-      class="ml-2 group-focus-within/select:text-white"
-      >@if(label() === null) {
-      {{ placeholder() }}
-      } @else {
-      {{ label() }}
-      }</span
+        transition"
     >
-
-    @if(value() !== null) {
-    <div
-      (click)="onResetClick()"
-      class="transition-all flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
-    >
-      <lucide-icon class="h-4 w-4" name="x" />
-    </div>
-    }
-
-    <ul
-      class="absolute inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
-      [class.hidden]="isOpen() === false"
-    >
-      @for(option of options(); track option.value) {
-      <li
-        (click)="onOptionClick(option.value)"
-        class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
+      <span
+        [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
+        class="ml-2 group-focus-within/select:text-white"
+        >@if(optionLabel() === null) {
+        {{ placeholder() }}
+        } @else {
+        {{ optionLabel() }}
+        }</span
       >
-        {{ option.label }}
 
-        @if(option.value === value()) {
-        <lucide-icon class="h-4 w-4" name="check" />
-        }
-      </li>
+      @if(value() !== null) {
+      <div
+        (click)="onResetClick()"
+        class="transition-all flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
+      >
+        <lucide-icon class="h-4 w-4" name="x" />
+      </div>
       }
-    </ul>
+
+      <ul
+        class="absolute inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
+        [class.hidden]="isOpen() === false"
+      >
+        @for(option of options(); track option.value) {
+        <li
+          (click)="onOptionClick(option.value)"
+          class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
+        >
+          {{ option.label }}
+
+          @if(option.value === value()) {
+          <lucide-icon class="h-4 w-4" name="check" />
+          }
+        </li>
+        }
+      </ul>
+    </div>
   `,
 })
 export class InputSelect implements FormValueControl<string | null> {
@@ -95,13 +102,14 @@ export class InputSelect implements FormValueControl<string | null> {
 
   public value = model<string | null>(null);
 
+  public label = input<string>();
   public placeholder = input<string>();
 
   public options = input<SelectOption[]>([]);
 
   public isOpen = signal<boolean>(false);
 
-  public label = computed(() => {
+  public optionLabel = computed(() => {
     const option = this.options().find(({ value }) => value === this.value());
 
     if (!option) {
