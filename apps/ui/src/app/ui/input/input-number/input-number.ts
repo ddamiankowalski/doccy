@@ -1,29 +1,53 @@
-import { Component, ElementRef, input, model, viewChild } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, computed, ElementRef, input, model, viewChild } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
+
+type InputNumberMode = 'currency' | 'normal';
 
 @Component({
   selector: 'dc-input-number',
   host: {
     class: 'flex flex-col h-full w-full relative gap-2',
   },
+  styles: [
+    `
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+    `,
+  ],
+  imports: [NgClass],
   template: `
     @if(label()) {
     <label class="text-white text-xs leading-none" [for]="id()">{{ label() }}</label>
     }
 
-    <input
-      #inputEl
-      [id]="id()"
-      [value]="value()"
-      [placeholder]="placeholder()"
-      (input)="onInput()"
-      type="number"
-      class="bg-charcoal-light
+    <div class="relative">
+      @if(mode() === 'currency') {
+      <div class="absolute text-xs mr-3 right-0 top-1/2  -translate-y-1/2 text-white/30">
+        złotych
+      </div>
+      }
+
+      <input
+        #inputEl
+        [id]="id()"
+        [value]="value()"
+        [placeholder]="placeholder()"
+        (input)="onInput()"
+        type="number"
+        class="bg-charcoal-light
         w-full
         h-8.5
         border border-white/50
         rounded-md
-        px-3 py-2
+        py-2
         text-white
         hover:text-white
         text-xs
@@ -34,7 +58,9 @@ import { FormValueControl } from '@angular/forms/signals';
         focus:text-white
         focus:ring-white/20
         transition"
-    />
+        [ngClass]="paddingClass()"
+      />
+    </div>
   `,
 })
 export class InputNumber implements FormValueControl<number | null> {
@@ -45,6 +71,18 @@ export class InputNumber implements FormValueControl<number | null> {
   public id = input<string>();
   public label = input<string>();
   public placeholder = input<string>();
+
+  public paddingClass = computed<string>(() => {
+    const mode = this.mode();
+
+    if (mode === 'currency') {
+      return 'pl-3 pr-16';
+    }
+
+    return 'px-3';
+  });
+
+  public mode = input<InputNumberMode>('normal');
 
   public onInput(): void {
     const input = this._input();
