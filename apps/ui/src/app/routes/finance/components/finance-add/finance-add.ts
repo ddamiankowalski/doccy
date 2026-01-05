@@ -4,13 +4,14 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { InputSelect } from '../../../../ui/input/input-select/input-select';
 import { InputNumber } from '../../../../ui/input/input-number/input-number';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
+import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [InputText, Spinner, InputSelect, InputNumber, PrimaryButton],
+  imports: [InputText, Spinner, InputSelect, InputNumber, PrimaryButton, SecondaryButton],
   template: `
     @if(isLoading()) {
     <dc-spinner class="p-8" />
@@ -26,8 +27,10 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
       />
     </fieldset>
 
-    <dc-primary-button class="block mt-8">Add asset</dc-primary-button>
-
+    <div class="flex gap-2">
+      <dc-secondary-button class="grow block mt-8">Cancel</dc-secondary-button>
+      <dc-primary-button class="grow block mt-8">Add asset</dc-primary-button>
+    </div>
     }
   `,
 })
