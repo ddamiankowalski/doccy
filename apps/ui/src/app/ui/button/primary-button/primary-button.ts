@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'dc-primary-button',
   template: `
     <button
+      (click)="clicked.emit()"
       class="flex w-full items-center justify-center cursor-pointer rounded-md bg-white/90 hover:bg-white transition-colors active:bg-white/90 text-xs font-medium text-charcoal py-2 px-4"
     >
       <ng-content />
     </button>
   `,
 })
-export class PrimaryButton {}
+export class PrimaryButton {
+  public clicked = output<void>();
+}

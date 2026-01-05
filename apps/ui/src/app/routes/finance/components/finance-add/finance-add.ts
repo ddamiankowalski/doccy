@@ -28,8 +28,8 @@ import { SecondaryButton } from '../../../../ui/button/secondary-button/secondar
     </fieldset>
 
     <div class="flex gap-2">
-      <dc-secondary-button class="grow block mt-8">Cancel</dc-secondary-button>
-      <dc-primary-button class="grow block mt-8">Add asset</dc-primary-button>
+      <dc-secondary-button class="flex-1 block mt-8">Cancel</dc-secondary-button>
+      <dc-primary-button class="flex-1 block mt-8">Add asset</dc-primary-button>
     </div>
     }
   `,
