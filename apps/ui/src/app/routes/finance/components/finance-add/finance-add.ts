@@ -26,6 +26,8 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
       />
     </fieldset>
 
+    <dc-primary-button>hello</dc-primary-button>
+
     }
   `,
 })
