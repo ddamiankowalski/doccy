@@ -26,7 +26,7 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
       />
     </fieldset>
 
-    <dc-primary-button>hello</dc-primary-button>
+    <dc-primary-button class="block mt-8">Add asset</dc-primary-button>
 
     }
   `,
