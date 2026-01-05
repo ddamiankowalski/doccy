@@ -19,13 +19,14 @@ import { FormValueControl } from '@angular/forms/signals';
       (input)="onInput()"
       class="bg-charcoal-light
         w-full
-        border border-white/50 
+        h-8.5
+        border border-white/50
         rounded-md
-        px-3 py-2 
+        px-3 py-2
         text-white/50
         hover:text-white
         text-xs
-        focus:outline-none 
+        focus:outline-none
         focus:ring-3
         focus:ring-offset-1
         focus:text-white

@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { InputText } from '../../../../ui/input/input-text/input-text';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
+import { InputSelect } from '../../../../ui/input/input-select/input-select';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [InputText, Spinner],
+  imports: [InputText, Spinner, InputSelect],
   template: `
     @if(isLoading()) {
     <dc-spinner class="p-4" />
@@ -15,7 +16,8 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
     <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       <dc-input-text label="First name" placeholder="Enter first name" />
       <dc-input-text label="Last name" placeholder="Enter last name" />
-      <dc-input-text label="Enter value" placeholder="Enter value" />
+      <dc-input-text label="Asset value" placeholder="Enter value" />
+      <dc-input-select [options]="options" />
     </fieldset>
     }
   `,
@@ -26,6 +28,13 @@ export class FinanceAdd {
   constructor() {
     setTimeout(() => {
       this.isLoading.set(false);
-    }, 2000);
+    }, 500);
   }
+
+  public options = [
+    {
+      label: 'Some label',
+      value: '1',
+    },
+  ];
 }

@@ -26,7 +26,7 @@ import { LucideAngularModule } from 'lucide-angular';
       #backdrop
       (pointerdown)="onBackdropClick($event)"
     >
-      <div class="w-[min(30rem,100vw)] min-h-0">
+      <div class="w-[min(35rem,100vw)] min-h-0">
         <dc-tile>
           <header class="flex items-start justify-between mb-6 gap-8">
             <div class="flex flex-col gap-2">
