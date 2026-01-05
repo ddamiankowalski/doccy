@@ -19,11 +19,6 @@ export type SelectOption = {
         text-white/50
         hover:text-white
         text-xs
-        focus:outline-none
-        focus:ring-3
-        focus:ring-offset-1
-        focus:text-white
-        focus:ring-white/20
         transition`,
   },
   template: `
@@ -39,6 +34,8 @@ export class InputSelect implements FormValueControl<string> {
   public onClick(): void {
     this.isOpen.update((isOpen) => !isOpen);
   }
+
+  public readonly focusClass = 'outline-none ring-3 ring-offset-1 text-white ring-white/20';
 
   public value = model<string>('');
 
