@@ -23,9 +23,10 @@ import { FormValueControl } from '@angular/forms/signals';
         border border-white/50
         rounded-md
         px-3 py-2
-        text-white/50
+        text-white
         hover:text-white
         text-xs
+        placeholder:text-white/30
         focus:outline-none
         focus:ring-3
         focus:ring-offset-1

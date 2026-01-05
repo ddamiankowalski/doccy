@@ -20,7 +20,8 @@ export type SelectOption = {
 @Component({
   selector: 'dc-input-select',
   host: {
-    class: `relative mt-auto bg-charcoal-light
+    tabindex: '0',
+    class: `group/select relative mt-auto bg-charcoal-light
         h-[2.125rem]
         cursor-pointer
         w-full
@@ -29,22 +30,22 @@ export type SelectOption = {
         px-3 py-2
         text-xs
         text-white/50
+        focus:outline-none
+        focus:ring-3
+        focus:ring-offset-1
+        focus:text-white
+        focus:ring-white/20
         transition`,
-    '[class.outline-none]': 'isOpen()',
-    '[class.ring-3]': 'isOpen()',
-    '[class.ring-offset-1]': 'isOpen()',
-    '[class.text-white]': 'isOpen()',
-    '[class.ring-white/20]': 'isOpen()',
   },
   template: `
-    <span>{{ placeholder() }}</span>
+    <span class="text-white/30 group-focus-within/select:text-white">{{ placeholder() }}</span>
 
     <ul
-      class="absolute inset-x-0 top-full mt-2 px-3 py-2 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
+      class="absolute inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
       [class.hidden]="isOpen() === false"
     >
       @for(option of options(); track option.value) {
-      <li>{{ option.label }}</li>
+      <li class="p-2 rounded-sm hover:bg-white/10">{{ option.label }}</li>
       }
     </ul>
   `,
