@@ -9,7 +9,7 @@ export type SelectOption = {
 @Component({
   selector: 'dc-input-select',
   host: {
-    class: `mt-auto bg-charcoal-light
+    class: `relative mt-auto bg-charcoal-light
         h-[2.125rem]
         cursor-pointer
         w-full
@@ -20,9 +20,17 @@ export type SelectOption = {
         hover:text-white
         text-xs
         transition`,
+    '[class.outline-none]': 'isOpen()',
+    '[class.ring-3]': 'isOpen()',
+    '[class.ring-offset-1]': 'isOpen()',
+    '[class.text-white]': 'isOpen()',
+    '[class.ring-white/20]': 'isOpen()',
   },
   template: `
-    <ul class="flex flex-col gap-2" [class.hidden]="isOpen() === false">
+    <ul
+      class="absolute inset-x-0 top-full mt-2 px-3 py-2 flex flex-col gap-2 rounded-md bg-charcoal-light border border-white/50"
+      [class.hidden]="isOpen() === false"
+    >
       @for(option of options(); track option.value) {
       <li>{{ option.label }}</li>
       }
@@ -34,8 +42,6 @@ export class InputSelect implements FormValueControl<string> {
   public onClick(): void {
     this.isOpen.update((isOpen) => !isOpen);
   }
-
-  public readonly focusClass = 'outline-none ring-3 ring-offset-1 text-white ring-white/20';
 
   public value = model<string>('');
 
