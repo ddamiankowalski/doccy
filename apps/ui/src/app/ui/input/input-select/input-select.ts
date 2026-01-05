@@ -27,9 +27,8 @@ export type SelectOption = {
         border border-white/50
         rounded-md
         px-3 py-2
-        text-white/50
-        hover:text-white
         text-xs
+        text-white/50
         transition`,
     '[class.outline-none]': 'isOpen()',
     '[class.ring-3]': 'isOpen()',
@@ -38,6 +37,8 @@ export type SelectOption = {
     '[class.ring-white/20]': 'isOpen()',
   },
   template: `
+    <span>{{ placeholder() }}</span>
+
     <ul
       class="absolute inset-x-0 top-full mt-2 px-3 py-2 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
       [class.hidden]="isOpen() === false"
@@ -58,6 +59,8 @@ export class InputSelect implements FormValueControl<string> {
   private _elementRef = inject(ElementRef);
 
   public value = model<string>('');
+
+  public placeholder = input<string>();
 
   public options = input<SelectOption[]>([]);
 
