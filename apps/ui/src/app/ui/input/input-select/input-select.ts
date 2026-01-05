@@ -72,9 +72,13 @@ export type SelectOption = {
       @for(option of options(); track option.value) {
       <li
         (click)="onOptionClick(option.value)"
-        class="transition-all p-2 rounded-sm hover:bg-white/10"
+        class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
       >
         {{ option.label }}
+
+        @if(option.value === value()) {
+        <lucide-icon class="h-4 w-4" name="check" />
+        }
       </li>
       }
     </ul>
