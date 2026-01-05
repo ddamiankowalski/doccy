@@ -35,7 +35,7 @@ export type SelectOption = {
         w-full
         border border-white/50
         rounded-md
-        px-3 py-2
+        px-1 py-2
         text-xs
         text-white/50
         focus:outline-none
@@ -48,7 +48,7 @@ export type SelectOption = {
   template: `
     <span
       [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
-      class="group-focus-within/select:text-white"
+      class="ml-2 group-focus-within/select:text-white"
       >@if(label() === null) {
       {{ placeholder() }}
       } @else {
@@ -59,7 +59,7 @@ export type SelectOption = {
     @if(value() !== null) {
     <div
       (click)="onResetClick()"
-      class="transition-all ml-2 flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
+      class="transition-all flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
     >
       <lucide-icon class="h-4 w-4" name="x" />
     </div>
