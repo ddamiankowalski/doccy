@@ -36,5 +36,13 @@ export class FinanceAdd {
       label: 'Some label',
       value: '1',
     },
+    {
+      label: 'Some label2',
+      value: '2',
+    },
+    {
+      label: 'Some label3',
+      value: '3',
+    },
   ];
 }

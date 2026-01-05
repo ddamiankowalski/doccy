@@ -45,7 +45,12 @@ export type SelectOption = {
       [class.hidden]="isOpen() === false"
     >
       @for(option of options(); track option.value) {
-      <li class="p-2 rounded-sm hover:bg-white/10">{{ option.label }}</li>
+      <li
+        (click)="onOptionClick(option.value)"
+        class="transition-all p-2 rounded-sm hover:bg-white/10"
+      >
+        {{ option.label }}
+      </li>
       }
     </ul>
   `,
@@ -80,5 +85,9 @@ export class InputSelect implements FormValueControl<string> {
         ev.stopPropagation();
         this.isOpen.set(false);
       });
+  }
+
+  public onOptionClick(value: string): void {
+    console.log(value);
   }
 }
