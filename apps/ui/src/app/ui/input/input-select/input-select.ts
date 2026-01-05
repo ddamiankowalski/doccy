@@ -1,5 +1,7 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
+  computed,
   DOCUMENT,
   ElementRef,
   HostListener,
@@ -10,6 +12,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormValueControl } from '@angular/forms/signals';
+import { LucideAngularModule } from 'lucide-angular';
 import { filter, fromEvent } from 'rxjs';
 
 export type SelectOption = {
@@ -19,9 +22,14 @@ export type SelectOption = {
 
 @Component({
   selector: 'dc-input-select',
+  imports: [NgClass, LucideAngularModule],
   host: {
     tabindex: '0',
-    class: `group/select relative mt-auto bg-charcoal-light
+    class: `
+        flex
+        justify-between
+        items-center
+        group/select relative mt-auto bg-charcoal-light
         h-[2.125rem]
         cursor-pointer
         w-full
@@ -38,7 +46,24 @@ export type SelectOption = {
         transition`,
   },
   template: `
-    <span class="text-white/30 group-focus-within/select:text-white">{{ placeholder() }}</span>
+    <span
+      [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
+      class="group-focus-within/select:text-white"
+      >@if(label() === null) {
+      {{ placeholder() }}
+      } @else {
+      {{ label() }}
+      }</span
+    >
+
+    @if(value() !== null) {
+    <div
+      (click)="onResetClick()"
+      class="transition-all ml-2 flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
+    >
+      <lucide-icon class="h-4 w-4" name="x" />
+    </div>
+    }
 
     <ul
       class="absolute inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
@@ -55,7 +80,7 @@ export type SelectOption = {
     </ul>
   `,
 })
-export class InputSelect implements FormValueControl<string> {
+export class InputSelect implements FormValueControl<string | null> {
   @HostListener('click')
   public onClick(): void {
     this.isOpen.update((isOpen) => !isOpen);
@@ -64,13 +89,23 @@ export class InputSelect implements FormValueControl<string> {
   private _document = inject(DOCUMENT);
   private _elementRef = inject(ElementRef);
 
-  public value = model<string>('');
+  public value = model<string | null>(null);
 
   public placeholder = input<string>();
 
   public options = input<SelectOption[]>([]);
 
   public isOpen = signal<boolean>(false);
+
+  public label = computed(() => {
+    const option = this.options().find(({ value }) => value === this.value());
+
+    if (!option) {
+      return null;
+    }
+
+    return option.label;
+  });
 
   constructor() {
     fromEvent(this._document.body, 'click')
@@ -88,6 +123,10 @@ export class InputSelect implements FormValueControl<string> {
   }
 
   public onOptionClick(value: string): void {
-    console.log(value);
+    this.value.set(value);
+  }
+
+  public onResetClick(): void {
+    this.value.set(null);
   }
 }

@@ -11,7 +11,7 @@ import { InputSelect } from '../../../../ui/input/input-select/input-select';
   imports: [InputText, Spinner, InputSelect],
   template: `
     @if(isLoading()) {
-    <dc-spinner class="p-4" />
+    <dc-spinner class="p-8" />
     } @else {
     <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       <dc-input-text id="test" label="First name" placeholder="Enter first name" />
