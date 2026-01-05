@@ -2,13 +2,14 @@ import { Component, signal } from '@angular/core';
 import { InputText } from '../../../../ui/input/input-text/input-text';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { InputSelect } from '../../../../ui/input/input-select/input-select';
+import { InputNumber } from '../../../../ui/input/input-number/input-number';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [InputText, Spinner, InputSelect],
+  imports: [InputText, Spinner, InputSelect, InputNumber],
   template: `
     @if(isLoading()) {
     <dc-spinner class="p-8" />
@@ -16,7 +17,7 @@ import { InputSelect } from '../../../../ui/input/input-select/input-select';
     <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       <dc-input-text id="test" label="First name" placeholder="Enter first name" />
       <dc-input-text id="sometest" label="Last name" placeholder="Enter last name" />
-      <dc-input-text id="another" label="Asset value" placeholder="Enter value" />
+      <dc-input-number id="idk" label="Enter value" placeholder="Enter the value" />
       <dc-input-select placeholder="Select your option" [options]="options" />
     </fieldset>
     }

@@ -2,7 +2,7 @@ import { Component, ElementRef, input, model, viewChild } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 
 @Component({
-  selector: 'dc-input-text',
+  selector: 'dc-input-number',
   host: {
     class: 'flex flex-col h-full w-full relative gap-2',
   },
@@ -17,7 +17,7 @@ import { FormValueControl } from '@angular/forms/signals';
       [value]="value()"
       [placeholder]="placeholder()"
       (input)="onInput()"
-      type="text"
+      type="number"
       class="bg-charcoal-light
         w-full
         h-8.5
@@ -37,10 +37,10 @@ import { FormValueControl } from '@angular/forms/signals';
     />
   `,
 })
-export class InputText implements FormValueControl<string> {
+export class InputNumber implements FormValueControl<number | null> {
   private _input = viewChild.required<ElementRef>('inputEl');
 
-  public value = model<string>('');
+  public value = model<number | null>(null);
 
   public id = input<string>();
   public label = input<string>();
