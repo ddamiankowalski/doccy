@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Asset, SectionAddField, SectionType } from './type';
+import { Asset, SectionType } from './type';
+import { InputField } from '../../../ui/input/input-form/input-form';
 
 type Response = {
   status: number;
@@ -12,7 +13,7 @@ type AssetsResponse = {
 } & Response;
 
 type FieldsResponse = {
-  fields: SectionAddField[];
+  fields: InputField[];
 } & Response;
 
 @Injectable({

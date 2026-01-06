@@ -12,7 +12,7 @@ const path = require('path');
  * @returns 
  */
 const parseFields = async (type) => {
-  logger.log('Parsing the fields');
+  logger.log(`Parsing the fields for type "${type}"`);
 
   const file = await fs.readFile(path.join(__dirname, `${type}-fields.json`));
   return _parse(file);

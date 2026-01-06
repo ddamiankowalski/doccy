@@ -5,7 +5,8 @@ import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
-import { Asset, Section, SectionAddField, SectionType } from './type';
+import { Asset, Section, SectionType } from './type';
+import { InputField } from '../../../ui/input/input-form/input-form';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -29,7 +30,7 @@ export const FinanceStore = signalStore(
 
     const fetchFields = rxMethod<SectionType>(
       switchMap((type) => {
-        const patchFields = (fields: SectionAddField[] | 'loading' | 'error') => {
+        const patchFields = (fields: InputField[] | 'loading' | 'error') => {
           patchState(store, (state) => {
             const section = state[type];
             return { [type]: { ...section, addFields: fields } };
