@@ -5,7 +5,7 @@ import { LucideAngularModule } from 'lucide-angular';
   selector: 'dc-disclaimer',
   imports: [LucideAngularModule],
   host: {
-    class: 'text-center',
+    class: 'block text-center',
   },
   template: `
     <div class="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
@@ -13,7 +13,7 @@ import { LucideAngularModule } from 'lucide-angular';
     </div>
 
     <h3 class="text-lg font-semibold text-white mb-2">{{ title() }}</h3>
-    <p class="text-gray-400 text-sm">{{ description() }}</p>
+    <p class="text-gray-400 font-normal text-sm">{{ description() }}</p>
   `,
 })
 export class Disclaimer {

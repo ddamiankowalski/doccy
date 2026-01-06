@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Asset } from './type';
 
 type AssetsResponse = {
-  assets: Asset[];
+  entries: Asset[];
 };
 
 @Injectable({

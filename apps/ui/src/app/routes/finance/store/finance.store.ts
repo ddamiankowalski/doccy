@@ -5,18 +5,18 @@ import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
-import { Asset } from './type';
+import { Asset, Section } from './type';
 
 type FinanceState = {
-  assets: Asset[];
-  assetsLoading: boolean;
-  assetsError: boolean;
+  assets: Section<Asset>;
+  liabilities: Section<Asset>;
+  income: Section<Asset>;
 };
 
 const initialState: FinanceState = {
-  assets: [],
-  assetsLoading: false,
-  assetsError: false,
+  assets: { entries: [], error: false, loading: false },
+  liabilities: { entries: [], error: false, loading: false },
+  income: { entries: [], error: false, loading: false },
 };
 
 export const FinanceStore = signalStore(
@@ -35,13 +35,18 @@ export const FinanceStore = signalStore(
 
     const fetchAssets = rxMethod<void>(
       switchMap(() => {
-        patchState(store, { assetsLoading: true, assetsError: false, assets: [] });
+        patchState(store, ({ assets }) => ({ assets: { ...assets, loading: true, error: false } }));
 
         return http.fetchAssets$().pipe(
           tapResponse({
-            next: ({ assets }) => patchState(store, { assets }),
-            error: () => patchState(store, { assetsError: true }),
-            finalize: () => patchState(store, { assetsLoading: false }),
+            next: ({ entries }) =>
+              patchState(store, ({ assets }) => ({ assets: { ...assets, entries } })),
+            error: () =>
+              patchState(store, ({ assets }) => ({
+                assets: { ...assets, error: true },
+              })),
+            finalize: () =>
+              patchState(store, ({ assets }) => ({ assets: { ...assets, loading: false } })),
           })
         );
       })

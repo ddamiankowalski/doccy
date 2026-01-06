@@ -1,9 +1,12 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
 import { FinanceAdd } from '../finance-add/finance-add';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 import { FinanceStore } from '../../store/finance.store';
+import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
+import { SectionType } from '../../store/type';
+import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 
 @Component({
   selector: 'dc-finance-section',
@@ -20,20 +23,36 @@ import { FinanceStore } from '../../store/finance.store';
       </div>
     </summary>
 
+    @if(section().loading) {
+    <dc-spinner class="my-24" />
+    } @else if(section().error) {
+    <dc-disclaimer
+      class="my-24"
+      icon="bug"
+      title="Something went wrong"
+      description="Could not fetch data right now. Please refresh this section to try again"
+    />
+    } @else {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <dc-finance-tile />
       <dc-finance-tile />
       <dc-finance-tile />
       <dc-finance-add-tile (click)="onAddClick()" />
     </div>
+    }
   </section>`,
-  imports: [FinanceTile, FinanceAddTile],
+  imports: [FinanceTile, FinanceAddTile, Spinner, Disclaimer],
 })
 export class FinanceSection implements OnInit {
-  public type = input.required<'assets' | 'liabilities' | 'income'>();
+  public type = input.required<SectionType>();
 
+  public finance = inject(FinanceStore);
   private _overlay = inject(OverlayService);
-  private _finance = inject(FinanceStore);
+
+  public section = computed(() => {
+    const type = this.type();
+    return this.finance[type]();
+  });
 
   public ngOnInit(): void {
     this._fetch();
@@ -51,7 +70,7 @@ export class FinanceSection implements OnInit {
   private _fetch(): void {
     switch (this.type()) {
       case 'assets':
-        this._finance.fetchAssets();
+        this.finance.fetchAssets();
         return;
       case 'liabilities':
       case 'income':
