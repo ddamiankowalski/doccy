@@ -1,4 +1,6 @@
 {
   "NAME": "Name",
-  "NAME_PLACEHOLDER": "Enter name"
+  "NAME_PLACEHOLDER": "Enter name",
+  "ASSET_TYPE": "Asset type",
+  "ASSET_TYPE_PLACEHOLDER": "Select asset type"
 }
