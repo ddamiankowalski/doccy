@@ -8,12 +8,16 @@ import { LucideAngularModule } from 'lucide-angular';
     class: 'block text-center',
   },
   template: `
-    <div class="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-      <lucide-icon class="h-8 w-8" [name]="icon()"></lucide-icon>
+    <div
+      class="h-16 w-16 rounded-full bg-white/5 text-white/50 flex items-center justify-center mx-auto mb-4"
+    >
+      <lucide-icon class="h-6 w-6" [name]="icon()"></lucide-icon>
     </div>
 
     <h3 class="text-lg font-semibold text-white mb-2">{{ title() }}</h3>
     <p class="text-gray-400 font-normal text-sm">{{ description() }}</p>
+
+    <ng-content />
   `,
 })
 export class Disclaimer {

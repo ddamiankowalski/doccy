@@ -7,6 +7,8 @@ import { FinanceStore } from '../../store/finance.store';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { SectionType } from '../../store/type';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
+import { TitleCasePipe } from '@angular/common';
+import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 
 @Component({
   selector: 'dc-finance-section',
@@ -15,7 +17,7 @@ import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
   },
   template: ` <section>
     <summary class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
-      {{ type() }}
+      {{ type() | titlecase }}
 
       <div class="flex items-center gap-2">
         <span class="text-sm text-gray-500 font-medium">Total</span>
@@ -32,16 +34,26 @@ import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
       title="Something went wrong"
       description="Could not fetch data right now. Please refresh this section to try again"
     />
-    } @else {
+    } @else { @if (section().entries.length > 0) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (entry of section().entries; track entry.uuid) {
       <dc-finance-tile />
-      <dc-finance-tile />
-      <dc-finance-tile />
+      }
+
       <dc-finance-add-tile (click)="onAddClick()" />
     </div>
-    }
+    } @else {
+    <div class="flex flex-col gap-6 items-center justify-center my-24">
+      <dc-disclaimer
+        icon="badge-info"
+        title="No entries"
+        description="Please add a new entry to see the results here"
+      />
+      <dc-primary-button (clicked)="onAddClick()">Create new entry</dc-primary-button>
+    </div>
+    } }
   </section>`,
-  imports: [FinanceTile, FinanceAddTile, Spinner, Disclaimer],
+  imports: [FinanceTile, FinanceAddTile, Spinner, Disclaimer, TitleCasePipe, PrimaryButton],
 })
 export class FinanceSection implements OnInit {
   public type = input.required<SectionType>();
