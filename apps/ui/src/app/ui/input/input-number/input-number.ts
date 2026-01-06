@@ -24,15 +24,15 @@ type InputNumberMode = 'currency' | 'normal';
   ],
   imports: [NgClass],
   template: `
-    @if(label()) {
-    <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
+    @if (label()) {
+      <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
     }
 
     <div class="relative">
-      @if(mode() === 'currency') {
-      <div class="absolute text-xs mr-3 right-0 top-1/2  -translate-y-1/2 text-white/30">
-        złotych
-      </div>
+      @if (mode() === 'currency') {
+        <div class="absolute text-xs mr-3 right-0 top-1/2  -translate-y-1/2 text-white/30">
+          złotych
+        </div>
       }
 
       <input
@@ -69,7 +69,7 @@ export class InputNumber implements FormValueControl<number | null> {
 
   public value = model<number | null>(null);
 
-  public inputId = input<string>();
+  public inputId = input.required<string>();
   public label = input<string>();
   public placeholder = input<string>();
 
