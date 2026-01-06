@@ -1,5 +1,9 @@
 [
   {
-    "type": "text"
+    "id": "testid",
+    "type": "text",
+    "required": false,
+    "label": "NAME",
+    "placeholder": "NAME_PLACEHOLDER"
   }
 ]
