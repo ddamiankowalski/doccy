@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use("/assets", assets);
+app.use("/api/assets", assets);
 
 app.listen(PORT, () => {
   logger.log(`Restarted the server successfully on port ${PORT}`);
