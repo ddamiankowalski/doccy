@@ -4,6 +4,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
+import { tapResponse } from '@ngrx/operators';
 
 type FinanceState = {
   loading: boolean;
@@ -14,7 +15,7 @@ const initialState: FinanceState = {
 };
 
 export const FinanceStore = signalStore(
-  { providedIn: 'root', protectedState: false },
+  { providedIn: 'root' },
   withState(initialState),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
@@ -27,7 +28,19 @@ export const FinanceStore = signalStore(
      */
     const _reset = (): void => patchState(store, initialState);
 
-    const fetch = rxMethod<void>(switchMap(() => http.fetch$()));
+    const fetch = rxMethod<void>(
+      switchMap(() => {
+        patchState(store, { loading: true });
+
+        return http.fetch$().pipe(
+          tapResponse({
+            next: (res) => console.log(res),
+            error: () => {},
+            finalize: () => patchState(store, { loading: false }),
+          })
+        );
+      })
+    );
 
     return {
       fetch,
