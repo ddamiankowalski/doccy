@@ -4,12 +4,17 @@ import { Events, withEventHandlers } from '@ngrx/signals/events';
 import { logout } from './user.events';
 import { tap } from 'rxjs';
 
-export const withUser = () =>
+/**
+ * Allows to clear the store when logout event is emitted
+ *
+ * @returns
+ */
+export const withUser = <_>() =>
   signalStoreFeature(
     {
-      methods: type<{ reset(): void }>(),
+      methods: type<{ _reset(): void }>(),
     },
     withEventHandlers((store, events = inject(Events)) => ({
-      onReset$: events.on(logout).pipe(tap(() => store.reset())),
+      onReset$: events.on(logout).pipe(tap(() => store._reset())),
     }))
   );
