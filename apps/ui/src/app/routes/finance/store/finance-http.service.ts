@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Asset, SectionType } from './type';
-import { InputField } from '../../../ui/input/input-form/input-form';
+import { InputField } from '../../../ui/input/input-form/type';
 
 type Response = {
   status: number;

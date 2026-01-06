@@ -1,4 +1,4 @@
-import { InputField } from '../../../ui/input/input-form/input-form';
+import { InputField } from '../../../ui/input/input-form/type';
 
 export type Asset = {
   uuid: string;

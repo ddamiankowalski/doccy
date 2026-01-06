@@ -1,23 +1,8 @@
 import { Component, input } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
-import { InputSelect, SelectOption } from '../input-select/input-select';
-
-export type InputType = 'text' | 'number' | 'select';
-
-export type InputField = {
-  id: string;
-  type: InputType;
-  required: boolean;
-  label: string;
-  placeholder: string;
-
-  /**
-   * When select is chosen as type then
-   * options must be provided
-   */
-  options?: SelectOption[]
-};
+import { InputSelect } from '../input-select/input-select';
+import { InputField } from './type';
 
 @Component({
   selector: 'dc-input-form',
