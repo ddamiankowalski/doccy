@@ -1,14 +1,13 @@
-import { Component, computed, effect, input, model, OnInit } from '@angular/core';
+import { Component, effect, inject, Injector, input, model, OnInit, runInInjectionContext } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
 import { FormModel, InputField } from './type';
 import { form, Field } from '@angular/forms/signals';
 import { toSchema } from './utils/to-schema';
-import { KeyValuePipe } from '@angular/common';
 
 @Component({
-  selector: '<dc-input-form>',
+  selector: 'dc-input-form',
   imports: [InputText, InputNumber, InputSelect, Field],
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
@@ -45,22 +44,24 @@ export class InputForm implements OnInit {
   public metadata = input.required<InputField[]>();
   
   public model = model<Record<string, any | null>>({});
-  public form = form(this.model, toSchema);
+  public form: any;
 
   constructor() {
     effect(() => {
-      console.log(this.form().value(), this.form())
+      console.log(this.form())
     })
   
   }
 
+  private _injector = inject(Injector);
+
   public ngOnInit(): void {
-    const model = this._buildModel();
-    this.model.set(model);
+    runInInjectionContext(this._injector, () => {
+      const metadata = this.metadata();
+      
+      this.model.set(metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {}))
+      this.form = form(this.model, toSchema(this.metadata()));
+     })
   }
 
-  private _buildModel(): FormModel {
-    const metadata = this.metadata();
-    return metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {});
-  }
 }

@@ -10,7 +10,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [TranslatePipe],
   template: `
     @if (label(); as label) {
-      <label class="text-white text-xs leading-none" [for]="inputId()">{{ label | translate }}</label>
+      <label class="text-white text-xs leading-none" [for]="inputId()">{{ (label | translate) + (required() ? '*' : '') }}</label>
     }
 
     <input
@@ -44,6 +44,7 @@ export class InputText implements FormValueControl<string> {
   private _input = viewChild.required<ElementRef>('inputEl');
 
   public value = model<string>('');
+  public required = input<boolean>(false);
 
   public inputId = input.required<string>();
   public label = input<string>();
