@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
-const Controller = require("../controllers/assets-controller");
+const Assets = require("../controllers/assets-controller");
 
 router.post("/", async (req, res) => {
   try {
-    const created = await Controller.create(req.body);
+    const created = await Assets.create(req.body);
     return res.json(created);
   } catch (err) {
     return res.json(err.payload);
@@ -13,12 +13,13 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (_, res) => {
-  const result = await Controller.getAll();
+  const result = await Assets.getAll();
   return res.json({ status: 200, entries: result });
 });
 
 router.get("/add-fields", async (_, res) => {
-  return res.json({ status: 200, fields: [{ type: 'text', label: 'NAME' }] })
+  const fields = await Assets.getAddFields();
+  return res.json({ status: 200, fields })
 })
 
 module.exports = router;

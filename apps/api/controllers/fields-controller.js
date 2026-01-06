@@ -4,6 +4,13 @@ const logger = require('../logger/logger');
 const fs = require('fs').promises;
 const path = require('path');
 
+/**
+ * Parses the fields for a controller
+ * of a given type
+ * 
+ * @param {*} type 
+ * @returns 
+ */
 const parseFields = async (type) => {
   logger.log('Parsing the fields');
 
@@ -20,4 +27,6 @@ const _parse = (file) => {
   }
 }
 
-module.exports = {};
+module.exports = {
+  parseFields
+};

@@ -1,4 +1,5 @@
 const { getModel } = require("../models/model");
+const { parseFields } = require("./fields-controller");
 
 /**
  * Creates a new asset
@@ -20,7 +21,17 @@ const getAll = async () => {
   return await model.getAll();
 };
 
+/**
+ * Parses the JSON and returns it
+ * 
+ * @returns 
+ */
+const getAddFields = async () => {
+  return await parseFields('assets');
+}
+
 module.exports = {
   create,
   getAll,
+  getAddFields
 };
