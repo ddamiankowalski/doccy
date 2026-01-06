@@ -5,10 +5,15 @@ import { InputSelect } from '../input-select/input-select';
 import { FormModel, InputField } from './type';
 import { form, Field, FieldTree } from '@angular/forms/signals';
 import { toSchema } from './utils/to-schema';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LucideAngularModule } from "lucide-angular";
 
 @Component({
   selector: 'dc-input-form',
-  imports: [InputText, InputNumber, InputSelect, Field],
+  host: {
+    class: 'relative block pb-6'
+  },
+  imports: [InputText, InputNumber, InputSelect, Field, TranslatePipe, LucideAngularModule],
   template: `
     @if(form) {
       <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
@@ -41,8 +46,11 @@ import { toSchema } from './utils/to-schema';
       </form>
 
       @let state = form();
-      @if(state.invalid() && state.touched()) {
-        <span>Hej!</span>
+
+      @if(state.invalid() && (state.touched() || state.dirty())) {
+        <span animate.enter="fade-in" animate.leave="fade-out" class="flex mt-4 text-[#ff6466] items-center gap-1 text-xs">
+          <lucide-icon class="w-3 h-3" name="triangle-alert" />
+          {{ 'REQUIRED_FIELDS_ERROR' | translate }}</span>
       }
     }
   `,

@@ -28,10 +28,8 @@ import { JsonPipe } from '@angular/common';
     <dc-input-form [metadata]="fields.metadata" />
 
     <div class="flex gap-2">
-      <dc-secondary-button (clicked)="onCancelClick()" class="flex-1 block mt-8"
-        >Cancel</dc-secondary-button
-      >
-      <dc-primary-button class="flex-1 block mt-8">Add asset</dc-primary-button>
+      <dc-secondary-button (clicked)="onCancelClick()" class="flex-1">Cancel</dc-secondary-button>
+      <dc-primary-button class="flex-1">Add asset</dc-primary-button>
     </div>
     }
   `,

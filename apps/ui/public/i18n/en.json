@@ -2,5 +2,8 @@
   "NAME": "Name",
   "NAME_PLACEHOLDER": "Enter name",
   "ASSET_TYPE": "Asset type",
-  "ASSET_TYPE_PLACEHOLDER": "Select asset type"
+  "ASSET_TYPE_PLACEHOLDER": "Select asset type",
+  "ASSET_SUBTYPE": "Subtype of asset",
+  "ASSET_SUBTYPE_PLACEHOLDER": "Select subtype of asset",
+  "REQUIRED_FIELDS_ERROR": "Please fill out all required fields"
 }

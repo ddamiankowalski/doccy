@@ -42,6 +42,7 @@ type InputNumberMode = 'currency' | 'normal';
         [value]="value()"
         [placeholder]="placeholder()"
         (input)="onInput()"
+        (blur)="onBlur()"
         type="number"
         autocomplete="off"
         class="bg-charcoal-light
@@ -73,6 +74,8 @@ export class InputNumber implements FormValueControl<number | null> {
 
   public inputId = input.required<string>();
   public label = input<string>();
+  
+  public touched = model<boolean>(false);
   public placeholder = input<string>();
 
   public paddingClass = computed<string>(() => {
@@ -90,5 +93,9 @@ export class InputNumber implements FormValueControl<number | null> {
   public onInput(): void {
     const input = this._input();
     this.value.set(input.nativeElement.value);
+  }
+
+  public onBlur(): void {
+    this.touched.set(true);
   }
 }

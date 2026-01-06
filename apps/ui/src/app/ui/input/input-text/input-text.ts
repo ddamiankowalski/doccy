@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, model, viewChild } from '@angular/core';
+import { Component, ElementRef, input, model, output, viewChild } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -19,6 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
       [value]="value()"
       [placeholder]="placeholder() | translate"
       (input)="onInput()"
+      (blur)="onBlur()"
       autocomplete="off"
       type="text"
       class="bg-charcoal-light
@@ -50,8 +51,14 @@ export class InputText implements FormValueControl<string> {
   public label = input<string>();
   public placeholder = input<string>('');
 
+  public touched = model<boolean>(false);
+
   public onInput(): void {
     const input = this._input();
     this.value.set(input.nativeElement.value);
+  }
+
+  public onBlur(): void {
+    this.touched.set(true);
   }
 }

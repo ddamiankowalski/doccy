@@ -39,6 +39,7 @@ export type SelectOption = {
       #selectEl
       tabindex="0"
       [id]="inputId()"
+      (blur)="onBlur()"
       class="flex
         justify-between
         items-center
@@ -78,7 +79,7 @@ export type SelectOption = {
       }
 
       <ul
-        class="absolute inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
+        class="absolute z-10 inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
         [class.hidden]="isOpen() === false"
       >
         @for(option of options(); track option.value) {
@@ -109,6 +110,7 @@ export class InputSelect implements FormValueControl<string | null> {
   private _selectEl = viewChild.required('selectEl', { read: ElementRef });
 
   public value = model<string | null>(null);
+  public touched = model<boolean>(false);
   public required = input<boolean>(false);
 
   public inputId = input.required<string>();
@@ -151,5 +153,9 @@ export class InputSelect implements FormValueControl<string | null> {
 
   public onResetClick(): void {
     this.value.set(null);
+  }
+
+  public onBlur(): void {
+    this.touched.set(true);
   }
 }
