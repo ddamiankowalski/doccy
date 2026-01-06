@@ -31,7 +31,7 @@ export type SelectOption = {
   template: `
     @if(label()) {
     <label [for]="inputId()" class="text-white text-xs leading-none">{{
-      label() | translate
+      (label() | translate) + (required() ? '*' : '')
     }}</label>
     }
 
@@ -109,6 +109,8 @@ export class InputSelect implements FormValueControl<string | null> {
   private _selectEl = viewChild.required('selectEl', { read: ElementRef });
 
   public value = model<string | null>(null);
+  public required = input<boolean>(false);
+
   public inputId = input.required<string>();
 
   public label = input<string>();

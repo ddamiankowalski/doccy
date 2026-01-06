@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, ElementRef, input, model, viewChild } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type InputNumberMode = 'currency' | 'normal';
 
@@ -22,10 +23,10 @@ type InputNumberMode = 'currency' | 'normal';
       }
     `,
   ],
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   template: `
     @if (label()) {
-      <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
+      <label class="text-white text-xs leading-none" [for]="inputId()">{{ (label() | translate) + (required() ? '*':'') }}</label>
     }
 
     <div class="relative">
@@ -68,6 +69,7 @@ export class InputNumber implements FormValueControl<number | null> {
   private _input = viewChild.required<ElementRef>('inputEl');
 
   public value = model<number | null>(null);
+  public required = input<boolean>(false);
 
   public inputId = input.required<string>();
   public label = input<string>();
