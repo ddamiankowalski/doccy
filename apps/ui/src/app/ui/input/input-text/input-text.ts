@@ -17,6 +17,7 @@ import { FormValueControl } from '@angular/forms/signals';
       [value]="value()"
       [placeholder]="placeholder()"
       (input)="onInput()"
+      autocomplete="off"
       type="text"
       class="bg-charcoal-light
         w-full

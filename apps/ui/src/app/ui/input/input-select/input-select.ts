@@ -28,11 +28,12 @@ export type SelectOption = {
   },
   template: `
     @if(label()) {
-    <label class="text-white text-xs leading-none">{{ label() }}</label>
+    <label [for]="inputId()" class="text-white text-xs leading-none">{{ label() }}</label>
     }
 
     <div
       tabindex="0"
+      [id]="inputId()"
       class="flex
         justify-between
         items-center
@@ -101,6 +102,7 @@ export class InputSelect implements FormValueControl<string | null> {
   private _elementRef = inject(ElementRef);
 
   public value = model<string | null>(null);
+  public inputId = input.required<string>();
 
   public label = input<string>();
   public placeholder = input<string>();

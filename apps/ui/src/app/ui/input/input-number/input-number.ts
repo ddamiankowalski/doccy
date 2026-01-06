@@ -42,6 +42,7 @@ type InputNumberMode = 'currency' | 'normal';
         [placeholder]="placeholder()"
         (input)="onInput()"
         type="number"
+        autocomplete="off"
         class="bg-charcoal-light
         w-full
         h-8.5

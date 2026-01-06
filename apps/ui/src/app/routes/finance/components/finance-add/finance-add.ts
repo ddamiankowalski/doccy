@@ -27,6 +27,7 @@ import { Modal } from '../../../../ui/overlay/components/modal';
         placeholder="Enter the value"
       />
       <dc-input-select
+        inputId="select"
         label="Select an option"
         placeholder="Select your option"
         [options]="options"
