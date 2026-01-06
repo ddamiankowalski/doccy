@@ -6,14 +6,13 @@ import { Modal } from '../../../../ui/overlay/components/modal';
 import { FinanceStore } from '../../store/finance.store';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { InputForm } from '../../../../ui/input/input-form/input-form';
-import { JsonPipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm, NgClass],
+  imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm],
   template: `
     @let fields = finance.assets.fields(); @if(fields.loading) {
     <dc-spinner class="p-8" />
