@@ -1,13 +1,15 @@
 import { Component, ElementRef, input, model, viewChild } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'dc-input-text',
   host: {
     class: 'flex flex-col h-full w-full relative gap-2',
   },
+  imports: [TranslatePipe],
   template: `
-    @if (label()) {
+    @if (label() | translate) {
       <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
     }
 
