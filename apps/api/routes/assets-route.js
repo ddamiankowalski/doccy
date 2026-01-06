@@ -18,7 +18,7 @@ router.get("/", async (_, res) => {
 });
 
 router.get("/add-fields", async (_, res) => {
-  return res.json({ status: 200, fields: [{ type: 'text' }] })
+  return res.json({ status: 200, fields: [{ type: 'text', label: 'NAME' }] })
 })
 
 module.exports = router;
