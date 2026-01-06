@@ -29,7 +29,7 @@ import { Modal } from '../../../../ui/overlay/components/modal';
     </fieldset>
 
     <div class="flex gap-2">
-      <dc-secondary-button (onClicked)="onCancelClick()" class="flex-1 block mt-8"
+      <dc-secondary-button (clicked)="onCancelClick()" class="flex-1 block mt-8"
         >Cancel</dc-secondary-button
       >
       <dc-primary-button class="flex-1 block mt-8">Add asset</dc-primary-button>
