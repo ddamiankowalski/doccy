@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injector, input, model, OnInit, runInInjectionContext } from '@angular/core';
+import { Component, computed, effect, inject, Injector, input, model, OnInit, runInInjectionContext } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
@@ -47,6 +47,15 @@ export class InputForm implements OnInit {
   
   public model = model<Record<string, any | null>>({});
   public form: FieldTree<Record<string, any>, string | number> | null = null;
+
+  public invalid = computed(() => {
+    if (this.form === null) {
+      return false;
+    }
+
+    const state = this.form();
+    return state.invalid()
+  })
 
   private _injector = inject(Injector);
 

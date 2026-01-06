@@ -24,26 +24,9 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form [metadata]="fields.metadata" />
-    <!-- <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
-      @for(field of fields; track field) { @switch(field.type) { @case ('text') {
-      <dc-input-text inputId="test" label="First name" placeholder="Enter first name" />
-      } @case('number') {
-      <dc-input-number
-        inputId="idk"
-        mode="currency"
-        label="Enter value"
-        placeholder="Enter the value"
-      />
-      } @case ('select') {
-      <dc-input-select
-        inputId="select"
-        label="Select an option"
-        placeholder="Select your option"
-        [options]="options"
-      />
-      } } }
-    </fieldset> -->
+    <dc-input-form #form [metadata]="fields.metadata" />
+
+    {{ form.invalid() }}
 
     <div class="flex gap-2">
       <dc-secondary-button (clicked)="onCancelClick()" class="flex-1 block mt-8"
