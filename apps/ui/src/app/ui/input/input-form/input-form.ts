@@ -24,6 +24,7 @@ import { LucideAngularModule } from "lucide-angular";
                 @let placeholder = entry.placeholder;
                 @let label = entry.label;
                 @let id = entry.id;
+                @let mode = entry.mode;
 
                 @if(!state.hidden()) {
                   @switch (entry.type) {
@@ -31,7 +32,7 @@ import { LucideAngularModule } from "lucide-angular";
                       <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
                     }
                     @case ('number') {
-                      <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
+                      <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" [mode]="mode" />
                     }
                     @case ('select') {
                       @let options = entry.options;

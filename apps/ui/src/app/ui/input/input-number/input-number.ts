@@ -3,7 +3,7 @@ import { Component, computed, ElementRef, input, model, viewChild } from '@angul
 import { FormValueControl } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 
-type InputNumberMode = 'currency' | 'normal';
+export type InputNumberMode = 'currency' | 'normal';
 
 @Component({
   selector: 'dc-input-number',

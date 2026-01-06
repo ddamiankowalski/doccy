@@ -1,3 +1,4 @@
+import { InputNumberMode } from '../input-number/input-number';
 import { SelectOption } from '../input-select/input-select';
 
 export type InputType = 'text' | 'number' | 'select';
@@ -8,6 +9,7 @@ export type InputField = {
   required: boolean;
   label: string;
   placeholder: string;
+  mode: InputNumberMode;
 
   /**
    * When select is chosen as type then
