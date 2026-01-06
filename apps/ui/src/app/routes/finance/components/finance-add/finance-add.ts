@@ -29,7 +29,9 @@ import { Modal } from '../../../../ui/overlay/components/modal';
     </fieldset>
 
     <div class="flex gap-2">
-      <dc-secondary-button class="flex-1 block mt-8">Cancel</dc-secondary-button>
+      <dc-secondary-button (onClicked)="onCancelClick()" class="flex-1 block mt-8"
+        >Cancel</dc-secondary-button
+      >
       <dc-primary-button class="flex-1 block mt-8">Add asset</dc-primary-button>
     </div>
     }
@@ -43,10 +45,6 @@ export class FinanceAdd {
     setTimeout(() => {
       this.isLoading.set(false);
     }, 500);
-
-    setTimeout(() => {
-      this.modal.close();
-    }, 2000);
   }
 
   public options = [
@@ -63,4 +61,8 @@ export class FinanceAdd {
       value: '3',
     },
   ];
+
+  public onCancelClick(): void {
+    this.modal.close();
+  }
 }
