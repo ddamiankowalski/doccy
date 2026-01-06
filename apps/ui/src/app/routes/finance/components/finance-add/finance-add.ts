@@ -24,7 +24,7 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form [(model)]="fields.model" [metadata]="fields.metadata" />
+    <dc-input-form [metadata]="fields.metadata" />
     <!-- <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       @for(field of fields; track field) { @switch(field.type) { @case ('text') {
       <dc-input-text inputId="test" label="First name" placeholder="Enter first name" />

@@ -12,9 +12,10 @@ import { form, Field } from '@angular/forms/signals';
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       @for (field of metadata(); track field.id) {
-        @let isVisible = field | condition : metadata() : form().value();
+        @let value = form().value();
+        @let condition = field | condition : metadata() : value;
 
-        @if(isVisible) {
+        @if(condition) {
           @switch (field.type) {
           @case ('text') {
             <dc-input-text [field]="form[field.id]" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
@@ -34,16 +35,12 @@ import { form, Field } from '@angular/forms/signals';
   `,
 })
 export class InputForm {
-  public model = model.required<Record<string, any>>();
   public metadata = input.required<InputField[]>();
-
-  public form = form(this.model)
+  
+  public model = model<Record<string, any | null>>({});
+  public form = form(this.model);
 
   constructor() {
-
-    setTimeout(() => {
-      console.log(this.model())
-    }, 2000)
     effect(() => {
       console.log(this.form().value())
     })

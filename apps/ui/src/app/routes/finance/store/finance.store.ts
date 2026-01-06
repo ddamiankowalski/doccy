@@ -18,7 +18,6 @@ const sectionFieldsState: SectionFields = {
   error: false,
   loading: false,
   metadata: [],
-  model: {},
 };
 
 const initialSectionState = {
@@ -52,17 +51,12 @@ export const FinanceStore = signalStore(
         patchFields({ ...sectionFieldsState, loading: true });
         return http.fetchFields$(type).pipe(
           tapResponse({
-            next: ({ fields: metadata }) =>
-              patchFields({ ...sectionFieldsState, metadata, model: _buildModel(metadata) }),
+            next: ({ fields: metadata }) => patchFields({ ...sectionFieldsState, metadata }),
             error: () => patchFields({ ...sectionFieldsState, error: true }),
           })
         );
       })
     );
-
-    const _buildModel = (metadata: InputField[]): FormModel => {
-      return metadata.reduce((model, input) => ({ ...model, [input.id]: null }), {});
-    };
 
     /**
      * Resets the finance store to

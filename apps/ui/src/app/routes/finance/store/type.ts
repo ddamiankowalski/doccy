@@ -15,7 +15,6 @@ export type Section<T> = {
 };
 
 export type SectionFields = {
-  model: FormModel;
   metadata: InputField[];
   loading: boolean;
   error: boolean;

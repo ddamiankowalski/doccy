@@ -17,7 +17,7 @@ export type InputField = {
   condition?: InputCondition;
 };
 
-export type FormModel = Record<string, unknown>;
+export type FormModel = Record<string, any>;
 
 /**
  * Condition for displaying an input
