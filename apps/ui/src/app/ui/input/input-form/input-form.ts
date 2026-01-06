@@ -17,14 +17,14 @@ import { form, Field } from '@angular/forms/signals';
         @if(isVisible) {
           @switch (field.type) {
           @case ('text') {
-            <dc-input-text [field]="form['kk']" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+            <dc-input-text [field]="form[field.id]" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
           }
           @case ('number') {
-            <dc-input-number [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+            <dc-input-number [field]="form[field.id]" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
           }
           @case ('select') {
             @if (field.options) {
-            <dc-input-select [placeholder]="field.placeholder" [options]="field.options" [label]="field.label" [inputId]="field.id" />
+            <dc-input-select [field]="form[field.id]" [placeholder]="field.placeholder" [options]="field.options" [label]="field.label" [inputId]="field.id" />
             }
           }
         }
@@ -40,6 +40,10 @@ export class InputForm {
   public form = form(this.model)
 
   constructor() {
+
+    setTimeout(() => {
+      console.log(this.model())
+    }, 2000)
     effect(() => {
       console.log(this.form().value())
     })
