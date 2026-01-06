@@ -6,6 +6,7 @@ import { Modal } from '../../../../ui/overlay/components/modal';
 import { FinanceStore } from '../../store/finance.store';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { InputForm } from '../../../../ui/input/input-form/input-form';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'dc-finance-add',
@@ -24,9 +25,7 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form #form [metadata]="fields.metadata" />
-
-    {{ form.invalid() }}
+    <dc-input-form [metadata]="fields.metadata" />
 
     <div class="flex gap-2">
       <dc-secondary-button (clicked)="onCancelClick()" class="flex-1 block mt-8"

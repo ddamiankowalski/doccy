@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, Injector, input, model, OnInit, runInInjectionContext } from '@angular/core';
+import { Component, inject, Injector, input, model, OnInit, runInInjectionContext } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
@@ -11,34 +11,39 @@ import { toSchema } from './utils/to-schema';
   imports: [InputText, InputNumber, InputSelect, Field],
   template: `
     @if(form) {
-<form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
-  @for (entry of metadata(); track entry.id) {
-          @let field = form[entry.id];
-          @let state = field();
+      <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
+        @for (entry of metadata(); track entry.id) {
+                @let field = form[entry.id];
+                @let state = field();
 
-          @let placeholder = entry.placeholder;
-          @let label = entry.label;
-          @let id = entry.id;
+                @let placeholder = entry.placeholder;
+                @let label = entry.label;
+                @let id = entry.id;
 
-          @if(!state.hidden()) {
-            @switch (entry.type) {
-              @case ('text') {
-                <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
-              }
-              @case ('number') {
-                <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
-              }
-              @case ('select') {
-                @let options = entry.options;
-                
-                @if (options) {
-                  <dc-input-select [field]="field" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
-                }
-              }
-            } 
-          }    
-      }    
-    </form>
+                @if(!state.hidden()) {
+                  @switch (entry.type) {
+                    @case ('text') {
+                      <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
+                    }
+                    @case ('number') {
+                      <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
+                    }
+                    @case ('select') {
+                      @let options = entry.options;
+                      
+                      @if (options) {
+                        <dc-input-select [field]="field" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
+                      }
+                    }
+                  } 
+                }    
+            }    
+      </form>
+
+      @let state = form();
+      @if(state.invalid() && state.touched()) {
+        <span>Hej!</span>
+      }
     }
   `,
 })
@@ -46,26 +51,18 @@ export class InputForm implements OnInit {
   public metadata = input.required<InputField[]>();
   
   public model = model<Record<string, any | null>>({});
-  public form: FieldTree<Record<string, any>, string | number> | null = null;
-
-  public invalid = computed(() => {
-    if (this.form === null) {
-      return false;
-    }
-
-    const state = this.form();
-    return state.invalid()
-  })
+  public form: FieldTree<FormModel> | null = null;
 
   private _injector = inject(Injector);
 
   public ngOnInit(): void {
-    runInInjectionContext(this._injector, () => {
-      const metadata = this.metadata();
-
-      this.model.set(metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {}))
-      this.form = form(this.model, toSchema(metadata));
-     })
+    runInInjectionContext(this._injector, () => this._initializeForm())
   }
 
+  private _initializeForm(): void {
+    const metadata = this.metadata();
+
+    this.model.set(metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {}))
+    this.form = form(this.model, toSchema(metadata));
+  }
 }
