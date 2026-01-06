@@ -6,14 +6,14 @@ import { Modal } from '../../../../ui/overlay/components/modal';
 import { FinanceStore } from '../../store/finance.store';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { InputForm } from '../../../../ui/input/input-form/input-form';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm],
+  imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm, NgClass],
   template: `
     @let fields = finance.assets.fields(); @if(fields.loading) {
     <dc-spinner class="p-8" />
@@ -25,13 +25,16 @@ import { JsonPipe } from '@angular/common';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form [metadata]="fields.metadata" />
+    <dc-input-form #formElement [metadata]="fields.metadata" />
 
+    @if(formElement.form) {
     <div class="flex gap-2">
+      @let state = formElement.form();
+
       <dc-secondary-button (clicked)="onCancelClick()" class="flex-1">Cancel</dc-secondary-button>
-      <dc-primary-button class="flex-1">Add asset</dc-primary-button>
+      <dc-primary-button [isDisabled]="state.invalid()" class="flex-1">Add asset</dc-primary-button>
     </div>
-    }
+    } }
   `,
 })
 export class FinanceAdd {
