@@ -1,4 +1,4 @@
-import { InputField } from '../../../ui/input/input-form/type';
+import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 export type Asset = {
   uuid: string;
@@ -11,5 +11,12 @@ export type Section<T> = {
   entries: T[];
   loading: boolean;
   error: boolean;
-  addFields: InputField[] | 'error' | 'loading';
+  fields: SectionFields;
+};
+
+export type SectionFields = {
+  model: FormModel;
+  metadata: InputField[];
+  loading: boolean;
+  error: boolean;
 };

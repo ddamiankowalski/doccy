@@ -14,7 +14,10 @@ export type InputField = {
    * options must be provided
    */
   options?: SelectOption[];
+  condition?: InputCondition;
 };
+
+export type FormModel = Record<string, unknown>;
 
 /**
  * Condition for displaying an input

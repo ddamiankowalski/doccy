@@ -14,9 +14,9 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
   },
   imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm],
   template: `
-    @let fields = finance.assets.addFields(); @if(fields === 'loading') {
+    @let fields = finance.assets.fields(); @if(fields.loading) {
     <dc-spinner class="p-8" />
-    } @else if(fields === 'error' || fields.length === 0) {
+    } @else if(fields.error || fields.metadata.length === 0) {
     <dc-disclaimer
       class="my-12"
       icon="bug"
@@ -24,7 +24,7 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form [fields]="fields" />
+    <dc-input-form [(model)]="fields.model" [metadata]="fields.metadata" />
     <!-- <fieldset class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       @for(field of fields; track field) { @switch(field.type) { @case ('text') {
       <dc-input-text inputId="test" label="First name" placeholder="Enter first name" />

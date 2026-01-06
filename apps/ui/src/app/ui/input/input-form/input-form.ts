@@ -1,18 +1,23 @@
-import { Component, input } from '@angular/core';
+import { Component, effect, input, linkedSignal, model } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
-import { InputField } from './type';
+import { FormModel, InputField } from './type';
+import { InputConditionPipe } from './pipes/input-form-condition.pipe';
+import { form, Field } from '@angular/forms/signals';
 
 @Component({
-  selector: 'dc-input-form',
-  imports: [InputText, InputNumber, InputSelect],
+  selector: '<dc-input-form>',
+  imports: [InputText, InputNumber, InputSelect, InputConditionPipe, Field],
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
-      @for (field of fields(); track field.id) {
-        @switch (field.type) {
+      @for (field of metadata(); track field.id) {
+        @let isVisible = field | condition : metadata() : form().value();
+
+        @if(isVisible) {
+          @switch (field.type) {
           @case ('text') {
-            <dc-input-text [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+            <dc-input-text [field]="form['kk']" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
           }
           @case ('number') {
             <dc-input-number [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
@@ -23,10 +28,21 @@ import { InputField } from './type';
             }
           }
         }
+        }
       }
     </form>
   `,
 })
 export class InputForm {
-  public fields = input.required<InputField[]>();
+  public model = model.required<Record<string, any>>();
+  public metadata = input.required<InputField[]>();
+
+  public form = form(this.model)
+
+  constructor() {
+    effect(() => {
+      console.log(this.form().value())
+    })
+  
+  }
 }

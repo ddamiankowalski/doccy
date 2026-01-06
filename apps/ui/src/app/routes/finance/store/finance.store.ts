@@ -5,8 +5,8 @@ import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
-import { Asset, Section, SectionType } from './type';
-import { InputField } from '../../../ui/input/input-form/type';
+import { Asset, Section, SectionFields, SectionType } from './type';
+import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -14,7 +14,19 @@ type FinanceState = {
   income: Section<Asset>;
 };
 
-const initialSectionState = { entries: [], error: false, loading: false, addFields: [] };
+const sectionFieldsState: SectionFields = {
+  error: false,
+  loading: false,
+  metadata: [],
+  model: {},
+};
+
+const initialSectionState = {
+  entries: [],
+  error: false,
+  loading: false,
+  fields: sectionFieldsState,
+};
 
 const initialState: FinanceState = {
   assets: initialSectionState,
@@ -30,22 +42,27 @@ export const FinanceStore = signalStore(
 
     const fetchFields = rxMethod<SectionType>(
       switchMap((type) => {
-        const patchFields = (fields: InputField[] | 'loading' | 'error') => {
+        const patchFields = (fields: SectionFields) => {
           patchState(store, (state) => {
             const section = state[type];
-            return { [type]: { ...section, addFields: fields } };
+            return { [type]: { ...section, fields } };
           });
         };
 
-        patchFields('loading');
+        patchFields({ ...sectionFieldsState, loading: true });
         return http.fetchFields$(type).pipe(
           tapResponse({
-            next: ({ fields }) => patchFields(fields),
-            error: () => patchFields('error'),
+            next: ({ fields: metadata }) =>
+              patchFields({ ...sectionFieldsState, metadata, model: _buildModel(metadata) }),
+            error: () => patchFields({ ...sectionFieldsState, error: true }),
           })
         );
       })
     );
+
+    const _buildModel = (metadata: InputField[]): FormModel => {
+      return metadata.reduce((model, input) => ({ ...model, [input.id]: null }), {});
+    };
 
     /**
      * Resets the finance store to
