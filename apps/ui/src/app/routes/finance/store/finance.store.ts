@@ -1,7 +1,15 @@
-import { signalStore, withState } from '@ngrx/signals';
+import { signalStore, withMethods, withState } from '@ngrx/signals';
 
-type FinanceState = {};
+type FinanceState = {
+  loading: boolean;
+};
 
-const initialState: FinanceState = {};
+const initialState: FinanceState = {
+  loading: true,
+};
 
-export const FinanceStore = signalStore({ providedIn: 'root' }, withState(initialState));
+export const FinanceStore = signalStore(
+  { providedIn: 'root' },
+  withState(initialState),
+  withMethods(() => {})
+);
