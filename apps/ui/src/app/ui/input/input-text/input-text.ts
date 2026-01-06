@@ -9,15 +9,15 @@ import { TranslatePipe } from '@ngx-translate/core';
   },
   imports: [TranslatePipe],
   template: `
-    @if (label() | translate) {
-      <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
+    @if (label(); as label) {
+      <label class="text-white text-xs leading-none" [for]="inputId()">{{ label | translate }}</label>
     }
 
     <input
       #inputEl
       [id]="inputId()"
       [value]="value()"
-      [placeholder]="placeholder()"
+      [placeholder]="placeholder() | translate"
       (input)="onInput()"
       autocomplete="off"
       type="text"

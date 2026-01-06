@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormValueControl } from '@angular/forms/signals';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { filter, fromEvent } from 'rxjs';
 
@@ -23,13 +24,15 @@ export type SelectOption = {
 
 @Component({
   selector: 'dc-input-select',
-  imports: [NgClass, LucideAngularModule],
+  imports: [NgClass, LucideAngularModule, TranslatePipe],
   host: {
     class: `flex flex-col h-full w-full relative gap-2`,
   },
   template: `
     @if(label()) {
-    <label [for]="inputId()" class="text-white text-xs leading-none">{{ label() }}</label>
+    <label [for]="inputId()" class="text-white text-xs leading-none">{{
+      label() | translate
+    }}</label>
     }
 
     <div
@@ -59,9 +62,9 @@ export type SelectOption = {
         [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
         class="ml-2 group-focus-within/select:text-white"
         >@if(optionLabel() === null) {
-        {{ placeholder() }}
+        {{ placeholder() | translate }}
         } @else {
-        {{ optionLabel() }}
+        {{ optionLabel() | translate }}
         }</span
       >
 
@@ -83,7 +86,7 @@ export type SelectOption = {
           (click)="onOptionClick(option.value)"
           class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
         >
-          {{ option.label }}
+          {{ option.label | translate }}
 
           @if(option.value === value()) {
           <lucide-icon class="h-4 w-4" name="check" />

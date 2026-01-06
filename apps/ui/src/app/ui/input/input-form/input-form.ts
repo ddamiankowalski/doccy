@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
+import { InputSelect, SelectOption } from '../input-select/input-select';
 
 export type InputType = 'text' | 'number' | 'select';
 
@@ -10,20 +11,31 @@ export type InputField = {
   required: boolean;
   label: string;
   placeholder: string;
+
+  /**
+   * When select is chosen as type then
+   * options must be provided
+   */
+  options?: SelectOption[]
 };
 
 @Component({
   selector: 'dc-input-form',
-  imports: [InputText, InputNumber],
+  imports: [InputText, InputNumber, InputSelect],
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
       @for (field of fields(); track field.id) {
         @switch (field.type) {
           @case ('text') {
-            <dc-input-text [label]="field.label" [inputId]="field.id" />
+            <dc-input-text [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
           }
           @case ('number') {
-            <dc-input-number [label]="field.label" [inputId]="field.id" />
+            <dc-input-number [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+          }
+          @case ('select') {
+            @if (field.options) {
+            <dc-input-select [placeholder]="field.placeholder" [options]="field.options" [label]="field.label" [inputId]="field.id" />
+            }
           }
         }
       }
