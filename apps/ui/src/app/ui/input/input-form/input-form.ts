@@ -13,25 +13,26 @@ import { KeyValuePipe } from '@angular/common';
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
   @for (entry of metadata(); track entry.id) {
-          @let field = form[entry.id]();
-          
+          @let field = form[entry.id];
+          @let state = field();
+
           @let placeholder = entry.placeholder;
           @let label = entry.label;
           @let id = entry.id;
 
-          @if(!field.hidden()) {
+          @if(!state.hidden()) {
             @switch (entry.type) {
               @case ('text') {
-                <dc-input-text [field]="form[entry.id]" [placeholder]="placeholder" [label]="label" [inputId]="id" />
+                <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
               }
               @case ('number') {
-                <dc-input-number [field]="form[entry.id]" [placeholder]="placeholder" [label]="label" [inputId]="id" />
+                <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
               }
               @case ('select') {
                 @let options = entry.options;
                 
                 @if (options) {
-                  <dc-input-select [field]="form[entry.id]" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
+                  <dc-input-select [field]="field" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
                 }
               }
             } 
