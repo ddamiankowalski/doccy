@@ -6,7 +6,6 @@ import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
 import { Asset, Section, SectionFields, SectionType } from './type';
-import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 type FinanceState = {
   assets: Section<Asset>;

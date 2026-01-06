@@ -1,4 +1,4 @@
-import { Component, effect, input, linkedSignal, model } from '@angular/core';
+import { Component, effect, input, model, OnInit } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
@@ -34,7 +34,7 @@ import { form, Field } from '@angular/forms/signals';
     </form>
   `,
 })
-export class InputForm {
+export class InputForm implements OnInit {
   public metadata = input.required<InputField[]>();
   
   public model = model<Record<string, any | null>>({});
@@ -45,5 +45,15 @@ export class InputForm {
       console.log(this.form().value())
     })
   
+  }
+
+  public ngOnInit(): void {
+    const model = this._buildModel();
+    this.model.set(model);
+  }
+
+  private _buildModel(): FormModel {
+    const metadata = this.metadata();
+    return metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {});
   }
 }
