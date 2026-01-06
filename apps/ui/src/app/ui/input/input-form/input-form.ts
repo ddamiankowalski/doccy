@@ -3,14 +3,15 @@ import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
 import { FormModel, InputField } from './type';
-import { form, Field } from '@angular/forms/signals';
+import { form, Field, FieldTree } from '@angular/forms/signals';
 import { toSchema } from './utils/to-schema';
 
 @Component({
   selector: 'dc-input-form',
   imports: [InputText, InputNumber, InputSelect, Field],
   template: `
-    <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
+    @if(form) {
+<form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
   @for (entry of metadata(); track entry.id) {
           @let field = form[entry.id];
           @let state = field();
@@ -38,29 +39,23 @@ import { toSchema } from './utils/to-schema';
           }    
       }    
     </form>
+    }
   `,
 })
 export class InputForm implements OnInit {
   public metadata = input.required<InputField[]>();
   
   public model = model<Record<string, any | null>>({});
-  public form: any;
-
-  constructor() {
-    effect(() => {
-      console.log(this.form())
-    })
-  
-  }
+  public form: FieldTree<Record<string, any>, string | number> | null = null;
 
   private _injector = inject(Injector);
 
   public ngOnInit(): void {
     runInInjectionContext(this._injector, () => {
       const metadata = this.metadata();
-      
+
       this.model.set(metadata.reduce((model, field) => ({ ...model, [field.id]: null }), {}))
-      this.form = form(this.model, toSchema(this.metadata()));
+      this.form = form(this.model, toSchema(metadata));
      })
   }
 
