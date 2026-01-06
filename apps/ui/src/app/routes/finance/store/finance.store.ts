@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
-import { Asset, Section } from './type';
+import { Asset, Section, SectionAddField, SectionType } from './type';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -13,10 +13,12 @@ type FinanceState = {
   income: Section<Asset>;
 };
 
+const initialSectionState = { entries: [], error: false, loading: false, addFields: [] };
+
 const initialState: FinanceState = {
-  assets: { entries: [], error: false, loading: false },
-  liabilities: { entries: [], error: false, loading: false },
-  income: { entries: [], error: false, loading: false },
+  assets: initialSectionState,
+  liabilities: initialSectionState,
+  income: initialSectionState,
 };
 
 export const FinanceStore = signalStore(
@@ -24,6 +26,25 @@ export const FinanceStore = signalStore(
   withState(initialState),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
+
+    const fetchFields = rxMethod<SectionType>(
+      switchMap((type) => {
+        const patchFields = (fields: SectionAddField[] | 'loading' | 'error') => {
+          patchState(store, (state) => {
+            const section = state[type];
+            return { [type]: { ...section, addFields: fields } };
+          });
+        };
+
+        patchFields('loading');
+        return http.fetchFields$(type).pipe(
+          tapResponse({
+            next: ({ fields }) => patchFields(fields),
+            error: () => patchFields('error'),
+          })
+        );
+      })
+    );
 
     /**
      * Resets the finance store to
@@ -53,6 +74,7 @@ export const FinanceStore = signalStore(
     );
 
     return {
+      fetchFields,
       fetchAssets,
       _reset,
     };
