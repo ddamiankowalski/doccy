@@ -1,4 +1,4 @@
-import { Component, effect, input, model, OnInit } from '@angular/core';
+import { Component, computed, effect, input, model, OnInit } from '@angular/core';
 import { InputText } from '../input-text/input-text';
 import { InputNumber } from '../input-number/input-number';
 import { InputSelect } from '../input-select/input-select';
@@ -9,30 +9,32 @@ import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: '<dc-input-form>',
-  imports: [InputText, InputNumber, InputSelect, Field, KeyValuePipe],
+  imports: [InputText, InputNumber, InputSelect, Field],
   template: `
     <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
-      @for (entry of form | keyvalue; track entry.key) {
-        @if(entry && entry.value) {
-          @let field = entry.value();
+  @for (entry of metadata(); track entry.id) {
+          @let field = form[entry.id];
+          
+          @let placeholder = entry.placeholder;
+          @let label = entry.label;
+          @let id = entry.id;
 
-          @if(field.hidden() === false) {
-            @switch (field.type) {
+            @switch (entry.type) {
               @case ('text') {
-                <dc-input-text [field]="form[field.id]" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+                <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
               }
               @case ('number') {
-                <dc-input-number [field]="form[field.id]" [placeholder]="field.placeholder" [label]="field.label" [inputId]="field.id" />
+                <dc-input-number [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
               }
               @case ('select') {
-                @if (field.options) {
-                  <dc-input-select [field]="form[field.id]" [placeholder]="field.placeholder" [options]="field.options" [label]="field.label" [inputId]="field.id" />
+                @let options = entry.options;
+                
+                @if (options) {
+                  <dc-input-select [field]="field" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
                 }
               }
-            }
-          }
-        }       
-      }
+            }     
+      }    
     </form>
   `,
 })
@@ -44,7 +46,7 @@ export class InputForm implements OnInit {
 
   constructor() {
     effect(() => {
-      console.log(this.form().value())
+      console.log(this.form().value(), this.form())
     })
   
   }
