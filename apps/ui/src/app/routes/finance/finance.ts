@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FinanceSection } from './components/finance-section/finance-section';
+import { FinanceStore } from './store/finance.store';
 
 @Component({
   selector: 'dc-finance',
@@ -12,4 +13,10 @@ import { FinanceSection } from './components/finance-section/finance-section';
     /><dc-finance-section title="Monthly Income" value="$1,245,300" />`,
   imports: [FinanceSection],
 })
-export class Finance {}
+export class Finance {
+  private _finance = inject(FinanceStore);
+
+  constructor() {
+    this._finance.fetch();
+  }
+}
