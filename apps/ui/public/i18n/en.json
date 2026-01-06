@@ -5,5 +5,11 @@
   "ASSET_TYPE_PLACEHOLDER": "Select asset type",
   "ASSET_SUBTYPE": "Subtype of asset",
   "ASSET_SUBTYPE_PLACEHOLDER": "Select subtype of asset",
-  "REQUIRED_FIELDS_ERROR": "Please fill out all required fields"
+  "REQUIRED_FIELDS_ERROR": "Please fill out all required fields",
+  "BONDS": "Bonds",
+  "REAL_ESTATE": "Real estate",
+  "RETAIL_BONDS": "Retail",
+  "CORPORATE_BONDS": "Coorporate",
+  "VALUE": "Value",
+  "VALUE_PLACEHOLDER": "Enter value of asset"
 }

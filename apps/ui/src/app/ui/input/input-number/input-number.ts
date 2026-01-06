@@ -40,7 +40,7 @@ type InputNumberMode = 'currency' | 'normal';
         #inputEl
         [id]="inputId()"
         [value]="value()"
-        [placeholder]="placeholder()"
+        [placeholder]="placeholder() | translate"
         (input)="onInput()"
         (blur)="onBlur()"
         type="number"
