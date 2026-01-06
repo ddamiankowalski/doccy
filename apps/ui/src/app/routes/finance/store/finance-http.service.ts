@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Asset } from './type';
 
-type FinanceResponse = {
-  sections: [];
+type AssetsResponse = {
+  assets: Asset[];
 };
 
 @Injectable({
@@ -12,7 +13,7 @@ type FinanceResponse = {
 export class FinanceHttpService {
   private _http = inject(HttpClient);
 
-  public fetch$(): Observable<FinanceResponse> {
-    return this._http.get<FinanceResponse>('api/finance');
+  public fetchAssets$(): Observable<AssetsResponse> {
+    return this._http.get<AssetsResponse>('api/finance');
   }
 }

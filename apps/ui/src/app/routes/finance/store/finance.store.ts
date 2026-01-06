@@ -5,13 +5,16 @@ import { switchMap } from 'rxjs';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
+import { Asset } from './type';
 
 type FinanceState = {
-  loading: boolean;
+  assets: Asset[] | null;
+  assetsLoading: boolean;
 };
 
 const initialState: FinanceState = {
-  loading: true,
+  assets: null,
+  assetsLoading: false,
 };
 
 export const FinanceStore = signalStore(
@@ -30,13 +33,13 @@ export const FinanceStore = signalStore(
 
     const fetch = rxMethod<void>(
       switchMap(() => {
-        patchState(store, { loading: true });
+        patchState(store, { assetsLoading: true });
 
-        return http.fetch$().pipe(
+        return http.fetchAssets$().pipe(
           tapResponse({
-            next: (res) => console.log(res),
-            error: () => {},
-            finalize: () => patchState(store, { loading: false }),
+            next: ({ assets }) => patchState(store, { assets }),
+            error: () => patchState(store, { assets: null }),
+            finalize: () => patchState(store, { assetsLoading: false }),
           })
         );
       })
