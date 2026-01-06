@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { InputText } from '../../../../ui/input/input-text/input-text';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { InputSelect } from '../../../../ui/input/input-select/input-select';
 import { InputNumber } from '../../../../ui/input/input-number/input-number';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
+import { Modal } from '../../../../ui/overlay/components/modal';
 
 @Component({
   selector: 'dc-finance-add',
@@ -36,11 +37,16 @@ import { SecondaryButton } from '../../../../ui/button/secondary-button/secondar
 })
 export class FinanceAdd {
   public isLoading = signal(true);
+  public modal = inject(Modal);
 
   constructor() {
     setTimeout(() => {
       this.isLoading.set(false);
     }, 500);
+
+    setTimeout(() => {
+      this.modal.close();
+    }, 2000);
   }
 
   public options = [

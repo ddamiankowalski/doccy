@@ -24,7 +24,7 @@ import { LucideAngularModule } from 'lucide-angular';
       class="flex justify-center items-center fixed w-full h-full"
       style="background-color: rgba(0, 0, 0, 0.5);"
       #backdrop
-      (pointerdown)="onBackdropClick($event)"
+      (pointerdown)="_onBackdropClick($event)"
     >
       <div class="w-[min(35rem,100vw)] min-h-0">
         <dc-tile>
@@ -67,7 +67,7 @@ export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
     this._close();
   }
 
-  public onBackdropClick(ev: PointerEvent): void {
+  protected _onBackdropClick(ev: PointerEvent): void {
     ev.stopPropagation();
     const element = this._backdropElement();
 
@@ -98,6 +98,10 @@ export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
     if (container) {
       container.createComponent(component);
     }
+  }
+
+  public close(): void {
+    this._close();
   }
 
   public ngOnDestroy(): void {
