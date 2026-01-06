@@ -25,7 +25,7 @@ type InputNumberMode = 'currency' | 'normal';
   imports: [NgClass],
   template: `
     @if(label()) {
-    <label class="text-white text-xs leading-none" [for]="id()">{{ label() }}</label>
+    <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
     }
 
     <div class="relative">
@@ -37,7 +37,7 @@ type InputNumberMode = 'currency' | 'normal';
 
       <input
         #inputEl
-        [id]="id()"
+        [id]="inputId()"
         [value]="value()"
         [placeholder]="placeholder()"
         (input)="onInput()"
@@ -68,7 +68,7 @@ export class InputNumber implements FormValueControl<number | null> {
 
   public value = model<number | null>(null);
 
-  public id = input<string>();
+  public inputId = input<string>();
   public label = input<string>();
   public placeholder = input<string>();
 

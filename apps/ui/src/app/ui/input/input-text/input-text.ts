@@ -8,12 +8,12 @@ import { FormValueControl } from '@angular/forms/signals';
   },
   template: `
     @if(label()) {
-    <label class="text-white text-xs leading-none" [for]="id()">{{ label() }}</label>
+    <label class="text-white text-xs leading-none" [for]="inputId()">{{ label() }}</label>
     }
 
     <input
       #inputEl
-      [id]="id()"
+      [id]="inputId()"
       [value]="value()"
       [placeholder]="placeholder()"
       (input)="onInput()"
@@ -42,7 +42,7 @@ export class InputText implements FormValueControl<string> {
 
   public value = model<string>('');
 
-  public id = input<string>();
+  public inputId = input.required<string>();
   public label = input<string>();
   public placeholder = input<string>();
 
