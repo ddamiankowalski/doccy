@@ -20,10 +20,10 @@ export type InputField = {
       @for (field of fields(); track field.id) {
         @switch (field.type) {
           @case ('text') {
-            <dc-input-text [inputId]="field.id" />
+            <dc-input-text [label]="field.label" [inputId]="field.id" />
           }
           @case ('number') {
-            <dc-input-number [inputId]="field.id" />
+            <dc-input-number [label]="field.label" [inputId]="field.id" />
           }
         }
       }
