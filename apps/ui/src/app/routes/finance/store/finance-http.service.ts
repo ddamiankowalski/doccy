@@ -14,6 +14,6 @@ export class FinanceHttpService {
   private _http = inject(HttpClient);
 
   public fetchAssets$(): Observable<AssetsResponse> {
-    return this._http.get<AssetsResponse>('api/finance');
+    return this._http.get<AssetsResponse>('api/assets');
   }
 }

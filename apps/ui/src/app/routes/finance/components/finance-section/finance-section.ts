@@ -1,8 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
 import { FinanceAdd } from '../finance-add/finance-add';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
+import { FinanceStore } from '../../store/finance.store';
 
 @Component({
   selector: 'dc-finance-section',
@@ -11,11 +12,11 @@ import { OverlayService } from '../../../../ui/overlay/services/overlay.service'
   },
   template: ` <section>
     <summary class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
-      {{ title() }}
+      {{ type() }}
 
       <div class="flex items-center gap-2">
         <span class="text-sm text-gray-500 font-medium">Total</span>
-        <span class="text-lg font-bold text-white tracking-tight">{{ value() }}</span>
+        <span class="text-lg font-bold text-white tracking-tight">{{ '123$' }}</span>
       </div>
     </summary>
 
@@ -28,12 +29,15 @@ import { OverlayService } from '../../../../ui/overlay/services/overlay.service'
   </section>`,
   imports: [FinanceTile, FinanceAddTile],
 })
-export class FinanceSection {
-  public title = input.required<string>();
-
-  public value = input.required<string>();
+export class FinanceSection implements OnInit {
+  public type = input.required<'assets' | 'liabilities' | 'income'>();
 
   private _overlay = inject(OverlayService);
+  private _finance = inject(FinanceStore);
+
+  public ngOnInit(): void {
+    this._fetch();
+  }
 
   public onAddClick(): void {
     this._overlay.openModal({
@@ -42,5 +46,16 @@ export class FinanceSection {
       description: 'Create a new asset by filling out all fields',
       closeOnBackdrop: false,
     });
+  }
+
+  private _fetch(): void {
+    switch (this.type()) {
+      case 'assets':
+        this._finance.fetchAssets();
+        return;
+      case 'liabilities':
+      case 'income':
+        return;
+    }
   }
 }

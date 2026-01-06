@@ -8,13 +8,15 @@ import { tapResponse } from '@ngrx/operators';
 import { Asset } from './type';
 
 type FinanceState = {
-  assets: Asset[] | null;
+  assets: Asset[];
   assetsLoading: boolean;
+  assetsError: boolean;
 };
 
 const initialState: FinanceState = {
-  assets: null,
+  assets: [],
   assetsLoading: false,
+  assetsError: false,
 };
 
 export const FinanceStore = signalStore(
@@ -31,14 +33,14 @@ export const FinanceStore = signalStore(
      */
     const _reset = (): void => patchState(store, initialState);
 
-    const fetch = rxMethod<void>(
+    const fetchAssets = rxMethod<void>(
       switchMap(() => {
-        patchState(store, { assetsLoading: true });
+        patchState(store, { assetsLoading: true, assetsError: false, assets: [] });
 
         return http.fetchAssets$().pipe(
           tapResponse({
             next: ({ assets }) => patchState(store, { assets }),
-            error: () => patchState(store, { assets: null }),
+            error: () => patchState(store, { assetsError: true }),
             finalize: () => patchState(store, { assetsLoading: false }),
           })
         );
@@ -46,7 +48,7 @@ export const FinanceStore = signalStore(
     );
 
     return {
-      fetch,
+      fetchAssets,
       _reset,
     };
   }),
