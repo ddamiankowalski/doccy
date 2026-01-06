@@ -22,24 +22,6 @@
       ]
     },
     {
-      "name": "documents",
-      "columns": [
-        {
-          "name": "id",
-          "type": "uuid",
-          "nullable": false,
-          "primary": true,
-          "unique": true,
-          "default": "gen_random_uuid()"
-        },
-        {
-          "name": "name",
-          "type": "varchar",
-          "length": 255
-        }
-      ]
-    },
-    {
       "name": "assets",
       "columns": [
         {
