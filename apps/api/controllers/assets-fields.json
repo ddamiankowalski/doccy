@@ -1,9 +1,43 @@
 [
   {
-    "id": "testid",
+    "id": "assetName",
     "type": "text",
-    "required": false,
+    "required": true,
     "label": "NAME",
     "placeholder": "NAME_PLACEHOLDER"
+  },
+  {
+    "id": "assetValue",
+    "type": "number",
+    "mode": "currency",
+    "required": true,
+    "label": "VALUE",
+    "placeholder": "VALUE_PLACEHOLDER"
+  },
+  {
+    "id": "assetType",
+    "type": "select",
+    "options": [
+      { "value": "bonds", "label": "BONDS" },
+      { "value": "estate", "label": "REAL_ESTATE" }
+    ],
+    "required": true,
+    "label": "ASSET_TYPE",
+    "placeholder": "ASSET_TYPE_PLACEHOLDER"
+  },
+  {
+    "condition": {
+      "fieldId": "assetType",
+      "value": "bonds"
+    },
+    "id": "assetSubtype",
+    "type": "select",
+    "options": [
+      { "value": "retail-bonds", "label": "RETAIL_BONDS" },
+      { "value": "corporate-bonds", "label": "CORPORATE_BONDS" }
+    ],
+    "required": true,
+    "label": "ASSET_SUBTYPE",
+    "placeholder": "ASSET_SUBTYPE_PLACEHOLDER"
   }
 ]
