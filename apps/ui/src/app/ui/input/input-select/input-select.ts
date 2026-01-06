@@ -9,6 +9,7 @@ import {
   input,
   model,
   signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormValueControl } from '@angular/forms/signals';
@@ -32,6 +33,7 @@ export type SelectOption = {
     }
 
     <div
+      #selectEl
       tabindex="0"
       [id]="inputId()"
       class="flex
@@ -95,11 +97,13 @@ export type SelectOption = {
 export class InputSelect implements FormValueControl<string | null> {
   @HostListener('click')
   public onClick(): void {
+    this._selectEl().nativeElement.focus();
     this.isOpen.update((isOpen) => !isOpen);
   }
 
   private _document = inject(DOCUMENT);
   private _elementRef = inject(ElementRef);
+  private _selectEl = viewChild.required('selectEl', { read: ElementRef });
 
   public value = model<string | null>(null);
   public inputId = input.required<string>();
