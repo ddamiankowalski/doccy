@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Asset, SectionType } from './type';
-import { InputField } from '../../../ui/input/input-form/type';
+import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 type Response = {
   status: number;
@@ -28,5 +28,9 @@ export class FinanceHttpService {
 
   public fetchAssets$(): Observable<AssetsResponse> {
     return this._http.get<AssetsResponse>('api/assets');
+  }
+
+  public postAsset$(model: FormModel): Observable<Response> {
+    return this._http.post<Response>('api/assets', model);
   }
 }

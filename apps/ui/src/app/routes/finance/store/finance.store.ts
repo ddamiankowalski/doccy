@@ -6,6 +6,7 @@ import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
 import { Asset, Section, SectionFields, SectionType } from './type';
+import { FormModel } from '../../../ui/input/input-form/type';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -84,9 +85,14 @@ export const FinanceStore = signalStore(
       })
     );
 
+    const addAsset$ = (model: FormModel) => {
+      return http.postAsset$(model);
+    };
+
     return {
       fetchFields,
       fetchAssets,
+      addAsset$,
       _reset,
     };
   }),

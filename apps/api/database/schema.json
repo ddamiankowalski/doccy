@@ -39,10 +39,22 @@
           "nullable": false
         },
         {
-          "name": "type",
+          "name": "subtype",
           "type": "varchar",
           "length": 255,
           "nullable": false
+        },
+        {
+          "name": "type",
+          "type": "varchar",
+          "length": 255,
+          "nullable": true
+        },
+        {
+          "name": "subtype",
+          "type": "varchar",
+          "length": 255,
+          "nullable": true
         }
       ]
     }

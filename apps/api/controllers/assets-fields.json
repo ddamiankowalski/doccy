@@ -1,13 +1,13 @@
 [
   {
-    "id": "assetName",
+    "id": "name",
     "type": "text",
     "required": true,
     "label": "NAME",
     "placeholder": "NAME_PLACEHOLDER"
   },
   {
-    "id": "assetValue",
+    "id": "value",
     "type": "number",
     "mode": "currency",
     "required": true,
@@ -15,7 +15,7 @@
     "placeholder": "VALUE_PLACEHOLDER"
   },
   {
-    "id": "assetType",
+    "id": "type",
     "type": "select",
     "options": [
       { "value": "bonds", "label": "BONDS" },
@@ -27,10 +27,10 @@
   },
   {
     "condition": {
-      "fieldId": "assetType",
+      "fieldId": "type",
       "value": "bonds"
     },
-    "id": "assetSubtype",
+    "id": "subtype",
     "type": "select",
     "options": [
       { "value": "retail-bonds", "label": "RETAIL_BONDS" },

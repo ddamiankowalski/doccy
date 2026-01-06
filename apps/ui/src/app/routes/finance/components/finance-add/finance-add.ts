@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
@@ -24,23 +24,30 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       description="Could not fetch fields for adding a new record"
     />
     } @else {
-    <dc-input-form #formElement [metadata]="fields.metadata" />
+    <dc-input-form #formElement [metadata]="fields.metadata" [(model)]="model" />
 
     @if(formElement.form) {
     <div class="flex gap-2">
       @let state = formElement.form();
 
       <dc-secondary-button (clicked)="onCancelClick()" class="flex-1">Cancel</dc-secondary-button>
-      <dc-primary-button [isDisabled]="state.invalid()" class="flex-1">Add asset</dc-primary-button>
+      <dc-primary-button
+        (clicked)="onAddClick()"
+        [isDisabled]="state.invalid() || this.isLoading()"
+        class="flex-1"
+        >Add asset</dc-primary-button
+      >
     </div>
     } }
   `,
 })
 export class FinanceAdd {
-  public isLoading = signal(true);
   public modal = inject(Modal);
 
   public finance = inject(FinanceStore);
+
+  public isLoading = signal(false);
+  public model = signal({});
 
   constructor() {
     this.finance.fetchFields('assets');
@@ -63,5 +70,14 @@ export class FinanceAdd {
 
   public onCancelClick(): void {
     this.modal.close();
+  }
+
+  public onAddClick(): void {
+    this.isLoading.set(true);
+
+    this.finance.addAsset$(this.model()).subscribe({
+      next: (res) => console.log(res),
+      complete: () => this.isLoading.set(false),
+    });
   }
 }
