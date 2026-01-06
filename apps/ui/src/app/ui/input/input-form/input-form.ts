@@ -19,6 +19,7 @@ import { KeyValuePipe } from '@angular/common';
           @let label = entry.label;
           @let id = entry.id;
 
+          @if(!field().hidden()) {
             @switch (entry.type) {
               @case ('text') {
                 <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
@@ -33,7 +34,8 @@ import { KeyValuePipe } from '@angular/common';
                   <dc-input-select [field]="field" [placeholder]="placeholder" [options]="options" [label]="label" [inputId]="id" />
                 }
               }
-            }     
+            } 
+          }    
       }    
     </form>
   `,
