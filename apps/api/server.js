@@ -17,5 +17,7 @@ app.use("/assets", assets);
 app.listen(PORT, () => {
   logger.log(`Restarted the server successfully on port ${PORT}`);
 
-  migrate();
+  if (process.env.DB_MIGRATE !== 'FALSE') {
+    migrate();
+  }
 });
