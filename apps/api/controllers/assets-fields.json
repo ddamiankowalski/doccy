@@ -19,7 +19,8 @@
     "type": "select",
     "options": [
       { "value": "bonds", "label": "BONDS" },
-      { "value": "estate", "label": "REAL_ESTATE" }
+      { "value": "estate", "label": "REAL_ESTATE" },
+      { "value": "stocks", "label": "STOCKS" }
     ],
     "required": true,
     "label": "ASSET_TYPE",

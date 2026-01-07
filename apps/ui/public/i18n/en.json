@@ -11,6 +11,7 @@
   "RETAIL_BONDS": "Retail",
   "CORPORATE_BONDS": "Coorporate",
   "VALUE": "Value",
+  "STOCKS": "Stocks",
   "VALUE_PLACEHOLDER": "Enter value of asset",
   "SUCCESS_NOTIFICATION": "Success!",
   "SUCCESS_ADD_ENTRY": "You successfully added a new entry."
