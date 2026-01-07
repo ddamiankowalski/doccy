@@ -4,12 +4,8 @@ const router = Router();
 const Assets = require("../controllers/assets-controller");
 
 router.post("/", async (req, res) => {
-  try {
-    const asset = await Assets.create(req.body);
-    return res.json({ status: 200, asset });
-  } catch (err) {
-    return res.json(err.payload);
-  }
+  const asset = await Assets.create(req.body);
+  return res.json({ status: 200, asset });
 });
 
 router.get("/", async (_, res) => {
@@ -19,7 +15,7 @@ router.get("/", async (_, res) => {
 
 router.get("/add-fields", async (_, res) => {
   const fields = await Assets.getAddFields();
-  return res.json({ status: 200, fields })
-})
+  return res.json({ status: 200, fields });
+});
 
 module.exports = router;

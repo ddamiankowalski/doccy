@@ -1,23 +1,24 @@
-const logger = require('../logger/logger');
+const logger = require("../logger/logger");
 
 /**
  * Custom error handler
- * 
- * @param {*} err 
- * @param {*} _ 
+ *
+ * @param {*} err
+ * @param {*} _
  * @param {*} res
- * @param {*} __ 
+ * @param {*} __
  */
 const errorHandler = (err, _, res, __) => {
+  const status = err.status || 500;
+
   logger.error(err.message);
 
-  if (err.status === undefined) {
-    err.status = 500;
-  }
-
-  res.status(err.status).json({ status: err.status, message: err.message });
-}
+  res.status(status).json({
+    status,
+    message: err.message,
+  });
+};
 
 module.exports = {
-  errorHandler
-}
+  errorHandler,
+};
