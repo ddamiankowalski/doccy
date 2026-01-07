@@ -40,8 +40,7 @@
         },
         {
           "name": "value",
-          "type": "bigint",
-          "length": 255,
+          "type": "int",
           "nullable": false
         },
         {

@@ -51,6 +51,7 @@ const getModel = (name) => {
 
       try {
         const [created] = await db.query(query);
+        console.log(created);
         return created;
       } catch (err) {
         throw new SystemError(
