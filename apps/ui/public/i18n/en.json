@@ -23,5 +23,17 @@
   "ADD_NEW_INCOME": "Add new income",
   "ADD_NEW_ASSETS_DESCRIPTION": "Create a new asset by filling out the form",
   "ADD_NEW_LIABILITIES_DESCRIPTION": "Create a new liability by filling out the form",
-  "ADD_NEW_INCOME_DESCRIPTION": "Add new income by filling out the form"
+  "ADD_NEW_INCOME_DESCRIPTION": "Add new income by filling out the form",
+  "LIABILITY_TYPE": "Liability type",
+  "LIABILITY_TYPE_PLACEHOLDER": "Select liability type",
+  "PAYMENT": "Payment",
+  "MORTGAGE": "Mortgage",
+  "LOAN": "Loan",
+  "ONCE": "Once",
+  "MONTHLY": "Monthly",
+  "YEARLY": "Yearly",
+  "PAYMENT_FREQUENCY": "Frequency",
+  "PAYMENT_FREQUENCY_PLACEHOLDER": "Select frequency of payment",
+  "PAYMENT_VALUE": "Payment value (single)",
+  "PAYMENT_VALUE_PLACEHOLDER": "Enter value"
 }
