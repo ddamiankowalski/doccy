@@ -6,9 +6,10 @@ import {
   ApplicationRef,
   signal,
 } from '@angular/core';
-import { NotificationWrapper } from '../components/notification';
+import { NotificationWrapper } from '../components/notification-wrapper';
 
 export type Notification = {
+  id: number;
   title: string;
   message: string;
   type: NotificationType;
@@ -20,6 +21,8 @@ export type NotificationType = 'success' | 'error';
   providedIn: 'root',
 })
 export class NotificationService {
+  private static _id = 0;
+
   private readonly _id = 'dc-notifications';
   public readonly wrapperId = 'dc-notification-wrapper';
 
@@ -29,14 +32,23 @@ export class NotificationService {
   private _appRef = inject(ApplicationRef);
 
   public success(title: string, message: string): void {
-    this._createWrapper(title, message, 'success');
+    this._createWrapper();
+    this._addNotification(title, message, 'success');
   }
 
   public error(title: string, message: string): void {
-    this._createWrapper(title, message, 'error');
+    this._createWrapper();
+    this._addNotification(title, message, 'error');
   }
 
-  private _createWrapper(title: string, message: string, type: NotificationType): void {
+  private _addNotification(title: string, message: string, type: NotificationType): void {
+    this.entries.update((entries) => [
+      ...entries,
+      { message, title, type, id: NotificationService._id++ },
+    ]);
+  }
+
+  private _createWrapper(): void {
     if (document.getElementById(this.wrapperId) !== null) {
       return;
     }

@@ -1,17 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { NotificationService } from '../services/notification.service';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'dc-notification',
   template: `
-    <div [id]="notification.wrapperId">
-      @for(notification of notification.entries(); track $index) {
-      <span>{{ notification.title }}</span>
-      <span>{{ notification.message }}</span>
-      }
+    <div class="flex flex-col gap-2">
+      <span>{{ title() }}</span>
+      <span>{{ message() }}</span>
     </div>
   `,
 })
-export class NotificationWrapper {
-  public notification = inject(NotificationService);
+export class Notification {
+  public title = input.required<string>();
+  public message = input.required<string>();
 }
