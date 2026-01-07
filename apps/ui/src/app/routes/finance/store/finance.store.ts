@@ -7,6 +7,8 @@ import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
 import { Asset, Section, SectionFields, SectionType } from './type';
 import { FormModel } from '../../../ui/input/input-form/type';
+import { Dispatcher } from '@ngrx/signals/events';
+import { added } from './finance.events';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -39,6 +41,7 @@ export const FinanceStore = signalStore(
   withState(initialState),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
+    const dispatcher = inject(Dispatcher);
 
     const fetchFields = rxMethod<SectionType>(
       switchMap((type) => {
@@ -92,14 +95,15 @@ export const FinanceStore = signalStore(
           assets: { ...assets, createLoading: true },
         }));
 
-        console.log(model);
-
         return http.postAsset$(model).pipe(
           tapResponse({
-            next: ({ asset }) =>
+            next: ({ asset }) => {
+              dispatcher.dispatch(added(asset));
+
               patchState(store, ({ assets }) => ({
                 assets: { ...assets, entries: [...assets.entries, asset] },
-              })),
+              }));
+            },
             error: () => {},
             finalize: () =>
               patchState(store, ({ assets }) => ({

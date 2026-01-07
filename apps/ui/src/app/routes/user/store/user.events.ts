@@ -4,4 +4,4 @@ import { event } from '@ngrx/signals/events';
 /**
  * Emitted when user is logged out
  */
-export const logout = event('[UserEvent] Logged Out', type<void>());
+export const logout = event('[UserStore] Logged Out', type<void>());

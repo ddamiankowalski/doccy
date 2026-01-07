@@ -6,6 +6,9 @@ import { Modal } from '../../../../ui/overlay/components/modal';
 import { FinanceStore } from '../../store/finance.store';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { InputForm } from '../../../../ui/input/input-form/input-form';
+import { Events } from '@ngrx/signals/events';
+import { added } from '../../store/finance.events';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dc-finance-add',
@@ -48,8 +51,15 @@ export class FinanceAdd {
   public finance = inject(FinanceStore);
   public model = signal({});
 
+  private _events = inject(Events);
+
   constructor() {
     this.finance.fetchFields('assets');
+
+    this._events
+      .on(added)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.modal.close());
   }
 
   public options = [
