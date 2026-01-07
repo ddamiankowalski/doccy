@@ -24,9 +24,6 @@ import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar
 
       <h3 class="text-gray-400 text-sm font-medium mb-1">Real Estate</h3>
       <div class="text-2xl font-semibold text-white tracking-tight mb-4">$850,000</div>
-      <!-- <p class="text-xs text-gray-500 mt-2">
-        <span class="text-emerald-400">+8.2%</span> vs last year
-      </p> -->
 
       <dc-progress-bar class="mt-2" [value]="65" description="House down payment" />
     </dc-tile>
