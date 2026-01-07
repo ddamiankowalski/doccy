@@ -3,29 +3,44 @@ import {
   Injectable,
   inject,
   EnvironmentInjector,
-  Injector,
   ApplicationRef,
+  signal,
 } from '@angular/core';
-import { NotificationType } from '../components/notification';
+import { NotificationWrapper } from '../components/notification';
+
+export type Notification = {
+  title: string;
+  message: string;
+  type: NotificationType;
+};
+
+export type NotificationType = 'success' | 'error';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
   private readonly _id = 'dc-notifications';
+  public readonly wrapperId = 'dc-notification-wrapper';
+
+  public entries = signal<Notification[]>([]);
 
   private _injector = inject(EnvironmentInjector);
   private _appRef = inject(ApplicationRef);
 
   public success(title: string, message: string): void {
-    this._addNotification(title, message, 'success');
+    this._createWrapper(title, message, 'success');
   }
 
   public error(title: string, message: string): void {
-    this._addNotification(title, message, 'error');
+    this._createWrapper(title, message, 'error');
   }
 
-  private _addNotification(title: string, message: string, type: NotificationType): void {
+  private _createWrapper(title: string, message: string, type: NotificationType): void {
+    if (document.getElementById(this.wrapperId) !== null) {
+      return;
+    }
+
     const notification = document.getElementById(this._id);
     const hostElement = this._createHost();
 
@@ -33,14 +48,10 @@ export class NotificationService {
       throw new Error('Could not open notification because host was not found');
     }
 
-    const ref = createComponent(Notification, {
+    const ref = createComponent(NotificationWrapper, {
       environmentInjector: this._injector,
       hostElement,
     });
-
-    ref.setInput('title', title);
-    ref.setInput('message', message);
-    ref.setInput('type', type);
 
     this._appRef.attachView(ref.hostView);
     notification.append(hostElement);
