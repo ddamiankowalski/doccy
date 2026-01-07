@@ -26,14 +26,16 @@ export type InputNumberMode = 'currency' | 'normal';
   imports: [NgClass, TranslatePipe],
   template: `
     @if (label()) {
-      <label class="text-white text-xs leading-none" [for]="inputId()">{{ (label() | translate) + (required() ? '*':'') }}</label>
+    <label class="text-white text-xs leading-none" [for]="inputId()">{{
+      (label() | translate) + (required() ? '*' : '')
+    }}</label>
     }
 
     <div class="relative">
       @if (mode() === 'currency') {
-        <div class="absolute text-xs mr-3 right-0 top-1/2  -translate-y-1/2 text-white/30">
-          złotych
-        </div>
+      <div class="absolute text-xs mr-3 right-0 top-1/2  -translate-y-1/2 text-white/30">
+        złotych
+      </div>
       }
 
       <input
@@ -74,7 +76,7 @@ export class InputNumber implements FormValueControl<number | null> {
 
   public inputId = input.required<string>();
   public label = input<string>();
-  
+
   public touched = model<boolean>(false);
   public placeholder = input<string>();
 
@@ -92,7 +94,7 @@ export class InputNumber implements FormValueControl<number | null> {
 
   public onInput(): void {
     const input = this._input();
-    this.value.set(input.nativeElement.value);
+    this.value.set(parseFloat(input.nativeElement.value));
   }
 
   public onBlur(): void {

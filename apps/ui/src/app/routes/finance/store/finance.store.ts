@@ -92,6 +92,8 @@ export const FinanceStore = signalStore(
           assets: { ...assets, createLoading: true },
         }));
 
+        console.log(model);
+
         return http.postAsset$(model).pipe(
           tapResponse({
             next: ({ asset }) =>

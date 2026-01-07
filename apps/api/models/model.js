@@ -1,4 +1,5 @@
 const db = require("../database/db");
+const logger = require('../logger/logger');
 const SystemError = require("../error/system-error");
 
 /**
@@ -24,6 +25,7 @@ const getModel = (name) => {
      */
     create: async (data) => {
       const entries = Object.entries(data);
+      console.log(data);
 
       if (!entries.length) {
         return await db.query(
@@ -32,9 +34,20 @@ const getModel = (name) => {
       }
 
       const keys = entries.map(([key]) => key).join(", ");
-      const values = entries.map(([_, value]) => `'${value}'`).join(", ");
+      const values = entries.map(([_, value]) => {
+        switch (true) {
+          case value === null:
+            return 'NULL';
+          case typeof value === 'boolean':
+          case typeof value === 'number':
+            return `${value}`;
+          default:
+            return `'${value}'`;
+        }
+      }).join(", ");
 
       const query = `INSERT INTO ${name} (${keys}) VALUES (${values}) RETURNING *;`;
+      logger.log(query);
 
       try {
         const [created] = await db.query(query);
