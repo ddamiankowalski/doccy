@@ -41,7 +41,6 @@ export type InputNumberMode = 'currency' | 'normal';
       <input
         #inputEl
         [id]="inputId()"
-        [value]="value()"
         [placeholder]="placeholder() | translate"
         (input)="onInput()"
         (blur)="onBlur()"
@@ -93,8 +92,10 @@ export class InputNumber implements FormValueControl<number | null> {
   public mode = input<InputNumberMode>('normal');
 
   public onInput(): void {
-    const input = this._input();
-    this.value.set(parseFloat(input.nativeElement.value));
+    const input = this._input().nativeElement as HTMLInputElement;
+
+    const value = input.valueAsNumber;
+    this.value.set(value);
   }
 
   public onBlur(): void {

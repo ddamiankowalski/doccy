@@ -68,6 +68,8 @@ const _getTypeQuery = (type, metadata, name) => {
       return "uuid";
     case "int":
       return "INT";
+    case "numeric":
+      return "NUMERIC";
     case "bigint":
       return "BIGINT";
   }
