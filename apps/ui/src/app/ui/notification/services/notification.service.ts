@@ -65,6 +65,7 @@ export class NotificationService {
     element.style.left = '0';
     element.style.width = '100vw';
     element.style.height = '100vh';
+    element.style.pointerEvents = 'none';
 
     return element;
   }
