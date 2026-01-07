@@ -1,12 +1,9 @@
 import {
   ApplicationRef,
-  ComponentRef,
   createComponent,
   EnvironmentInjector,
   inject,
   Injectable,
-  InjectionToken,
-  Injector,
   Type,
 } from '@angular/core';
 import { Modal } from '../components/modal';
@@ -16,15 +13,6 @@ type ModalConfig<T> = {
   title?: string;
   description?: string;
   closeOnBackdrop?: boolean;
-};
-
-/**
- * Injection token for a reference
- */
-const MODAL_REF = new InjectionToken<ModalRef>('modal-ref');
-
-type ModalRef = {
-  close: () => void;
 };
 
 @Injectable({
@@ -52,24 +40,9 @@ export class OverlayService {
       throw new Error('Could not open modal because host was not found');
     }
 
-    const modalRef: ModalRef = {
-      close: () => {
-        console.log('??');
-      },
-    };
-
     const ref = createComponent(Modal, {
       environmentInjector: this._injector,
       hostElement,
-      elementInjector: Injector.create(
-        [
-          {
-            provide: MODAL_REF,
-            useValue: modalRef,
-          },
-        ],
-        this._injector
-      ),
     });
 
     ref.setInput('ref', ref);
