@@ -35,5 +35,7 @@
   "PAYMENT_FREQUENCY": "Frequency",
   "PAYMENT_FREQUENCY_PLACEHOLDER": "Select frequency of payment",
   "PAYMENT_VALUE": "Payment value (single)",
-  "PAYMENT_VALUE_PLACEHOLDER": "Enter value"
+  "PAYMENT_VALUE_PLACEHOLDER": "Enter value",
+  "ERROR_NOTIFICATION": "Error occurred",
+  "ERROR_ADD_ENTRY": "Could not add entry. Please try again or contact administrator"
 }

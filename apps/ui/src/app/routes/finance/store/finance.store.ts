@@ -156,7 +156,7 @@ export const FinanceStore = signalStore(
               dispatcher.dispatch(added({ type, entry: result }));
               notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
             },
-            error: () => {},
+            error: () => notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY'),
             finalize: () =>
               patchState(store, (state) => ({
                 [type]: { ...state[type], createLoading: false },
