@@ -10,13 +10,23 @@ import { Events } from '@ngrx/signals/events';
 import { added } from '../../store/finance.events';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Section, SectionType } from '../../store/type';
+import { TranslatePipe } from '@ngx-translate/core';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'dc-finance-add',
   host: {
     class: 'min-w-[30rem]',
   },
-  imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm],
+  imports: [
+    Spinner,
+    PrimaryButton,
+    SecondaryButton,
+    Disclaimer,
+    InputForm,
+    TranslatePipe,
+    UpperCasePipe,
+  ],
   template: `
     @let fields = section().fields; @if(fields.loading) {
     <dc-spinner class="p-8" />
@@ -40,7 +50,7 @@ import { Section, SectionType } from '../../store/type';
         [isDisabled]="state.invalid()"
         [isLoading]="this.finance.assets.createLoading()"
         class="flex-1"
-        >Add asset</dc-primary-button
+        >{{ 'ADD_' + this.type | uppercase | translate }}</dc-primary-button
       >
     </div>
     } }
