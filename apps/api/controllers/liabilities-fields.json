@@ -1,0 +1,9 @@
+[
+  {
+    "id": "name",
+    "type": "text",
+    "required": true,
+    "label": "NAME",
+    "placeholder": "NAME_PLACEHOLDER"
+  }
+]
