@@ -1,8 +1,8 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { withUser } from '../../user/store/with-user';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { switchMap } from 'rxjs';
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
 import { Asset, Section, SectionFields, SectionType } from './type';
@@ -40,6 +40,22 @@ const initialState: FinanceState = {
 export const FinanceStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withComputed((store) => {
+    /**
+     * Total values
+     */
+    const total = computed(() => {
+      return {
+        assets: store.assets().entries.reduce((sum, entry) => sum + entry.value, 0),
+        liabilities: store.liabilities().entries.reduce((sum, entry) => sum + entry.value, 0),
+        income: store.income().entries.reduce((sum, entry) => sum + entry.value, 0),
+      };
+    });
+
+    return {
+      total,
+    };
+  }),
   withReducer(
     /**
      * Add a new asset

@@ -1,8 +1,11 @@
-import { FormModel, InputField } from '../../../ui/input/input-form/type';
+import { InputField } from '../../../ui/input/input-form/type';
 
 export type Asset = {
-  uuid: string;
+  id: string;
   name: string;
+  value: number;
+  type: string;
+  subtype: string | null;
 };
 
 export type SectionType = 'assets' | 'liabilities' | 'income';

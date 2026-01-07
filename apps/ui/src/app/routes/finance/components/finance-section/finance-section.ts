@@ -21,7 +21,9 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
 
       <div class="flex items-center gap-2">
         <span class="text-sm text-gray-500 font-medium">Total</span>
-        <span class="text-lg font-bold text-white tracking-tight">{{ '123$' }}</span>
+        <span class="text-lg font-bold text-white tracking-tight"
+          >{{ finance.total().assets }} zł</span
+        >
       </div>
     </summary>
 
