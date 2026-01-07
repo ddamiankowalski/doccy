@@ -73,11 +73,6 @@ export class FinanceAdd {
   }
 
   public onAddClick(): void {
-    this.isLoading.set(true);
-
-    this.finance.addAsset$(this.model()).subscribe({
-      next: (res) => console.log(res),
-      complete: () => this.isLoading.set(false),
-    });
+    this.finance.addAsset(this.model());
   }
 }

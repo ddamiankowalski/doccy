@@ -39,8 +39,8 @@
           "nullable": false
         },
         {
-          "name": "subtype",
-          "type": "varchar",
+          "name": "value",
+          "type": "bigint",
           "length": 255,
           "nullable": false
         },

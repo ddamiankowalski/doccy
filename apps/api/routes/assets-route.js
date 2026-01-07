@@ -5,9 +5,8 @@ const Assets = require("../controllers/assets-controller");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
-    const created = await Assets.create(req.body);
-    return res.json(created);
+    const asset = await Assets.create(req.body);
+    return res.json({ status: 200, asset });
   } catch (err) {
     return res.json(err.payload);
   }

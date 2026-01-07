@@ -85,14 +85,24 @@ export const FinanceStore = signalStore(
       })
     );
 
-    const addAsset$ = (model: FormModel) => {
-      return http.postAsset$(model);
-    };
+    const addAsset = rxMethod<FormModel>(
+      switchMap((model) =>
+        http.postAsset$(model).pipe(
+          tapResponse({
+            next: ({ asset }) =>
+              patchState(store, ({ assets }) => ({
+                assets: { ...assets, entries: [...assets.entries, asset] },
+              })),
+            error: () => {},
+          })
+        )
+      )
+    );
 
     return {
       fetchFields,
       fetchAssets,
-      addAsset$,
+      addAsset,
       _reset,
     };
   }),

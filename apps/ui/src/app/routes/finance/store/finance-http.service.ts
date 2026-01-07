@@ -16,6 +16,8 @@ type FieldsResponse = {
   fields: InputField[];
 } & Response;
 
+type AssetResponse = { asset: Asset } & Response;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -30,7 +32,7 @@ export class FinanceHttpService {
     return this._http.get<AssetsResponse>('api/assets');
   }
 
-  public postAsset$(model: FormModel): Observable<Response> {
-    return this._http.post<Response>('api/assets', model);
+  public postAsset$(model: FormModel): Observable<AssetResponse> {
+    return this._http.post<AssetResponse>('api/assets', model);
   }
 }
