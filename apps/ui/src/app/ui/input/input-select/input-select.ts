@@ -76,6 +76,10 @@ export type SelectOption = {
       >
         <lucide-icon class="h-4 w-4" name="x" />
       </div>
+      } @else {
+      <div (click)="onResetClick()" class="flex justify-center items-center rounded-full  h-6 w-6">
+        <lucide-icon class="h-4 w-4" name="chevron-down" />
+      </div>
       }
 
       <ul
