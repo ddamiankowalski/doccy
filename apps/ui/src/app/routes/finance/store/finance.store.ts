@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs';
 import { computed, inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
-import { Asset, Section, SectionFields, SectionType } from './type';
+import { Asset, Liability, Section, SectionFields, SectionType } from './type';
 import { FormModel } from '../../../ui/input/input-form/type';
 import { Dispatcher, on, withReducer } from '@ngrx/signals/events';
 import { added } from './finance.events';
@@ -13,7 +13,7 @@ import { NotificationService } from '../../../ui/notification/services/notificat
 
 type FinanceState = {
   assets: Section<Asset>;
-  liabilities: Section<Asset>;
+  liabilities: Section<Liability>;
   income: Section<Asset>;
 };
 
@@ -98,18 +98,24 @@ export const FinanceStore = signalStore(
 
     const fetchLiabilities = rxMethod<void>(
       switchMap(() => {
-        patchState(store, ({ assets }) => ({ assets: { ...assets, loading: true, error: false } }));
+        patchState(store, ({ liabilities }) => ({
+          liabilities: { ...liabilities, loading: true, error: false },
+        }));
 
-        return http.fetchAssets$().pipe(
+        return http.fetchLiabilities$().pipe(
           tapResponse({
             next: ({ entries }) =>
-              patchState(store, ({ assets }) => ({ assets: { ...assets, entries } })),
+              patchState(store, ({ liabilities }) => ({
+                liabilities: { ...liabilities, entries },
+              })),
             error: () =>
-              patchState(store, ({ assets }) => ({
-                assets: { ...assets, error: true },
+              patchState(store, ({ liabilities }) => ({
+                liabilities: { ...liabilities, error: true },
               })),
             finalize: () =>
-              patchState(store, ({ assets }) => ({ assets: { ...assets, loading: false } })),
+              patchState(store, ({ liabilities }) => ({
+                liabilities: { ...liabilities, loading: false },
+              })),
           })
         );
       })
@@ -160,6 +166,7 @@ export const FinanceStore = signalStore(
       fetchFields,
       fetchAssets,
       addAsset,
+      fetchLiabilities,
       _reset,
     };
   }),

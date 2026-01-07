@@ -11,6 +11,7 @@ export type Asset = {
 export type Liability = {
   id: string;
   name: string;
+  value: number;
 };
 
 export type SectionType = 'assets' | 'liabilities' | 'income';

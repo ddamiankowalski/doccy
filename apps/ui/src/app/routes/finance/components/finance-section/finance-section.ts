@@ -98,6 +98,7 @@ export class FinanceSection implements OnInit {
         return;
       case 'liabilities':
         this.finance.fetchLiabilities();
+        return;
       case 'income':
         return;
     }
