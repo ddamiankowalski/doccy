@@ -8,6 +8,7 @@ const { errorHandler } = require("./error/error-handler.js");
  * Routes
  */
 const assets = require("./routes/assets-route.js");
+const liabilities = require('./routes/liabilities-route.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use("/api/assets", assets);
+app.use('/api/liabilities', liabilities);
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -33,7 +33,7 @@ export class FinanceHttpService {
   }
 
   public fetchLiabilities$(): Observable<FetchResponse<Liability>> {
-    return this._http.get<FetchResponse<Liability>>('api/assets');
+    return this._http.get<FetchResponse<Liability>>('api/liabilities');
   }
 
   public postAsset$(model: FormModel): Observable<PostResponse<Asset>> {
