@@ -7,7 +7,7 @@ import { FinanceHttpService } from './finance-http.service';
 import { tapResponse } from '@ngrx/operators';
 import { Asset, Section, SectionFields, SectionType } from './type';
 import { FormModel } from '../../../ui/input/input-form/type';
-import { Dispatcher } from '@ngrx/signals/events';
+import { Dispatcher, on, withReducer } from '@ngrx/signals/events';
 import { added } from './finance.events';
 
 type FinanceState = {
@@ -39,6 +39,14 @@ const initialState: FinanceState = {
 export const FinanceStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withReducer(
+    /**
+     * Add a new asset
+     */
+    on(added, ({ payload }, { assets }) => ({
+      assets: { ...assets, entries: [...assets.entries, payload] },
+    }))
+  ),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
     const dispatcher = inject(Dispatcher);
