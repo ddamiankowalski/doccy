@@ -16,7 +16,7 @@ const createTables = async ({ tables }) => {
     }
 
     const fields = columns.map(({ name, type, ...metadata }) => {
-      return `${name}  ${_getTypeQuery(type, metadata)} ${_isPrimary(
+      return `${name}  ${_getTypeQuery(type, metadata, name)} ${_isPrimary(
         metadata
       )} ${_isNullable(metadata)} ${_isUnique(metadata)} ${_getDefault(
         metadata
@@ -59,7 +59,7 @@ const _getDefault = (metadata) => {
   return `DEFAULT ${metadata.default}`;
 };
 
-const _getTypeQuery = (type, metadata) => {
+const _getTypeQuery = (type, metadata, name) => {
   switch (type) {
     case "varchar": {
       return `VARCHAR(${metadata.length})`;
@@ -68,9 +68,11 @@ const _getTypeQuery = (type, metadata) => {
       return "uuid";
     case "int":
       return "INT";
+    case "bigint":
+      return "BIGINT";
   }
 
-  logger.log("Could not get type from schema. Using VARCHAR(255) instead");
+  logger.log(`Could not get type from schema for table ${name}. Using VARCHAR(255) instead`);
   return "VARCHAR(255)";
 };
 
