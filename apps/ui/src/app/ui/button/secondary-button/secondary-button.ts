@@ -6,6 +6,7 @@ import { Component, computed, input, output } from '@angular/core';
   template: `
     <button
       (click)="onClick()"
+      [disabled]="isDisabled()"
       [ngClass]="[bgClass(), cursorClass(), textClass()]"
       class="flex w-full items-center justify-center rounded-md transition-colors  text-xs font-medium py-2 px-4"
     >
