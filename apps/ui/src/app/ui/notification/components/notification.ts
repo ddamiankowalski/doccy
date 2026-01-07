@@ -14,6 +14,5 @@ export type NotificationType = 'success' | 'error';
 export class Notification {
   public title = input.required<string>();
   public message = input.required<string>();
-
   public type = input.required<NotificationType>();
 }

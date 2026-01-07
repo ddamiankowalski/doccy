@@ -108,7 +108,7 @@ export const FinanceStore = signalStore(
         return http.postAsset$(model).pipe(
           tapResponse({
             next: ({ asset }) => {
-              debugger;
+              console.log('tu');
               dispatcher.dispatch(added(asset));
               notification.success('Hey!', 'Good job!');
             },

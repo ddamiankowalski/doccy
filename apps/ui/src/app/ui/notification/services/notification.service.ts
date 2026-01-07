@@ -1,4 +1,11 @@
-import { createComponent, Injectable, inject, EnvironmentInjector, Injector } from '@angular/core';
+import {
+  createComponent,
+  Injectable,
+  inject,
+  EnvironmentInjector,
+  Injector,
+  ApplicationRef,
+} from '@angular/core';
 import { NotificationType } from '../components/notification';
 
 @Injectable({
@@ -8,6 +15,7 @@ export class NotificationService {
   private readonly _id = 'dc-notifications';
 
   private _injector = inject(EnvironmentInjector);
+  private _appRef = inject(ApplicationRef);
 
   public success(title: string, message: string): void {
     this._addNotification(title, message, 'success');
@@ -34,6 +42,7 @@ export class NotificationService {
     ref.setInput('message', message);
     ref.setInput('type', type);
 
+    this._appRef.attachView(ref.hostView);
     notification.append(hostElement);
   }
 
