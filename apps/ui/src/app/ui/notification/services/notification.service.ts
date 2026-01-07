@@ -32,14 +32,14 @@ export class NotificationService {
 
     ref.setInput('title', title);
     ref.setInput('message', message);
+    ref.setInput('type', type);
 
-    notification.append();
+    notification.append(hostElement);
   }
 
   private _createHost(): HTMLDivElement {
     const element = document.createElement('div');
 
-    element.classList.add('');
     element.style.position = 'absolute';
     element.style.top = '0';
     element.style.left = '0';

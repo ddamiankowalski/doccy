@@ -9,6 +9,7 @@ import { Asset, Section, SectionFields, SectionType } from './type';
 import { FormModel } from '../../../ui/input/input-form/type';
 import { Dispatcher, on, withReducer } from '@ngrx/signals/events';
 import { added } from './finance.events';
+import { NotificationService } from '../../../ui/notification/services/notification.service';
 
 type FinanceState = {
   assets: Section<Asset>;
@@ -50,6 +51,7 @@ export const FinanceStore = signalStore(
   withMethods((store) => {
     const http = inject(FinanceHttpService);
     const dispatcher = inject(Dispatcher);
+    const notification = inject(NotificationService);
 
     const fetchFields = rxMethod<SectionType>(
       switchMap((type) => {
@@ -105,7 +107,11 @@ export const FinanceStore = signalStore(
 
         return http.postAsset$(model).pipe(
           tapResponse({
-            next: ({ asset }) => dispatcher.dispatch(added(asset)),
+            next: ({ asset }) => {
+              debugger;
+              dispatcher.dispatch(added(asset));
+              notification.success('Hey!', 'Good job!');
+            },
             error: () => {},
             finalize: () =>
               patchState(store, ({ assets }) => ({
