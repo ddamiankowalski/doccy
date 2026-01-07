@@ -60,9 +60,13 @@ export const FinanceStore = signalStore(
     /**
      * Add a new asset
      */
-    on(added, ({ payload }, { assets }) => ({
-      assets: { ...assets, entries: [...assets.entries, payload] },
-    }))
+    on(added, ({ payload }, state) => {
+      const { entry, type } = payload;
+
+      return {
+        [type]: { ...state[type], entries: [...state[type].entries, entry] },
+      };
+    })
   ),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
@@ -154,8 +158,8 @@ export const FinanceStore = signalStore(
             },
             error: () => {},
             finalize: () =>
-              patchState(store, ({ assets }) => ({
-                assets: { ...assets, createLoading: false },
+              patchState(store, (state) => ({
+                [type]: { ...state[type], createLoading: false },
               })),
           })
         );
