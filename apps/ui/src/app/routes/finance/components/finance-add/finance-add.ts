@@ -33,7 +33,8 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
       <dc-secondary-button (clicked)="onCancelClick()" class="flex-1">Cancel</dc-secondary-button>
       <dc-primary-button
         (clicked)="onAddClick()"
-        [isDisabled]="state.invalid() || this.isLoading()"
+        [isDisabled]="state.invalid()"
+        [isLoading]="this.finance.assets.createLoading()"
         class="flex-1"
         >Add asset</dc-primary-button
       >
@@ -45,8 +46,6 @@ export class FinanceAdd {
   public modal = inject(Modal);
 
   public finance = inject(FinanceStore);
-
-  public isLoading = signal(false);
   public model = signal({});
 
   constructor() {

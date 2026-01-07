@@ -12,16 +12,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   },
   imports: [HeaderUser, LucideAngularModule],
   template: ` <header class="flex items-center justify-between">
-    <div class="flex gap-6">
-      <div class="flex justify-center items-center p-2 bg-white text-black rounded-lg w-12">
-        <lucide-icon class="h-5 w-5" name="wallet-cards"></lucide-icon>
-      </div>
-      <div>
-        <h1 class="text-2xl font-bold tracking-tight">Finance Overview</h1>
-        <h2 class="text-gray-400 text-sm">Welcome back, here's your financial summary</h2>
-      </div>
-    </div>
-
     <nav class="hidden md:flex ml-auto mr-24 gap-8 items-center text-sm text-gray-500">
       <button
         (click)="onNavClick('finance')"

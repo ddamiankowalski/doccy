@@ -7,10 +7,11 @@ export type Asset = {
 
 export type SectionType = 'assets' | 'liabilities' | 'income';
 
-export type Section<T> = {
+export type Section<T = any> = {
   entries: T[];
   loading: boolean;
   error: boolean;
+  createLoading: boolean;
   fields: SectionFields;
 };
 

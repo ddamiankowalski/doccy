@@ -25,6 +25,7 @@ const initialSectionState = {
   error: false,
   loading: false,
   fields: sectionFieldsState,
+  createLoading: false,
 };
 
 const initialState: FinanceState = {
@@ -86,17 +87,25 @@ export const FinanceStore = signalStore(
     );
 
     const addAsset = rxMethod<FormModel>(
-      switchMap((model) =>
-        http.postAsset$(model).pipe(
+      switchMap((model) => {
+        patchState(store, ({ assets }) => ({
+          assets: { ...assets, createLoading: true },
+        }));
+
+        return http.postAsset$(model).pipe(
           tapResponse({
             next: ({ asset }) =>
               patchState(store, ({ assets }) => ({
                 assets: { ...assets, entries: [...assets.entries, asset] },
               })),
             error: () => {},
+            finalize: () =>
+              patchState(store, ({ assets }) => ({
+                assets: { ...assets, createLoading: false },
+              })),
           })
-        )
-      )
+        );
+      })
     );
 
     return {
