@@ -105,13 +105,7 @@ export const FinanceStore = signalStore(
 
         return http.postAsset$(model).pipe(
           tapResponse({
-            next: ({ asset }) => {
-              dispatcher.dispatch(added(asset));
-
-              patchState(store, ({ assets }) => ({
-                assets: { ...assets, entries: [...assets.entries, asset] },
-              }));
-            },
+            next: ({ asset }) => dispatcher.dispatch(added(asset)),
             error: () => {},
             finalize: () =>
               patchState(store, ({ assets }) => ({
