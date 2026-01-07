@@ -19,8 +19,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   logger.log(`Restarted the server successfully on port ${PORT}`);
-
-  if (process.env.DB_MIGRATE !== 'FALSE') {
-    migrate({ clear: true});
-  }
+  migrate({ clear: true});
 });
