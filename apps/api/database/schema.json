@@ -39,6 +39,29 @@
           "nullable": false,
           "unique": false,
           "default": null
+        },
+        {
+          "name": "type",
+          "type": "varchar",
+          "length": 255,
+          "nullable": false,
+          "unique": false,
+          "default": null
+        },
+        {
+          "name": "frequency",
+          "type": "varchar",
+          "length": 255,
+          "nullable": true,
+          "unique": false,
+          "default": null
+        },
+        {
+          "name": "payment_value",
+          "type": "int",
+          "nullable": true,
+          "unique": false,
+          "default": null
         }
       ]
     },
