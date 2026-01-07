@@ -27,7 +27,7 @@ const getAll = async () => {
  * @returns 
  */
 const getAddFields = async () => {
-  return await parseFields('assets');
+  return await parseFields('liabilities');
 }
 
 module.exports = {

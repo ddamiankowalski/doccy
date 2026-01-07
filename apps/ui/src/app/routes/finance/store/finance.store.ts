@@ -140,13 +140,13 @@ export const FinanceStore = signalStore(
       })
     );
 
-    const addAsset = rxMethod<FormModel>(
-      switchMap((model) => {
-        patchState(store, ({ assets }) => ({
-          assets: { ...assets, createLoading: true },
+    const addEntry = rxMethod<{ model: FormModel; type: SectionType }>(
+      switchMap(({ model, type }) => {
+        patchState(store, (state) => ({
+          [type]: { ...state[type], createLoading: true },
         }));
 
-        return http.postAsset$(model).pipe(
+        return http.postEntry$(type, model).pipe(
           tapResponse({
             next: ({ result }) => {
               dispatcher.dispatch(added(result));
@@ -165,7 +165,7 @@ export const FinanceStore = signalStore(
     return {
       fetchFields,
       fetchAssets,
-      addAsset,
+      addEntry,
       fetchLiabilities,
       _reset,
     };

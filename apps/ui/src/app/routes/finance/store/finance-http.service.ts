@@ -36,7 +36,7 @@ export class FinanceHttpService {
     return this._http.get<FetchResponse<Liability>>('api/liabilities');
   }
 
-  public postAsset$(model: FormModel): Observable<PostResponse<Asset>> {
-    return this._http.post<PostResponse<Asset>>('api/assets', model);
+  public postEntry$<T = any>(type: SectionType, model: FormModel): Observable<PostResponse<T>> {
+    return this._http.post<PostResponse<T>>(`api/${type}`, model);
   }
 }

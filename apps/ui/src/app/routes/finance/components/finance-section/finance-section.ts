@@ -87,7 +87,7 @@ export class FinanceSection implements OnInit {
       title: 'Add new asset',
       description: 'Create a new asset by filling out all fields',
       closeOnBackdrop: false,
-      data: {},
+      data: { type: this.type() },
     });
   }
 

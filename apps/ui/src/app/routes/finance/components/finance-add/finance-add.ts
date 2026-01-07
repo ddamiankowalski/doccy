@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
@@ -9,6 +9,7 @@ import { InputForm } from '../../../../ui/input/input-form/input-form';
 import { Events } from '@ngrx/signals/events';
 import { added } from '../../store/finance.events';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Section, SectionType } from '../../store/type';
 
 @Component({
   selector: 'dc-finance-add',
@@ -17,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   },
   imports: [Spinner, PrimaryButton, SecondaryButton, Disclaimer, InputForm],
   template: `
-    @let fields = finance.assets.fields(); @if(fields.loading) {
+    @let fields = section().fields; @if(fields.loading) {
     <dc-spinner class="p-8" />
     } @else if(fields.error || fields.metadata.length === 0) {
     <dc-disclaimer
@@ -51,10 +52,15 @@ export class FinanceAdd {
   public finance = inject(FinanceStore);
   public model = signal({});
 
+  public section = computed(() => {
+    return this.finance[this.type]();
+  });
+
   private _events = inject(Events);
 
   constructor() {
-    this.finance.fetchFields('assets');
+    const { type } = this.modal.data();
+    this.finance.fetchFields(type);
 
     this._events
       .on(added)
@@ -62,26 +68,16 @@ export class FinanceAdd {
       .subscribe(() => this.modal.close());
   }
 
-  public options = [
-    {
-      label: 'Some label',
-      value: '1',
-    },
-    {
-      label: 'Some label2',
-      value: '2',
-    },
-    {
-      label: 'Some label3',
-      value: '3',
-    },
-  ];
+  get type(): SectionType {
+    const { type } = this.modal.data();
+    return type;
+  }
 
   public onCancelClick(): void {
     this.modal.close();
   }
 
   public onAddClick(): void {
-    this.finance.addAsset(this.model());
+    this.finance.addEntry({ model: this.model(), type: this.type });
   }
 }
