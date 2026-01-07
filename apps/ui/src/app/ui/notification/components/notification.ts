@@ -15,15 +15,15 @@ import { LucideAngularModule } from 'lucide-angular';
   template: `
     <div
       animate.enter="fade-in"
-      class="relative w-120 bg bg-charcoal-light flex flex-col py-2 px-4 border border-white/5 rounded-md"
+      class="relative w-120 bg bg-charcoal-light flex gap-1 flex-col py-2 px-4 border border-white/5 rounded-md"
     >
       <div class="flex items-center gap-2">
-        <lucide-icon class="w-3 h-3" [name]="iconName()" />
+        <lucide-icon [ngClass]="[titleText()]" class="w-3.5 h-3.5" [name]="iconName()" />
         <span [ngClass]="[titleText()]" class="text-sm font-medium">{{
           notification().title
         }}</span>
       </div>
-      <span class="ml-5 text-gray-400 text-xs">{{ notification().message }}</span>
+      <span [ngClass]="[messageText()]" class="ml-5.5 text-xs">{{ notification().message }}</span>
 
       <button
         (click)="onButtonClick()"
@@ -65,10 +65,19 @@ export class Notification {
     }
   });
 
+  public messageText = computed(() => {
+    switch (this.notification().type) {
+      case 'error':
+        return 'text-[#ff6466]';
+      case 'success':
+        return 'text-gray-400';
+    }
+  });
+
   public iconName = computed(() => {
     switch (this.notification().type) {
       case 'error':
-        return 'bug';
+        return 'circle-alert';
       case 'success':
         return 'circle-check';
     }
