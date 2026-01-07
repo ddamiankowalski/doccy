@@ -17,5 +17,8 @@
   "SUCCESS_ADD_ENTRY": "You successfully added a new entry.",
   "NEW_ENTRY": "Create new entry",
   "ADD_ASSETS": "Add asset",
-  "ADD_LIABILITIES": "Add liability"
+  "ADD_LIABILITIES": "Add liability",
+  "ADD_NEW_ASSETS": "Add new asset",
+  "ADD_NEW_LIABILITIES": "Add new liability",
+  "ADD_NEW_INCOME": "Add new income"
 }

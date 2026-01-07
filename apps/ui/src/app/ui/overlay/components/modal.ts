@@ -14,10 +14,11 @@ import {
 } from '@angular/core';
 import { Tile } from '../../components/tile/tile';
 import { LucideAngularModule } from 'lucide-angular';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'dc-modal',
-  imports: [Tile, LucideAngularModule],
+  imports: [Tile, LucideAngularModule, TranslatePipe],
   template: `
     <div
       animate.enter="fade-in"
@@ -31,9 +32,11 @@ import { LucideAngularModule } from 'lucide-angular';
           <header class="flex items-start justify-between mb-6 gap-8">
             <div class="flex flex-col gap-2">
               @if(title()) {
-              <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
+              <span class="text-white text-lg font-medium leading-none">{{
+                title() | translate
+              }}</span>
               } @if(description()) {
-              <span class="text-gray-400 text-xs font-medium">{{ description() }}</span>
+              <span class="text-gray-400 text-xs font-medium">{{ description() | translate }}</span>
               }
             </div>
 

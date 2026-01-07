@@ -84,8 +84,8 @@ export class FinanceSection implements OnInit {
   public onAddClick(): void {
     this._overlay.openModal({
       component: FinanceAdd,
-      title: 'Add new asset',
-      description: 'Create a new asset by filling out all fields',
+      title: 'ADD_NEW_' + this.type().toUpperCase(),
+      description: `ADD_NEW_${this.type().toUpperCase()}_DESCRIPTION`,
       closeOnBackdrop: false,
       data: { type: this.type() },
     });
