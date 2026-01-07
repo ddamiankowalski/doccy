@@ -153,7 +153,7 @@ export const FinanceStore = signalStore(
         return http.postEntry$(type, model).pipe(
           tapResponse({
             next: ({ result }) => {
-              dispatcher.dispatch(added(result));
+              dispatcher.dispatch(added({ type, entry: result }));
               notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
             },
             error: () => {},
