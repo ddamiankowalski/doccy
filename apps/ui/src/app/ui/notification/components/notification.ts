@@ -5,10 +5,11 @@ import {
 } from '../services/notification.service';
 import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'dc-notification',
-  imports: [NgClass, LucideAngularModule],
+  imports: [NgClass, LucideAngularModule, TranslatePipe],
   host: {
     class: 'pointer-events-auto',
   },
@@ -20,10 +21,12 @@ import { LucideAngularModule } from 'lucide-angular';
       <div class="flex items-center gap-2">
         <lucide-icon [ngClass]="[titleText()]" class="w-3.5 h-3.5" [name]="iconName()" />
         <span [ngClass]="[titleText()]" class="text-sm font-medium">{{
-          notification().title
+          notification().title | translate
         }}</span>
       </div>
-      <span [ngClass]="[messageText()]" class="ml-5.5 text-xs">{{ notification().message }}</span>
+      <span [ngClass]="[messageText()]" class="ml-5.5 text-xs">{{
+        notification().message | translate
+      }}</span>
 
       <button
         (click)="onButtonClick()"

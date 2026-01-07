@@ -109,7 +109,7 @@ export const FinanceStore = signalStore(
           tapResponse({
             next: ({ asset }) => {
               dispatcher.dispatch(added(asset));
-              notification.success('Hey!', 'Good job!');
+              notification.success('', 'Good job!');
             },
             error: () => {},
             finalize: () =>
