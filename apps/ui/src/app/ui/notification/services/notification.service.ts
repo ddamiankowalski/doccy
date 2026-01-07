@@ -41,11 +41,17 @@ export class NotificationService {
     this._addNotification(title, message, 'error');
   }
 
+  public close(id: number): void {
+    this.entries.update((entries) => entries.filter((entry) => entry.id !== id));
+  }
+
   private _addNotification(title: string, message: string, type: NotificationType): void {
     this.entries.update((entries) => [
       ...entries,
-      { message, title, type, id: NotificationService._id++ },
+      { message, title, type, id: NotificationService._id },
     ]);
+
+    NotificationService._id++;
   }
 
   private _createWrapper(): void {

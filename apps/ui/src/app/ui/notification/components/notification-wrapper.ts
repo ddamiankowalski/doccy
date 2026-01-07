@@ -6,9 +6,9 @@ import { Notification } from './notification';
   selector: 'dc-notification-wrapper',
   imports: [Notification],
   template: `
-    <div [id]="notification.wrapperId">
+    <div class="flex flex-col gap-2 top-0 right-0 absolute p-8" [id]="notification.wrapperId">
       @for(notification of notification.entries(); track $index) {
-      <dc-notification [title]="notification.title" [message]="notification.message" />
+      <dc-notification [notification]="notification" />
       }
     </div>
   `,
