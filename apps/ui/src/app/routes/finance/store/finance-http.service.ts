@@ -1,22 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Asset, SectionType } from './type';
+import { Asset, Liability, SectionType } from './type';
 import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 type Response = {
   status: number;
 };
 
-type AssetsResponse = {
-  entries: Asset[];
+type FetchResponse<T> = {
+  entries: T[];
 } & Response;
 
 type FieldsResponse = {
   fields: InputField[];
 } & Response;
 
-type AssetResponse = { asset: Asset } & Response;
+type PostResponse<T> = { result: T } & Response;
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +28,15 @@ export class FinanceHttpService {
     return this._http.get<FieldsResponse>(`api/${type}/add-fields`);
   }
 
-  public fetchAssets$(): Observable<AssetsResponse> {
-    return this._http.get<AssetsResponse>('api/assets');
+  public fetchAssets$(): Observable<FetchResponse<Asset>> {
+    return this._http.get<FetchResponse<Asset>>('api/assets');
   }
 
-  public postAsset$(model: FormModel): Observable<AssetResponse> {
-    return this._http.post<AssetResponse>('api/assets', model);
+  public fetchLiabilities$(): Observable<FetchResponse<Liability>> {
+    return this._http.get<FetchResponse<Liability>>('api/assets');
+  }
+
+  public postAsset$(model: FormModel): Observable<PostResponse<Asset>> {
+    return this._http.post<PostResponse<Asset>>('api/assets', model);
   }
 }

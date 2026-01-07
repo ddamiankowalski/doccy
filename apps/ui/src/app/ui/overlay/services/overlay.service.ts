@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import { Modal } from '../components/modal';
 
-type ModalConfig<T> = {
+type ModalConfig<T, K = any> = {
   component: Type<T>;
   title?: string;
   description?: string;
   closeOnBackdrop?: boolean;
+  data?: K;
 };
 
 @Injectable({
@@ -32,6 +33,7 @@ export class OverlayService {
     title = undefined,
     description = undefined,
     closeOnBackdrop = true,
+    data,
   }: ModalConfig<T>): void {
     const overlay = document.getElementById(this._id);
     const hostElement = this._createHost();
@@ -51,6 +53,7 @@ export class OverlayService {
     ref.setInput('title', title);
     ref.setInput('description', description);
     ref.setInput('closeOnBackdrop', closeOnBackdrop);
+    ref.setInput('data', data);
 
     this._appRef.attachView(ref.hostView);
     overlay.append(hostElement);

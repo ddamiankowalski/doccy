@@ -14,5 +14,6 @@
   "STOCKS": "Stocks",
   "VALUE_PLACEHOLDER": "Enter value of asset",
   "SUCCESS_NOTIFICATION": "Success!",
-  "SUCCESS_ADD_ENTRY": "You successfully added a new entry."
+  "SUCCESS_ADD_ENTRY": "You successfully added a new entry.",
+  "NEW_ENTRY": "Create new entry"
 }

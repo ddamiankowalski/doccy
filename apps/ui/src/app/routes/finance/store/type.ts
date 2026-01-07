@@ -8,6 +8,11 @@ export type Asset = {
   subtype: string | null;
 };
 
+export type Liability = {
+  id: string;
+  name: string;
+};
+
 export type SectionType = 'assets' | 'liabilities' | 'income';
 
 export type Section<T = any> = {

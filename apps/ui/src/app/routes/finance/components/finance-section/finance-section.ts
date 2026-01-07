@@ -9,6 +9,7 @@ import { SectionType } from '../../store/type';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { TitleCasePipe } from '@angular/common';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'dc-finance-section',
@@ -51,11 +52,19 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
         title="No entries"
         description="Please add a new entry to see the results here"
       />
-      <dc-primary-button (clicked)="onAddClick()">Create new entry</dc-primary-button>
+      <dc-primary-button (clicked)="onAddClick()">{{ 'NEW_ENTRY' | translate }}</dc-primary-button>
     </div>
     } }
   </section>`,
-  imports: [FinanceTile, FinanceAddTile, Spinner, Disclaimer, TitleCasePipe, PrimaryButton],
+  imports: [
+    FinanceTile,
+    FinanceAddTile,
+    Spinner,
+    Disclaimer,
+    TitleCasePipe,
+    PrimaryButton,
+    TranslatePipe,
+  ],
 })
 export class FinanceSection implements OnInit {
   public type = input.required<SectionType>();
@@ -78,6 +87,7 @@ export class FinanceSection implements OnInit {
       title: 'Add new asset',
       description: 'Create a new asset by filling out all fields',
       closeOnBackdrop: false,
+      data: {},
     });
   }
 
@@ -87,6 +97,7 @@ export class FinanceSection implements OnInit {
         this.finance.fetchAssets();
         return;
       case 'liabilities':
+        this.finance.fetchLiabilities();
       case 'income':
         return;
     }

@@ -1,20 +1,20 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const router = Router();
 
-const Assets = require("../controllers/assets-controller");
+const Liabilities = require('../controllers/liabilities-controller');
 
 router.post("/", async (req, res) => {
-  const asset = await Assets.create(req.body);
+  const asset = await Liabilities.create(req.body);
   return res.json({ status: 200, result: asset });
 });
 
 router.get("/", async (_, res) => {
-  const result = await Assets.getAll();
+  const result = await Liabilities.getAll();
   return res.json({ status: 200, entries: result });
 });
 
 router.get("/add-fields", async (_, res) => {
-  const fields = await Assets.getAddFields();
+  const fields = await Liabilities.getAddFields();
   return res.json({ status: 200, fields });
 });
 

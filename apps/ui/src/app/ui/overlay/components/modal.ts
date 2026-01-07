@@ -57,7 +57,7 @@ import { LucideAngularModule } from 'lucide-angular';
     </div>
   `,
 })
-export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
+export class Modal<T, K = any> implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:keydown.escape')
   public onKeydownHandler() {
     this._close();
@@ -82,6 +82,7 @@ export class Modal<T> implements OnInit, OnDestroy, AfterViewInit {
   public title = input<string>();
   public description = input<string>();
   public closeOnBackdrop = input<boolean>();
+  public data = input<K>();
 
   private _backdropElement = viewChild('backdrop', { read: ElementRef });
   private _container = viewChild('container', { read: ViewContainerRef });

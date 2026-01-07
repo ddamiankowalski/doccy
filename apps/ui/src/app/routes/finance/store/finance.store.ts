@@ -96,6 +96,25 @@ export const FinanceStore = signalStore(
      */
     const _reset = (): void => patchState(store, initialState);
 
+    const fetchLiabilities = rxMethod<void>(
+      switchMap(() => {
+        patchState(store, ({ assets }) => ({ assets: { ...assets, loading: true, error: false } }));
+
+        return http.fetchAssets$().pipe(
+          tapResponse({
+            next: ({ entries }) =>
+              patchState(store, ({ assets }) => ({ assets: { ...assets, entries } })),
+            error: () =>
+              patchState(store, ({ assets }) => ({
+                assets: { ...assets, error: true },
+              })),
+            finalize: () =>
+              patchState(store, ({ assets }) => ({ assets: { ...assets, loading: false } })),
+          })
+        );
+      })
+    );
+
     const fetchAssets = rxMethod<void>(
       switchMap(() => {
         patchState(store, ({ assets }) => ({ assets: { ...assets, loading: true, error: false } }));
@@ -123,8 +142,8 @@ export const FinanceStore = signalStore(
 
         return http.postAsset$(model).pipe(
           tapResponse({
-            next: ({ asset }) => {
-              dispatcher.dispatch(added(asset));
+            next: ({ result }) => {
+              dispatcher.dispatch(added(result));
               notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
             },
             error: () => {},
