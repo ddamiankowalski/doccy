@@ -25,7 +25,6 @@ const getModel = (name) => {
      */
     create: async (data) => {
       const entries = Object.entries(data);
-      console.log(data);
 
       if (!entries.length) {
         return await db.query(
