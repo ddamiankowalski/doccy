@@ -1,4 +1,5 @@
 const postgres = require("pg-promise")();
+const { types } = require("pg");
 
 /**
  * Options for the database

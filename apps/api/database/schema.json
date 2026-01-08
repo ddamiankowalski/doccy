@@ -58,7 +58,7 @@
         },
         {
           "name": "payment_value",
-          "type": "numeric",
+          "type": "double",
           "nullable": true,
           "unique": false,
           "default": null

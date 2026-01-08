@@ -70,6 +70,8 @@ const _getTypeQuery = (type, metadata, name) => {
       return "INT";
     case "numeric":
       return "NUMERIC";
+    case "double":
+      return "DOUBLE PRECISION";
     case "bigint":
       return "BIGINT";
   }
