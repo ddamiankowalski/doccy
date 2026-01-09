@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Asset, Liability, SectionType } from './type';
+import { Asset, Equity, Liability, SectionType } from './type';
 import { FormModel, InputField } from '../../../ui/input/input-form/type';
 
 type Response = {
@@ -18,8 +18,8 @@ type FieldsResponse = {
 
 type PostResponse<T> = { result: T } & Response;
 
-type SymbolResponse = {
-  result: { name: string; symbol: string }[];
+type EquityResponse = {
+  result: Equity[];
 } & Response;
 
 @Injectable({
@@ -44,7 +44,7 @@ export class FinanceHttpService {
     return this._http.post<PostResponse<T>>(`api/${type}`, model);
   }
 
-  public searchSymbol$(symbol: string): Observable<SymbolResponse> {
-    return this._http.get<SymbolResponse>('api/market/search', { params: { symbol } });
+  public searchEquity$(symbol: string): Observable<EquityResponse> {
+    return this._http.get<EquityResponse>('api/market/search-equity', { params: { symbol } });
   }
 }

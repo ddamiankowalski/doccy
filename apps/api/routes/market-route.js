@@ -4,7 +4,7 @@ const router = Router();
 const Market = require('../controllers/market/market-controller');
 const SystemError = require('../error/system-error');
 
-router.get('/search', async (req, res) => {
+router.get('/search-equity', async (req, res) => {
   const { symbol } = req.query;
 
   if (!symbol) {

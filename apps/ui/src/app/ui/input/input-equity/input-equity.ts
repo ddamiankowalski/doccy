@@ -29,6 +29,7 @@ import {
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FinanceHttpService } from '../../../routes/finance/store/finance-http.service';
+import { Equity } from '../../../routes/finance/store/type';
 
 @Component({
   selector: 'dc-input-symbol',
@@ -126,7 +127,8 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
             }
             @case ('loaded') {
               @for (option of options(); track option.symbol) {
-                @let symbol = option.symbol; @let name = option.name;
+                @let symbol = option.symbol;
+                @let exchange = option.exchange;
 
                 <li
                   (click)="onOptionClick(symbol)"
@@ -134,7 +136,7 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
                 >
                   <div class="flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
                     <span>{{ symbol }}</span>
-                    <p class="text-white/30 overflow-hidden text-ellipsis">{{ name }}</p>
+                    <p class="text-white/30 overflow-hidden text-ellipsis">{{ exchange }}</p>
                   </div>
 
                   @if (symbol === value()) {
@@ -155,7 +157,7 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
     </div>
   `,
 })
-export class InputSymbol implements FormValueControl<string | null>, AfterViewInit {
+export class InputEquity implements FormValueControl<string | null>, AfterViewInit {
   public inputModel = signal<string>('');
   public inputState = signal<'loading' | 'empty' | 'loaded' | 'error'>('empty');
 
@@ -163,7 +165,7 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
   public touched = model<boolean>(false);
   public required = input<boolean>(false);
 
-  public options = signal<{ name: string; symbol: string }[]>([]);
+  public options = signal<Equity[]>([]);
 
   public inputId = input.required<string>();
 
@@ -243,7 +245,7 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
         tap(() => this.inputState.set('loading')),
         debounceTime(1000),
         switchMap((symbol) =>
-          this._http.searchSymbol$(symbol).pipe(
+          this._http.searchEquity$(symbol).pipe(
             catchError(() => {
               this.inputState.set('error');
               return EMPTY;

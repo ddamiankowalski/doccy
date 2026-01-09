@@ -29,3 +29,11 @@ export type SectionFields = {
   loading: boolean;
   error: boolean;
 };
+
+export type Equity = {
+  symbol: string;
+  name: string;
+  shortname: string;
+  longname: string;
+  exchange: string;
+};

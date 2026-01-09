@@ -7,10 +7,11 @@ const logger = require('../../logger/logger');
  * @param {*} equities
  */
 const cacheEquities = async equities => {
-  equities.forEach(({ symbol, name, shortname, longname, exchange }) => {
+  equities.forEach(async ({ symbol, name, shortname, longname, exchange }) => {
     try {
-      db.query(
-        `INSERT INTO equity_info (symbol, exchange, name, short_name, long_name) VALUES(${symbol}, ${name}, ${shortname}, ${longname}, ${exchange})`
+      await db.query(
+        `INSERT INTO equity_info (symbol, exchange, name, short_name, long_name) VALUES($1, $2, $3, $4, $5) ON CONFLICT (symbol, exchange) DO NOTHING`,
+        [symbol, exchange, name, shortname, longname]
       );
     } catch (err) {
       logger.log(

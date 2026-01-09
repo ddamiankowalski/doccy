@@ -15,7 +15,7 @@ import { form, Field, FieldTree } from '@angular/forms/signals';
 import { toSchema } from './utils/to-schema';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { InputSymbol } from '../input-symbol/input-symbol';
+import { InputEquity } from '../input-equity/input-equity';
 
 @Component({
   selector: 'dc-input-form',
@@ -29,46 +29,70 @@ import { InputSymbol } from '../input-symbol/input-symbol';
     Field,
     TranslatePipe,
     LucideAngularModule,
-    InputSymbol,
+    InputEquity,
   ],
   template: `
-    @if(form) {
-    <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
-      @for (entry of metadata(); track entry.id) { @let field = form[entry.id]; @let state =
-      field(); @let placeholder = entry.placeholder; @let label = entry.label; @let id = entry.id;
-      @let mode = entry.mode; @if(!state.hidden()) { @switch (entry.type) { @case ('text') {
-      <dc-input-text [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
-      } @case ('number') {
-      <dc-input-number
-        [field]="field"
-        [placeholder]="placeholder"
-        [label]="label"
-        [inputId]="id"
-        [mode]="mode"
-      />
-      } @case ('select') { @let options = entry.options; @if (options) {
-      <dc-input-select
-        [field]="field"
-        [placeholder]="placeholder"
-        [options]="options"
-        [label]="label"
-        [inputId]="id"
-      />
-      } } @case ('symbol') {
-      <dc-input-symbol [field]="field" [placeholder]="placeholder" [label]="label" [inputId]="id" />
-      } } } }
-    </form>
+    @if (form) {
+      <form class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-[calc(2*1fr)]">
+        @for (entry of metadata(); track entry.id) {
+          @let field = form[entry.id]; @let state = field(); @let placeholder = entry.placeholder;
+          @let label = entry.label; @let id = entry.id; @let mode = entry.mode;
+          @if (!state.hidden()) {
+            @switch (entry.type) {
+              @case ('text') {
+                <dc-input-text
+                  [field]="field"
+                  [placeholder]="placeholder"
+                  [label]="label"
+                  [inputId]="id"
+                />
+              }
+              @case ('number') {
+                <dc-input-number
+                  [field]="field"
+                  [placeholder]="placeholder"
+                  [label]="label"
+                  [inputId]="id"
+                  [mode]="mode"
+                />
+              }
+              @case ('select') {
+                @let options = entry.options;
+                @if (options) {
+                  <dc-input-select
+                    [field]="field"
+                    [placeholder]="placeholder"
+                    [options]="options"
+                    [label]="label"
+                    [inputId]="id"
+                  />
+                }
+              }
+              @case ('symbol') {
+                <dc-input-symbol
+                  [field]="field"
+                  [placeholder]="placeholder"
+                  [label]="label"
+                  [inputId]="id"
+                />
+              }
+            }
+          }
+        }
+      </form>
 
-    @let state = form(); @if(state.invalid() && (state.touched() || state.dirty())) {
-    <span
-      animate.enter="fade-in"
-      animate.leave="fade-out"
-      class="flex mt-4 text-[#ff6466] items-center gap-1 text-xs"
-    >
-      <lucide-icon class="w-3 h-3" name="triangle-alert" />
-      {{ 'REQUIRED_FIELDS_ERROR' | translate }}</span
-    >
-    } }
+      @let state = form();
+      @if (state.invalid() && (state.touched() || state.dirty())) {
+        <span
+          animate.enter="fade-in"
+          animate.leave="fade-out"
+          class="flex mt-4 text-[#ff6466] items-center gap-1 text-xs"
+        >
+          <lucide-icon class="w-3 h-3" name="triangle-alert" />
+          {{ 'REQUIRED_FIELDS_ERROR' | translate }}</span
+        >
+      }
+    }
   `,
 })
 export class InputForm implements OnInit {
