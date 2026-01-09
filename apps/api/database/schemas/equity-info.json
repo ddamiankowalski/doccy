@@ -1,5 +1,5 @@
 {
-  "name": "stock_info",
+  "name": "equity_info",
   "columns": [
     {
       "name": "symbol",
@@ -15,6 +15,12 @@
     },
     {
       "name": "name",
+      "type": "varchar",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "short_name",
       "type": "varchar",
       "length": 255,
       "nullable": true

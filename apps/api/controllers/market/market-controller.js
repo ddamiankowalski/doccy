@@ -1,4 +1,5 @@
-const SystemError = require("../error/system-error");
+const SystemError = require("../../error/system-error");
+const MarketCache = require('./market-cache-controller');
 
 const YahooFinance = require("yahoo-finance2").default;
 
@@ -13,17 +14,19 @@ const api = new YahooFinance();
  * @param {*} symbol
  * @returns
  */
-const search = async (symbol) => {
+const searchEquity = async (symbol) => {
   try {
     const { quotes } = await api.search(symbol);
 
-    console.log(quotes);
-
-    return quotes
+    const equities = quotes
       .filter((quote) => "quoteType" in quote && quote.quoteType === "EQUITY")
-      .map(({ symbol, name, shortname, longname }) => {
-        return { symbol, name: longname || shortname || name };
+      .map(({ symbol, name, shortname, longname, exchange }) => {
+        return { symbol, name, shortname, longname, exchange };
       });
+    
+    MarketCache.cacheEquities(equities);
+    
+    return equities;
   } catch {
     throw SystemError(
       `Could not fetch results for searching market symbol "${symbol}"`
@@ -32,5 +35,5 @@ const search = async (symbol) => {
 };
 
 module.exports = {
-  search,
+  searchEquity,
 };

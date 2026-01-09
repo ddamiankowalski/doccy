@@ -1,5 +1,4 @@
 const db = require("../database/db");
-const logger = require('../logger/logger');
 const SystemError = require("../error/system-error");
 
 /**
