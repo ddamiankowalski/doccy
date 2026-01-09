@@ -46,11 +46,9 @@ export const FinanceStore = signalStore(
      */
     const total = computed(() => {
       return {
-        assets: store.assets().entries.reduce((sum, entry) => sum + entry.value, 0),
-        liabilities: store
-          .liabilities()
-          .entries.reduce((sum, entry) => sum + entry['payment_value' as any as 'value'], 0),
-        income: store.income().entries.reduce((sum, entry) => sum + entry.value, 0),
+        assets: 0,
+        liabilities: 1,
+        income: 2,
       };
     });
 
