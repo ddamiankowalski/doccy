@@ -112,7 +112,7 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
           <span>Type something in</span>
         </div>
         } @else { @switch(state) { @case('loading'){
-        <dc-spinner class="block my-4 h-2 w-2" />
+        <dc-spinner class="block py-4" />
         } @case ('empty') {
         <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
           <lucide-icon class="w-3.5 h-3.5" name="info" />
