@@ -39,5 +39,9 @@
   "ERROR_NOTIFICATION": "Error occurred",
   "ERROR_ADD_ENTRY": "Could not add entry. Please try again or contact administrator",
   "STOCK_TICKER_NAME": "Stock ticker",
-  "STOCK_TICKER_NAME_PLACEHOLDER": "Search for ticker"
+  "STOCK_TICKER_NAME_PLACEHOLDER": "Search for ticker",
+  "STOCK_PRICE": "Price of stock",
+  "STOCK_PRICE_PLACEHOLDER": "Enter price of stock",
+  "COMMISION": "Commission",
+  "COMISSION_PLACEHOLDER": "Enter commision"
 }

@@ -31,23 +31,14 @@ const getModel = (name) => {
         );
       }
 
+      const placeholders = entries.map((_, i) => `$${i + 1}`).join(", ");
       const keys = entries.map(([key]) => key).join(", ");
-      const values = entries.map(([_, value]) => {
-        switch (true) {
-          case value === null:
-            return 'NULL';
-          case typeof value === 'boolean':
-          case typeof value === 'number':
-            return `${value}`;
-          default:
-            return `'${value}'`;
-        }
-      }).join(", ");
+      const values = entries.map(([_, value]) => value);
 
-      const query = `INSERT INTO ${name} (${keys}) VALUES (${values}) RETURNING *;`;
+      const query = `INSERT INTO ${name} (${keys}) VALUES (${placeholders}) RETURNING *;`;
 
       try {
-        const [created] = await db.query(query);
+        const [created] = await db.query(query, values);
         return created;
       } catch (err) {
         throw new SystemError(

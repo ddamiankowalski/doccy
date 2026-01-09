@@ -68,7 +68,7 @@ import { InputEquity } from '../input-equity/input-equity';
                   />
                 }
               }
-              @case ('symbol') {
+              @case ('equity') {
                 <dc-input-symbol
                   [field]="field"
                   [placeholder]="placeholder"

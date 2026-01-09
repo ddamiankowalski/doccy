@@ -1,20 +1,5 @@
 [
   {
-    "id": "name",
-    "type": "text",
-    "required": true,
-    "label": "NAME",
-    "placeholder": "NAME_PLACEHOLDER"
-  },
-  {
-    "id": "value",
-    "type": "number",
-    "mode": "currency",
-    "required": true,
-    "label": "VALUE",
-    "placeholder": "VALUE_PLACEHOLDER"
-  },
-  {
     "id": "type",
     "type": "select",
     "options": [
@@ -27,11 +12,39 @@
     "placeholder": "ASSET_TYPE_PLACEHOLDER"
   },
   {
-    "id": "symbol",
-    "type": "symbol",
+    "condition": {
+      "fieldId": "type",
+      "value": "stocks"
+    },
+    "id": "ticker",
+    "type": "equity",
     "required": true,
     "label": "STOCK_TICKER_NAME",
     "placeholder": "STOCK_TICKER_NAME_PLACEHOLDER"
+  },
+  {
+    "condition": {
+      "fieldId": "type",
+      "value": "stocks"
+    },
+    "id": "price",
+    "type": "number",
+    "mode": "currency",
+    "required": true,
+    "label": "STOCK_PRICE",
+    "placeholder": "STOCK_PRICE_PLACEHOLDER"
+  },
+  {
+      "condition": {
+      "fieldId": "type",
+      "value": "stocks"
+    },
+    "id": "commission",
+    "type": "number",
+    "mode": "currency",
+    "required": false,
+    "label": "COMMISION",
+    "placeholder": "COMISSION_PLACEHOLDER"
   },
   {
     "condition": {
