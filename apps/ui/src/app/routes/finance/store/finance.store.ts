@@ -40,7 +40,7 @@ const initialState: FinanceState = {
 export const FinanceStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed((store) => {
+  withComputed(() => {
     /**
      * Total values
      */
