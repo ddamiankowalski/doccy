@@ -27,6 +27,3 @@ app.listen(PORT, () => {
   migrate({ clear: true});
 });
 
-const yahooFinance = new Yahoo();
-yahooFinance.quote('PKN.WA').then((x) => console.log(x));
-
