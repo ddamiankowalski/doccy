@@ -90,8 +90,9 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
       >
         @let state = inputState(); @switch(state) { @case('loading'){
         <dc-spinner />
-        } @case ('empty') { type something in } @case('loaded') { @for(symbol of symbols(); track
-        symbol) {
+        } @case ('empty') { type something in } @case('loaded') { @for(option of options(); track
+        option.symbol) { @let symbol = option.symbol;
+
         <li
           (click)="onOptionClick(symbol)"
           class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
@@ -115,7 +116,7 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
   public touched = model<boolean>(false);
   public required = input<boolean>(false);
 
-  public symbols = signal<string[]>([]);
+  public options = signal<{ name: string; symbol: string }[]>([]);
 
   public inputId = input.required<string>();
 
@@ -141,6 +142,7 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
         takeUntilDestroyed(this._destroyRef),
         map((ev) => (ev.target as HTMLInputElement).value),
         filter((symbol) => symbol.length !== 0),
+        tap(() => this.inputState.set('loading')),
         debounceTime(1000),
         switchMap((symbol) =>
           this._http.searchSymbol$(symbol).pipe(
@@ -152,7 +154,10 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
         )
       )
       .subscribe({
-        next: ({ symbols }) => this.symbols.set(symbols),
+        next: ({ result }) => {
+          this.options.set(result);
+          this.inputState.set('loaded');
+        },
       });
   }
 

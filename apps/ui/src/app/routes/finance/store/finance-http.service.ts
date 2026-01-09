@@ -19,7 +19,7 @@ type FieldsResponse = {
 type PostResponse<T> = { result: T } & Response;
 
 type SymbolResponse = {
-  symbols: string[];
+  result: { name: string; symbol: string }[];
 } & Response;
 
 @Injectable({
@@ -44,7 +44,7 @@ export class FinanceHttpService {
     return this._http.post<PostResponse<T>>(`api/${type}`, model);
   }
 
-  public searchSymbol$(symbol: string): Observable<any> {
-    return this._http.get('api/market/search', { params: { symbol } });
+  public searchSymbol$(symbol: string): Observable<SymbolResponse> {
+    return this._http.get<SymbolResponse>('api/market/search', { params: { symbol } });
   }
 }
