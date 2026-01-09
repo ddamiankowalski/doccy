@@ -37,25 +37,25 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
     class: `flex flex-col h-full w-full relative gap-2`,
   },
   template: `
-    @if(label()) {
-    <label [for]="inputId()" class="text-white text-xs leading-none">{{
-      (label() | translate) + (required() ? '*' : '')
-    }}</label>
+    @if (label()) {
+      <label [for]="inputId()" class="text-white text-xs leading-none">{{
+        (label() | translate) + (required() ? '*' : '')
+      }}</label>
     }
 
     <div class="relative">
-      @if(value() === null) {
-      <input
-        #inputEl
-        [(ngModel)]="inputModel"
-        [id]="inputId()"
-        [placeholder]="placeholder() | translate"
-        (focus)="onFocus()"
-        (blur)="onBlur()"
-        (input)="onInput()"
-        autocomplete="off"
-        type="text"
-        class="bg-charcoal-light
+      @if (value() === null) {
+        <input
+          #inputEl
+          [(ngModel)]="inputModel"
+          [id]="inputId()"
+          [placeholder]="placeholder() | translate"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+          (input)="onInput()"
+          autocomplete="off"
+          type="text"
+          class="bg-charcoal-light
         w-full
         h-8.5
         border border-white/50
@@ -71,10 +71,10 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
         focus:text-white
         focus:ring-white/20
         transition"
-      />
+        />
       } @else {
-      <div
-        class="flex
+        <div
+          class="flex
         pl-3
         justify-between
         items-center
@@ -87,10 +87,10 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
         px-1 py-2
         text-xs
         text-white/50"
-        (click)="onSelectClick()"
-      >
-        {{ value() }}
-      </div>
+          (click)="onSelectClick()"
+        >
+          {{ value() }}
+        </div>
       }
 
       <div class="absolute text-white/50 right-0 top-1/2 -translate-y-1/2 mr-1.5">
@@ -106,40 +106,51 @@ import { FinanceHttpService } from '../../../routes/finance/store/finance-http.s
         class="absolute z-10 inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
         [class.hidden]="isOpen() === false"
       >
-        @let state = inputState(); @let inputValue = inputModel(); @if(inputValue.length === 0) {
-        <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
-          <lucide-icon class="w-3.5 h-3.5" name="info" />
-          <span>Type something in</span>
-        </div>
-        } @else { @switch(state) { @case('loading'){
-        <dc-spinner class="block py-4" />
-        } @case ('empty') {
-        <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
-          <lucide-icon class="w-3.5 h-3.5" name="info" />
-          <span>No results</span>
-        </div>
-        } @case('loaded') { @for(option of options(); track option.symbol) { @let symbol =
-        option.symbol; @let name = option.name;
-
-        <li
-          (click)="onOptionClick(symbol)"
-          class="flex text-xs cursor-pointer justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
-        >
-          <div class="flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
-            <span>{{ symbol }}</span>
-            <p class="text-white/30 overflow-hidden text-ellipsis">{{ name }}</p>
+        @let state = inputState();
+        @let inputValue = inputModel();
+        @if (inputValue.length === 0) {
+          <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
+            <lucide-icon class="w-3.5 h-3.5" name="info" />
+            <span>Type something in</span>
           </div>
+        } @else {
+          @switch (state) {
+            @case ('loading') {
+              <dc-spinner class="block py-4" />
+            }
+            @case ('empty') {
+              <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
+                <lucide-icon class="w-3.5 h-3.5" name="info" />
+                <span>No results</span>
+              </div>
+            }
+            @case ('loaded') {
+              @for (option of options(); track option.symbol) {
+                @let symbol = option.symbol; @let name = option.name;
 
-          @if(symbol === value()) {
-          <lucide-icon class="h-4 w-4" name="check" />
+                <li
+                  (click)="onOptionClick(symbol)"
+                  class="flex text-xs cursor-pointer justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
+                >
+                  <div class="flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+                    <span>{{ symbol }}</span>
+                    <p class="text-white/30 overflow-hidden text-ellipsis">{{ name }}</p>
+                  </div>
+
+                  @if (symbol === value()) {
+                    <lucide-icon class="h-4 w-4" name="check" />
+                  }
+                </li>
+              }
+            }
+            @case ('error') {
+              <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
+                <lucide-icon class="w-3.5 h-3.5" name="bug" />
+                <span>Error occurred, contact administrator</span>
+              </div>
+            }
           }
-        </li>
-        } } @case('error') {
-        <div class="pointer-events-none flex items-center gap-1.5 p-2 text-xs text-white/30">
-          <lucide-icon class="w-3.5 h-3.5" name="bug" />
-          <span>Error occurred, contact administrator</span>
-        </div>
-        } } }
+        }
       </ul>
     </div>
   `,
@@ -179,7 +190,7 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
         filter(({ target }) => {
           const { nativeElement } = this._elementRef;
           return !nativeElement.contains(target);
-        })
+        }),
       )
       .subscribe((ev) => {
         ev.stopPropagation();
@@ -236,9 +247,9 @@ export class InputSymbol implements FormValueControl<string | null>, AfterViewIn
             catchError(() => {
               this.inputState.set('error');
               return EMPTY;
-            })
-          )
-        )
+            }),
+          ),
+        ),
       )
       .subscribe({
         next: ({ result }) => {
