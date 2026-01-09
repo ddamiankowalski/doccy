@@ -8,7 +8,7 @@ const parser = require("./db-schema-parser");
  * @param {*} schemas 
  */
 const createTables = async (schemas) => {
-  schemas.forEach(({ name, columns }) => {
+  schemas.forEach(({ name, columns, composite_pk }) => {
     if (columns.length === 0) {
       logger.log(`Could not create "${name}" due to lack of column definition`);
       return;
@@ -22,9 +22,17 @@ const createTables = async (schemas) => {
       )}`;
     });
 
-    _createTable(name, fields);
+    _createTable(name, _addSuffix(fields, composite_pk));
   });
 };
+
+const _addSuffix = (fields, composite) => {
+  if (composite === undefined) {
+    return fields;
+  }
+
+  return [...fields, `PRIMARY KEY (${composite.join(',')})`];
+}
 
 const _isPrimary = ({ primary }) => {
   if (primary) {

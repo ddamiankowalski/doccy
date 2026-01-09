@@ -1,0 +1,30 @@
+{
+  "name": "stock_info",
+  "columns": [
+    {
+      "name": "symbol",
+      "type": "varchar",
+      "length": 255,
+      "nullable": false
+    },
+    {
+      "name": "exchange",
+      "type": "varchar",
+      "length": 255,
+      "nullable": false
+    },
+    {
+      "name": "name",
+      "type": "varchar",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "long_name",
+      "type": "varchar",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "composite_pk": ["symbol", "exchange"]
+}

@@ -17,6 +17,8 @@ const search = async (symbol) => {
   try {
     const { quotes } = await api.search(symbol);
 
+    console.log(quotes);
+
     return quotes
       .filter((quote) => "quoteType" in quote && quote.quoteType === "EQUITY")
       .map(({ symbol, name, shortname, longname }) => {
