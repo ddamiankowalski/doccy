@@ -1,25 +1,40 @@
-import { NgClass } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   computed,
-  DOCUMENT,
+  DestroyRef,
   ElementRef,
-  HostListener,
   inject,
   input,
   model,
   signal,
   viewChild,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormValueControl } from '@angular/forms/signals';
+import { FormsModule } from '@angular/forms';
+import { Field, form, FormValueControl } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { filter, fromEvent } from 'rxjs';
+import { Spinner } from '../../loader/components/spinner/spinner';
+import {
+  asyncScheduler,
+  catchError,
+  debounceTime,
+  EMPTY,
+  filter,
+  fromEvent,
+  map,
+  NEVER,
+  of,
+  switchMap,
+  tap,
+  throttleTime,
+} from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FinanceHttpService } from '../../../routes/finance/store/finance-http.service';
 
 @Component({
   selector: 'dc-input-symbol',
-  imports: [NgClass, LucideAngularModule, TranslatePipe],
+  imports: [LucideAngularModule, TranslatePipe, Spinner, FormsModule],
   host: {
     class: `flex flex-col h-full w-full relative gap-2`,
   },
@@ -30,89 +45,82 @@ import { filter, fromEvent } from 'rxjs';
     }}</label>
     }
 
-    <div
-      #selectEl
-      tabindex="0"
-      [id]="inputId()"
-      (blur)="onBlur()"
-      class="flex
-        justify-between
-        items-center
-        group/select relative mt-auto bg-charcoal-light
-        h-8.5
-        cursor-pointer
+    <div class="relative">
+      <input
+        #inputEl
+        [(ngModel)]="inputModel"
+        [id]="inputId()"
+        [placeholder]="placeholder() | translate"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        autocomplete="off"
+        type="text"
+        class="bg-charcoal-light
         w-full
+        h-8.5
         border border-white/50
         rounded-md
-        px-1 py-2
+        px-3 py-2
+        text-white
+        hover:text-white
         text-xs
-        text-white/50
+        placeholder:text-white/30
         focus:outline-none
         focus:ring-3
         focus:ring-offset-1
         focus:text-white
         focus:ring-white/20
         transition"
-    >
-      <span
-        [ngClass]="value() !== null ? 'text-white' : 'text-white/30'"
-        class="ml-2 group-focus-within/select:text-white"
-        >@if(optionLabel() === null) {
-        {{ placeholder() | translate }}
-        } @else {
-        {{ optionLabel() | translate }}
-        }</span
-      >
+      />
 
-      @if(value() !== null) {
-      <div
-        (click)="onResetClick()"
-        class="transition-all flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
-      >
-        <lucide-icon class="h-4 w-4" name="x" />
+      <div class="absolute text-white/50 right-0 top-1/2 -translate-y-1/2 mr-1.5">
+        @if(value() !== null || true) {
+        <div
+          (click)="onResetClick()"
+          class="transition-all cursor-pointer flex justify-center items-center rounded-full hover:bg-white/10 h-6 w-6"
+        >
+          <lucide-icon class="h-4 w-4" name="x" />
+        </div>
+        }
       </div>
-      } @else {
-      <div (click)="onResetClick()" class="flex justify-center items-center rounded-full  h-6 w-6">
-        <lucide-icon class="h-4 w-4" name="chevron-down" />
-      </div>
-      }
 
       <ul
         class="absolute z-10 inset-x-0 top-full mt-2 p-1 bg-charcoal-light flex flex-col gap-2 rounded-md border border-white/10"
         [class.hidden]="isOpen() === false"
       >
-        @for(option of options; track option.value) {
+        @let state = inputState(); @switch(state) { @case('loading'){
+        <dc-spinner />
+        } @case ('empty') { type something in } @case('loaded') { @for(symbol of symbols(); track
+        symbol) {
         <li
-          (click)="onOptionClick(option.value)"
+          (click)="onOptionClick(symbol)"
           class="flex justify-between items-center transition-all p-2 rounded-sm hover:bg-white/10"
         >
-          {{ option.label | translate }}
+          {{ symbol }}
 
-          @if(option.value === value()) {
+          @if(symbol === value()) {
           <lucide-icon class="h-4 w-4" name="check" />
           }
         </li>
-        }
+        } } @case('error') { error occurred } }
       </ul>
     </div>
   `,
 })
-export class InputSymbol implements FormValueControl<string | null> {
-  @HostListener('click')
-  public onClick(): void {
-    this._selectEl().nativeElement.focus();
-    this.isOpen.update((isOpen) => !isOpen);
-  }
-
-  private _document = inject(DOCUMENT);
-  private _elementRef = inject(ElementRef);
-  private _selectEl = viewChild.required('selectEl', { read: ElementRef });
+export class InputSymbol implements FormValueControl<string | null>, AfterViewInit {
+  public inputModel = model<string>('');
+  public inputState = signal<'loading' | 'empty' | 'loaded' | 'error'>('empty');
 
   public value = model<string | null>(null);
   public touched = model<boolean>(false);
   public required = input<boolean>(false);
 
+  public symbols = signal<string[]>([]);
+
   public inputId = input.required<string>();
+
+  private _inputEl = viewChild.required('inputEl', { read: ElementRef });
+  private _destroyRef = inject(DestroyRef);
 
   public optionLabel = computed(() => {
     return '';
@@ -123,26 +131,33 @@ export class InputSymbol implements FormValueControl<string | null> {
 
   public isOpen = signal<boolean>(false);
 
-  public options = [
-    {
-      label: 'label',
-      value: 'value',
-    },
-  ];
+  private _http = inject(FinanceHttpService);
 
-  constructor() {
-    fromEvent(this._document.body, 'click')
+  public ngAfterViewInit(): void {
+    const { nativeElement } = this._inputEl();
+
+    fromEvent<InputEvent>(nativeElement, 'input')
       .pipe(
-        takeUntilDestroyed(),
-        filter(({ target }) => {
-          const { nativeElement } = this._elementRef;
-          return !nativeElement.contains(target);
-        })
+        takeUntilDestroyed(this._destroyRef),
+        map((ev) => (ev.target as HTMLInputElement).value),
+        filter((symbol) => symbol.length !== 0),
+        debounceTime(1000),
+        switchMap((symbol) =>
+          this._http.searchSymbol$(symbol).pipe(
+            catchError(() => {
+              this.inputState.set('error');
+              return EMPTY;
+            })
+          )
+        )
       )
-      .subscribe((ev) => {
-        ev.stopPropagation();
-        this.isOpen.set(false);
+      .subscribe({
+        next: ({ symbols }) => this.symbols.set(symbols),
       });
+  }
+
+  public onFocus(): void {
+    this.isOpen.set(true);
   }
 
   public onOptionClick(value: string): void {
@@ -155,5 +170,6 @@ export class InputSymbol implements FormValueControl<string | null> {
 
   public onBlur(): void {
     this.touched.set(true);
+    this.isOpen.set(false);
   }
 }
