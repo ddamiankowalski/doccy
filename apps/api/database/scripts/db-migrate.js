@@ -4,12 +4,11 @@ const parser = require("./db-schema-parser");
 
 /**
  * Creates tables in postgres database
- *
- * @param {*} name
- * @param {*} fields
+ * 
+ * @param {*} schemas 
  */
-const createTables = async ({ tables }) => {
-  tables.forEach(({ name, columns }) => {
+const createTables = async (schemas) => {
+  schemas.forEach(({ name, columns }) => {
     if (columns.length === 0) {
       logger.log(`Could not create "${name}" due to lack of column definition`);
       return;
@@ -128,7 +127,7 @@ const migrate = async ({ clear = true } = {}) => {
     await reset();
   }
 
-  const schema = await parser.parseSchema();
+  const schema = await parser.parseSchemas();
   await createTables(schema);
 };
 
