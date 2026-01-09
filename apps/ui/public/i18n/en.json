@@ -37,5 +37,7 @@
   "PAYMENT_VALUE": "Payment value (single)",
   "PAYMENT_VALUE_PLACEHOLDER": "Enter value",
   "ERROR_NOTIFICATION": "Error occurred",
-  "ERROR_ADD_ENTRY": "Could not add entry. Please try again or contact administrator"
+  "ERROR_ADD_ENTRY": "Could not add entry. Please try again or contact administrator",
+  "STOCK_TICKER_NAME": "Stock ticker",
+  "STOCK_TICKER_NAME_PLACEHOLDER": "Search for ticker"
 }

@@ -27,6 +27,13 @@
     "placeholder": "ASSET_TYPE_PLACEHOLDER"
   },
   {
+    "id": "symbol",
+    "type": "symbol",
+    "required": true,
+    "label": "STOCK_TICKER_NAME",
+    "placeholder": "STOCK_TICKER_NAME_PLACEHOLDER"
+  },
+  {
     "condition": {
       "fieldId": "type",
       "value": "bonds"
