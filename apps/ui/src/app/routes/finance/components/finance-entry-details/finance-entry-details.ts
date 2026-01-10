@@ -150,7 +150,7 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
         </table>
       </div>
 
-      <div class="flex gap-2 mt-2 items-center justify-center text-gray-400 text-xs font-medium">
+      <div class="flex gap-2 mt-4 items-center justify-center text-gray-400 text-xs font-medium">
         <dc-icon-button (clicked)="onPreviousClick()" name="chevron-left" />
         <span>Page {{ currentPage() }} of {{ allPages() }}</span>
         <dc-icon-button (clicked)="onNextClick()" name="chevron-right" />
