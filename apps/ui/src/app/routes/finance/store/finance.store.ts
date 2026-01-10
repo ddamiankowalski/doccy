@@ -81,6 +81,11 @@ export const FinanceStore = signalStore(
             patchState(store, { [name]: { error: true } });
             return EMPTY;
           }),
+          tap((added) => {
+            patchState(store, (state) => ({
+              [name]: { ...state[name], entries: [...state[name].entries, added] },
+            }));
+          }),
         ),
       ),
     );
