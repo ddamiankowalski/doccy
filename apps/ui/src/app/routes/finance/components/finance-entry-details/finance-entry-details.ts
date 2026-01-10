@@ -1,24 +1,26 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
+import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
-import { Table } from '../../../../ui/table/components/table';
+import { FinanceAdd } from '../finance-add/finance-add';
+import { FinanceTable } from '../finance-entry-table/finance-entry-table';
 
 @Component({
   selector: 'dc-finance-entry-details',
   encapsulation: ViewEncapsulation.None,
-  imports: [PrimaryButton, SecondaryButton, LucideAngularModule, Table],
+  imports: [ LucideAngularModule, FinanceAdd, FinanceTable],
   template: `
-    <div class="w-full text-xs">
-      <div class="flex gap-2 mb-2">
-        <dc-primary-button icon="plus"> Add new </dc-primary-button>
-        <dc-secondary-button icon="plus" [isDisabled]="true"> Remove selected </dc-secondary-button>
-      </div>
-
-      <dc-table/>
-    </div>
+      @switch(tab()) {
+        @case ('table') {
+          <dc-finance-table (add)="onAddClick()" />
+        } @case('add') {
+          <dc-finance-add />
+        }
+      }
   `,
 })
 export class FinanceEntryDetails {
+  public tab = signal<'add' | 'table'>('table');
 
+  public onAddClick(): void {
+    this.tab.set('add');
+  }
 }

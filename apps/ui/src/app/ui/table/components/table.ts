@@ -3,6 +3,9 @@ import { IconButton } from "../../button/icon-button/icon-button";
 
 @Component({
   selector: 'dc-table',
+  host: {
+    class: 'text-xs'
+  },
   imports: [IconButton],
   template: `
         <table class="w-full table-fixed ">
