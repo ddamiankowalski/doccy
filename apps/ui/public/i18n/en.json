@@ -1,6 +1,8 @@
 {
   "NAME": "Name",
   "NAME_PLACEHOLDER": "Enter name",
+  "ASSET_NAME": "Asset name",
+  "ASSET_NAME_PLACEHOLDER": "Enter name of your choice",
   "ASSET_TYPE": "Asset type",
   "ASSET_TYPE_PLACEHOLDER": "Select asset type",
   "ASSET_SUBTYPE": "Subtype of asset",

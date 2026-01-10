@@ -10,5 +10,12 @@
     "required": true,
     "label": "ASSET_TYPE",
     "placeholder": "ASSET_TYPE_PLACEHOLDER"
+  },
+  {
+    "id": "name",
+    "type": "text",
+    "required": false,
+    "label": "ASSET_NAME",
+    "placeholder": "ASSET_NAME_PLACEHOLDER"
   }
 ]

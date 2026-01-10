@@ -4,7 +4,9 @@ export type FinanceEntry = {
   type: string;
 };
 
-export type AssetEntry = {} & FinanceEntry;
+export type AssetEntry = {
+  total: number;
+} & FinanceEntry;
 
 export type LiabilityEntry = {} & FinanceEntry;
 
