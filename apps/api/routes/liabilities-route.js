@@ -13,7 +13,7 @@ router.get("/", async (_, res) => {
   return res.json({ status: 200, entries: result });
 });
 
-router.get("/add-fields", async (_, res) => {
+router.get("/add-section-fields", async (_, res) => {
   const fields = await Liabilities.getAddFields();
   return res.json({ status: 200, fields });
 });

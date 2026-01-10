@@ -1,178 +1,52 @@
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { withUser } from '../../user/store/with-user';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { switchMap } from 'rxjs';
-import { computed, inject } from '@angular/core';
-import { FinanceHttpService } from './finance-http.service';
-import { tapResponse } from '@ngrx/operators';
-import { Asset, Liability, Section, SectionFields, SectionType } from './type';
-import { FormModel } from '../../../ui/input/input-form/type';
-import { Dispatcher, on, withReducer } from '@ngrx/signals/events';
-import { added } from './finance.events';
-import { NotificationService } from '../../../ui/notification/services/notification.service';
+import { signalStore, withMethods, withState } from '@ngrx/signals';
+import { withUserReset } from '../../user/store/with-user';
+import { withAssets } from './with-assets';
+import { withLiabilities } from './with-liabilities';
+import { withIncome } from './with-income';
+
+export type SectionName = 'assets' | 'liabilities' | 'income';
+
+export type FinanceSection = {
+  total: number;
+  loading: boolean;
+};
 
 type FinanceState = {
-  assets: Section<Asset>;
-  liabilities: Section<Liability>;
-  income: Section<Asset>;
+  assets: FinanceSection;
+  liabilities: FinanceSection;
+  income: FinanceSection;
 };
 
-const sectionFieldsState: SectionFields = {
-  error: false,
+export const sectionState: FinanceSection = {
+  total: 0,
   loading: false,
-  metadata: [],
-};
-
-const initialSectionState = {
-  entries: [],
-  error: false,
-  loading: false,
-  fields: sectionFieldsState,
-  createLoading: false,
 };
 
 const initialState: FinanceState = {
-  assets: initialSectionState,
-  liabilities: initialSectionState,
-  income: initialSectionState,
+  assets: sectionState,
+  income: sectionState,
+  liabilities: sectionState,
 };
 
 export const FinanceStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed(() => {
-    /**
-     * Total values
-     */
-    const total = computed(() => {
-      return {
-        assets: 0,
-        liabilities: 1,
-        income: 2,
-      };
-    });
-
-    return {
-      total,
-    };
-  }),
-  withReducer(
-    /**
-     * Add a new asset
-     */
-    on(added, ({ payload }, state) => {
-      const { entry, type } = payload;
-
-      return {
-        [type]: { ...state[type], entries: [...state[type].entries, entry] },
-      };
-    }),
-  ),
+  withAssets(),
+  withLiabilities(),
+  withIncome(),
   withMethods((store) => {
-    const http = inject(FinanceHttpService);
-    const dispatcher = inject(Dispatcher);
-    const notification = inject(NotificationService);
-
-    const fetchFields = rxMethod<SectionType>(
-      switchMap((type) => {
-        const patchFields = (fields: SectionFields) => {
-          patchState(store, (state) => {
-            const section = state[type];
-            return { [type]: { ...section, fields } };
-          });
-        };
-
-        patchFields({ ...sectionFieldsState, loading: true });
-        return http.fetchSectionFields$(type).pipe(
-          tapResponse({
-            next: ({ fields: metadata }) => patchFields({ ...sectionFieldsState, metadata }),
-            error: () => patchFields({ ...sectionFieldsState, error: true }),
-          }),
-        );
-      }),
-    );
-
     /**
-     * Resets the finance store to
-     * initial state
-     *
-     * @returns
+     * Resets the state
      */
-    const _reset = (): void => patchState(store, initialState);
-
-    const fetchLiabilities = rxMethod<void>(
-      switchMap(() => {
-        patchState(store, ({ liabilities }) => ({
-          liabilities: { ...liabilities, loading: true, error: false },
-        }));
-
-        return http.fetchLiabilities$().pipe(
-          tapResponse({
-            next: ({ entries }) =>
-              patchState(store, ({ liabilities }) => ({
-                liabilities: { ...liabilities, entries },
-              })),
-            error: () =>
-              patchState(store, ({ liabilities }) => ({
-                liabilities: { ...liabilities, error: true },
-              })),
-            finalize: () =>
-              patchState(store, ({ liabilities }) => ({
-                liabilities: { ...liabilities, loading: false },
-              })),
-          }),
-        );
-      }),
-    );
-
-    const fetchAssets = rxMethod<void>(
-      switchMap(() => {
-        patchState(store, ({ assets }) => ({ assets: { ...assets, loading: true, error: false } }));
-
-        return http.fetchAssets$().pipe(
-          tapResponse({
-            next: ({ entries }) =>
-              patchState(store, ({ assets }) => ({ assets: { ...assets, entries } })),
-            error: () =>
-              patchState(store, ({ assets }) => ({
-                assets: { ...assets, error: true },
-              })),
-            finalize: () =>
-              patchState(store, ({ assets }) => ({ assets: { ...assets, loading: false } })),
-          }),
-        );
-      }),
-    );
-
-    const addEntry = rxMethod<{ model: FormModel; type: SectionType }>(
-      switchMap(({ model, type }) => {
-        patchState(store, (state) => ({
-          [type]: { ...state[type], createLoading: true },
-        }));
-
-        return http.postEntry$(type, model).pipe(
-          tapResponse({
-            next: ({ result }) => {
-              dispatcher.dispatch(added({ type, entry: result }));
-              notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
-            },
-            error: () => notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY'),
-            finalize: () =>
-              patchState(store, (state) => ({
-                [type]: { ...state[type], createLoading: false },
-              })),
-          }),
-        );
-      }),
-    );
+    const _reset = () => {
+      store._resetAssets();
+      store._resetLiabilities();
+      store._resetIncome();
+    };
 
     return {
-      fetchFields,
-      fetchAssets,
-      addEntry,
-      fetchLiabilities,
       _reset,
     };
   }),
-  withUser(),
+  withUserReset(),
 );

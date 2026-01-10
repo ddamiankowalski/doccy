@@ -9,12 +9,12 @@ import { tap } from 'rxjs';
  *
  * @returns
  */
-export const withUser = <_>() =>
+export const withUserReset = <_>() =>
   signalStoreFeature(
     {
       methods: type<{ _reset(): void }>(),
     },
     withEventHandlers((store, events = inject(Events)) => ({
       onReset$: events.on(logout).pipe(tap(() => store._reset())),
-    }))
+    })),
   );
