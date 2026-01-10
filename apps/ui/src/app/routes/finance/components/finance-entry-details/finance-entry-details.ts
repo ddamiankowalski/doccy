@@ -19,136 +19,14 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
       <table class="w-full table-fixed ">
         <thead class="bg-charcoal-light ">
           <tr class="border-b border-white/5 ">
-            <th class="w-1/3 px-4 py-3 text-left font-semibold text-gray-400 text-xs">Song</th>
+            <th class="w-1/3 px-4 py-3 text-left font-semibold text-gray-400 text-xs">Name</th>
             <th class="w-1/3 px-4 py-3 text-left font-semibold text-gray-400 text-xs">Artist</th>
-            <th class="w-1/3 px-4 py-3 text-left font-semibold text-gray-400 text-xs">Year</th>
+            <th class="w-1/3 px-4 py-3 text-left font-semibold text-gray-400 text-xs">Date</th>
           </tr>
         </thead>
       </table>
 
-      <!-- Scrollable body -->
-      <div class="max-h-[25rem] overflow-y-auto">
-        <table class="w-full table-fixed text-xs">
-          <tbody>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <tr class="border-b border-white/5 hover:bg-white/5">
-              <td class="w-1/3 px-4 py-4">The Sliding Mr. Bones</td>
-              <td class="w-1/3 px-4 py-4">Malcolm Lockyer</td>
-              <td class="w-1/3 px-4 py-4">1961</td>
-            </tr>
-            <!-- more rows -->
-          </tbody>
-        </table>
-      </div>
+      i am able
 
       <div class="flex gap-2 mt-4 items-center justify-center text-gray-400 text-xs font-medium">
         <dc-icon-button (clicked)="onPreviousClick()" name="chevron-left" />
