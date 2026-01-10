@@ -9,10 +9,10 @@ import { LucideAngularModule } from 'lucide-angular';
   imports: [LucideAngularModule],
   template: `
     <button
-      class="flex items-center justify-center p-1.5 text-gray-500 hover:text-white hover:bg-white/10 rounded-md transition-all"
+      class="flex cursor-pointer w-7 h-7 items-center justify-center p-1.5 text-gray-500 hover:text-white hover:bg-white/10 rounded-md transition-all"
       (click)="clicked.emit()"
     >
-      <lucide-icon class="w-1.5 h-1.5" [name]="name()" />
+      <lucide-icon class="w-3.5 h-3.5" [name]="name()" />
     </button>
   `,
 })
