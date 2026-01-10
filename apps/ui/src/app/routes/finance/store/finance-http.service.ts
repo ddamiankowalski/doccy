@@ -73,7 +73,7 @@ export class FinanceHttpService {
    * @param model
    * @returns
    */
-  public removeEntry$(name: SectionName): Observable<EntryRemoveResponse> {
-    return this._http.delete<EntryRemoveResponse>(`/api/${name}/entry-remove`);
+  public removeEntry$(name: SectionName, id: string): Observable<EntryRemoveResponse> {
+    return this._http.delete<EntryRemoveResponse>(`/api/${name}/entry-remove`, { body: { id } });
   }
 }

@@ -125,7 +125,7 @@ export const FinanceStore = signalStore(
      * @returns
      */
     const removeEntry$ = (name: SectionName, id: string): Observable<any> => {
-      return http.removeEntry$(name).pipe(
+      return http.removeEntry$(name, id).pipe(
         catchError((err) => {
           notification.error('ERROR_NOTIFICATION', 'ERROR_REMOVE_ENTRY');
           throw err;

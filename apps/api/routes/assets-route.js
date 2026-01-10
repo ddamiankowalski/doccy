@@ -31,7 +31,9 @@ router.post('/entry-add', async (req, res) => {
 })
 
 router.delete('/entry-remove', async (req, res) => {
-  const entry = await Assets.removeEntry(req.body);
+  const { id } = req.body;
+  
+  const entry = await Assets.removeEntry(id);
   return res.json({ status: 200, result: entry });
 })
 
