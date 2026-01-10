@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
-import { FinanceAdd } from '../finance-add/finance-add';
+import { FinanceAddEntry } from '../finance-add-entry/finance-add-entry';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 import { FinanceStore, SectionName } from '../../store/finance.store';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
@@ -88,7 +88,7 @@ export class FinanceSection implements OnInit {
 
   public onAddClick(): void {
     this._overlay.openModal({
-      component: FinanceAdd,
+      component: FinanceAddEntry,
       title: 'ADD_NEW_' + this.name().toUpperCase(),
       description: `ADD_NEW_${this.name().toUpperCase()}_DESCRIPTION`,
       closeOnBackdrop: false,

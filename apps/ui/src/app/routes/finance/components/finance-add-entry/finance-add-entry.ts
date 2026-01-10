@@ -11,7 +11,7 @@ import { UpperCasePipe } from '@angular/common';
 import { catchError, EMPTY } from 'rxjs';
 
 @Component({
-  selector: 'dc-finance-add',
+  selector: 'dc-finance-add-entry',
   host: {
     class: 'min-w-[30rem]',
   },
@@ -60,7 +60,7 @@ import { catchError, EMPTY } from 'rxjs';
     }
   `,
 })
-export class FinanceAdd {
+export class FinanceAddEntry {
   public modal = inject(Modal);
   public finance = inject(FinanceStore);
 
