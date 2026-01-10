@@ -9,7 +9,7 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
   selector: 'dc-finance-tile',
   imports: [LucideAngularModule, Tile, ProgressBar, IconButton],
   template: `
-    <dc-tile>
+    <dc-tile class="group/tile">
       <div class="flex justify-between items-start mb-4">
         <div
           class="flex justify-center items-center min-w-9 min-h-9 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors"
@@ -18,10 +18,10 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
         </div>
 
         <div class="flex ml-2 gap-2 items-center">
-          <div class="flex gap-1">
+          <div class="flex invisible group-hover/tile:visible gap-1">
             <dc-icon-button name="ellipsis" />
             <dc-icon-button name="pen" />
-            <dc-icon-button name="trash" />
+            <dc-icon-button name="trash" type="error" />
           </div>
 
           <div
