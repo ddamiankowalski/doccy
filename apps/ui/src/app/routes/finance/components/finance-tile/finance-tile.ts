@@ -22,7 +22,7 @@ import { EMPTY, switchMap, tap, catchError } from 'rxjs';
         <div class="flex ml-2 gap-2 items-center">
           <div class="flex invisible group-hover/tile:visible gap-1">
             <dc-icon-button name="ellipsis" />
-            <dc-icon-button name="pen" />
+            <dc-icon-button name="plus" />
             <dc-icon-button (clicked)="onTrashClicked()" name="trash" type="error" />
           </div>
 
