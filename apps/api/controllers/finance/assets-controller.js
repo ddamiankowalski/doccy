@@ -30,6 +30,17 @@ const createEntry = async (data) => {
 }
 
 /**
+ * Removes finance entry
+ * 
+ * @param {*} id 
+ * @returns 
+ */
+const removeEntry = async (id) => {
+  const model = getModel('asset_entries');
+  return await model.remove(id);
+}
+
+/**
  * Returns all sections for assets
  * 
  * @returns 
@@ -67,5 +78,6 @@ module.exports = {
   getEntryFields,
   getSections,
   createEntry,
+  removeEntry,
   getEntries
 };

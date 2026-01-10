@@ -30,6 +30,11 @@ router.post('/entry-add', async (req, res) => {
   return res.json({ status: 200, result: entry });
 })
 
+router.delete('/entry-remove', async (req, res) => {
+  const entry = await Assets.removeEntry(req.body);
+  return res.json({ status: 200, result: entry });
+})
+
 router.get('/sections', async (_, res) => {
   const sections = await Assets.getSections();
   return res.json({ status: 200, result: sections });
