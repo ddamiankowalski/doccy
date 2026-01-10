@@ -40,13 +40,13 @@ const getAll = async () => {
  * 
  * @returns 
  */
-const getSectionFields = async () => {
-  return await parseFields('assets-section');
+const getEntryFields = async () => {
+  return await parseFields('assets-entry');
 }
 
 module.exports = {
   create,
   getAll,
-  getSectionFields,
+  getEntryFields,
   getSections
 };
