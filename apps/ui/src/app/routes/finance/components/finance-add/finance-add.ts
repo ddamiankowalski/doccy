@@ -73,6 +73,7 @@ export class FinanceAdd {
   });
 
   public section = computed(() => {
+    console.log(this.name);
     return this.finance[this.name]();
   });
 
@@ -111,8 +112,8 @@ export class FinanceAdd {
   }
 
   get name(): SectionName {
-    const { type } = this.modal.data();
-    return type;
+    const { name } = this.modal.data();
+    return name;
   }
 
   public onCancelClick(): void {
