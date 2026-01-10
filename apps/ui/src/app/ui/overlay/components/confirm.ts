@@ -2,6 +2,7 @@ import { Component, ComponentRef, input, signal } from '@angular/core';
 import { PrimaryButton } from '../../button/primary-button/primary-button';
 import { SecondaryButton } from '../../button/secondary-button/secondary-button';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Tile } from '../../components/tile/tile';
 
 export type ConfirmResult = {
   type: 'confirm' | 'cancel';
@@ -14,16 +15,30 @@ export type ConfirmOpts = {
 
 @Component({
   selector: 'dc-confirm',
-  imports: [PrimaryButton, SecondaryButton, TranslatePipe],
+  imports: [PrimaryButton, SecondaryButton, TranslatePipe, Tile],
   template: `
-    <div class="flex flex-col gap-2">
-      <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
-      <span class="text-gray-400 text-xs font-medium">{{ message() }}</span>
-    </div>
+    <div
+      animate.enter="fade-in"
+      class="flex justify-center items-center fixed w-full h-full"
+      style="background-color: rgba(0, 0, 0, 0.5);"
+    >
+      <div class="min-h-0 max-w-[20rem]">
+        <dc-tile>
+          <div class="text-center flex flex-col gap-4 mb-4">
+            <span class="text-white text-lg font-medium leading-none">{{ title() }}</span>
+            <span class="text-gray-400 text-xs font-medium">{{ message() }}</span>
+          </div>
 
-    <div class="flex gap-2">
-      <dc-secondary-button (clicked)="onCancel()">{{ 'CANCEL' | translate }}</dc-secondary-button>
-      <dc-primary-button (clicked)="onConfirm()">{{ 'CONFIRM' | translate }}</dc-primary-button>
+          <div class="flex gap-2">
+            <dc-secondary-button class="flex-1" (clicked)="onCancel()">{{
+              'CANCEL' | translate
+            }}</dc-secondary-button>
+            <dc-primary-button class="flex-1" (clicked)="onConfirm()">{{
+              'CONFIRM' | translate
+            }}</dc-primary-button>
+          </div>
+        </dc-tile>
+      </div>
     </div>
   `,
 })

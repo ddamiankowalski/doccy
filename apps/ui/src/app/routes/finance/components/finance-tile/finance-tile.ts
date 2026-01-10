@@ -1,9 +1,10 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
 import { FinanceEntry } from '../../store/finance.store';
 import { IconButton } from '../../../../ui/button/icon-button/icon-button';
+import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -21,7 +22,7 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
           <div class="flex invisible group-hover/tile:visible gap-1">
             <dc-icon-button name="ellipsis" />
             <dc-icon-button name="pen" />
-            <dc-icon-button name="trash" type="error" />
+            <dc-icon-button (clicked)="onTrashClicked()" name="trash" type="error" />
           </div>
 
           <div
@@ -42,6 +43,7 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
 })
 export class FinanceTile<T extends FinanceEntry> {
   public entry = input.required<T>();
+  public overlay = inject(OverlayService);
 
   public title = computed(() => {
     const { name } = this.entry();
@@ -59,4 +61,14 @@ export class FinanceTile<T extends FinanceEntry> {
 
     return 'circle-question-mark';
   });
+
+  public onTrashClicked(): void {
+    this.overlay
+      .openConfirm$({
+        message:
+          'You are removing asset entry, this action is irreversible and all data will be lost',
+        title: 'Removing asset entry',
+      })
+      .subscribe((x) => console.log(x));
+  }
 }

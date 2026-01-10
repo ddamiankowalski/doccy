@@ -1,4 +1,6 @@
 {
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
   "NAME": "Name",
   "NAME_PLACEHOLDER": "Enter name",
   "ASSET_NAME": "Asset name",
