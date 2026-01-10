@@ -1,4 +1,4 @@
-import { Component, ComponentRef, input, signal } from '@angular/core';
+import { Component, ComponentRef, HostListener, input, signal } from '@angular/core';
 import { PrimaryButton } from '../../button/primary-button/primary-button';
 import { SecondaryButton } from '../../button/secondary-button/secondary-button';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -53,6 +53,11 @@ export type ConfirmOpts = {
   `,
 })
 export class Confirm {
+  @HostListener('document:keydown.escape')
+  public onKeydownHandler() {
+    this.onCancel();
+  }
+
   public title = input.required<string>();
   public message = input.required<string>();
   public ref = input.required<ComponentRef<Confirm>>();
