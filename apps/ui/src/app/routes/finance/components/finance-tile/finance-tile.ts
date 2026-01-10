@@ -1,7 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
+import { FinanceEntry } from '../../store/finance.store';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -22,13 +23,24 @@ import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar
         </div>
       </div>
 
-      <h3 class="text-gray-400 text-sm font-medium mb-1">{{ title() }}</h3>
-      <div class="text-2xl font-semibold text-white tracking-tight mb-4">$850,000</div>
+      <div class="flex justify-between">
+        <div class="flex flex-col">
+          <h3 class="text-gray-400 text-sm font-medium mb-1">{{ title() }}</h3>
+          <div class="text-2xl font-semibold text-white tracking-tight mb-4">$850,000</div>
+        </div>
+
+        <div>i am actions</div>
+      </div>
 
       <dc-progress-bar class="mt-2" [value]="65" description="House down payment" />
     </dc-tile>
   `,
 })
-export class FinanceTile {
-  public title = input.required<string>();
+export class FinanceTile<T extends FinanceEntry> {
+  public entry = input.required<T>();
+
+  public title = computed(() => {
+    const { name } = this.entry();
+    return name;
+  });
 }
