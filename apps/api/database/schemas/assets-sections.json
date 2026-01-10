@@ -1,0 +1,19 @@
+{
+  "name": "assets_sections",
+  "columns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "nullable": false,
+      "primary": true,
+      "unique": true,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "name": "type",
+      "type": "varchar",
+      "length": 255,
+      "nullable": false
+    }
+  ]
+}

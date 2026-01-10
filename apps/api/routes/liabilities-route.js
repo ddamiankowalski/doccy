@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const Liabilities = require('../controllers/liabilities-controller');
+const Liabilities = require('../controllers/finance/liabilities-controller');
 
 router.post("/", async (req, res) => {
   const asset = await Liabilities.create(req.body);

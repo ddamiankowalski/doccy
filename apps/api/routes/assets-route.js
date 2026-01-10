@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-const Assets = require("../controllers/assets-controller");
+const Assets = require("../controllers/finance/assets-controller");
 
 router.post("/", async (req, res) => {
   const { type, ...data } = req.body;

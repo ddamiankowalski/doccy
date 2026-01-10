@@ -1,6 +1,5 @@
-const SystemError = require("../error/system-error");
-const { getModel } = require("../models/model");
-const { parseFields } = require("./fields-controller");
+const { getModel } = require("../../models/model");
+const { parseFields } = require("../fields-controller");
 
 /**
  * Creates a new asset
