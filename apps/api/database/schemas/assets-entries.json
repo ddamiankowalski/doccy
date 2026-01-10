@@ -1,5 +1,5 @@
 {
-  "name": "finance_entries",
+  "name": "asset_entries",
   "columns": [
     {
       "name": "id",

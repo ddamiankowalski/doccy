@@ -37,6 +37,7 @@ const getModel = (name) => {
 
       const query = `INSERT INTO ${name} (${keys}) VALUES (${placeholders}) RETURNING *;`;
 
+      console.log(query);
       try {
         const [created] = await db.query(query, values);
         return created;

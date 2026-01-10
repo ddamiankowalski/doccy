@@ -24,8 +24,9 @@ const create = async (type, data) => {
  * @param {*} type 
  * @param {*} name 
  */
-const createEntry = async (type, name) => {
-  const model = getModel('finance_')
+const createEntry = async (data) => {
+  const model = getModel('asset_entries');
+  return await model.create(data);
 }
 
 /**
@@ -59,5 +60,6 @@ module.exports = {
   create,
   getAll,
   getEntryFields,
-  getSections
+  getSections,
+  createEntry
 };

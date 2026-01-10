@@ -21,7 +21,9 @@ router.get("/entry-fields", async (_, res) => {
 });
 
 router.post('/entry-add', async (req, res) => {
-  const entry = await Assets.addEntry()
+  const { type } = req.body;
+  const entry = await Assets.createEntry({ type });
+  
   return res.json({ status: 200, result: entry });
 })
 
