@@ -74,7 +74,16 @@ export const FinanceStore = signalStore(
      * @param name
      * @returns
      */
-    const fetchEntries = rxMethod<SectionName>(mergeMap((name) => http.fetchEntries$(name)));
+    const fetchEntries = rxMethod<SectionName>(
+      mergeMap((name) =>
+        http.fetchEntries$(name).pipe(
+          catchError(() => {
+            patchState(store, { [name]: { error: true } });
+            return EMPTY;
+          }),
+        ),
+      ),
+    );
 
     const addEntry$ = (name: SectionName, model: object): Observable<FinanceEntry> => {
       return http.addEntry$(name, model).pipe(
