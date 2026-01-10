@@ -1,25 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Asset, Equity, Liability, SectionType } from './type';
-import { FormModel, InputField } from '../../../ui/input/input-form/type';
+import { EntryFields, SectionName } from './finance.store';
+import { map, Observable } from 'rxjs';
+import { InputField } from '../../../ui/input/input-form/type';
 
 type Response = {
   status: number;
 };
 
-type FetchResponse<T> = {
-  entries: T[];
-} & Response;
-
-type FieldsResponse = {
-  fields: InputField[];
-} & Response;
-
-type PostResponse<T> = { result: T } & Response;
-
-type EquityResponse = {
-  result: Equity[];
+type EntryFieldsResponse = {
+  result: InputField[];
 } & Response;
 
 @Injectable({
@@ -28,23 +18,16 @@ type EquityResponse = {
 export class FinanceHttpService {
   private _http = inject(HttpClient);
 
-  public fetchSectionFields$(type: SectionType): Observable<FieldsResponse> {
-    return this._http.get<FieldsResponse>(`api/${type}/add-section-fields`);
-  }
-
-  public fetchAssets$(): Observable<FetchResponse<Asset>> {
-    return this._http.get<FetchResponse<Asset>>('api/assets');
-  }
-
-  public fetchLiabilities$(): Observable<FetchResponse<Liability>> {
-    return this._http.get<FetchResponse<Liability>>('api/liabilities');
-  }
-
-  public postEntry$<T = any>(type: SectionType, model: FormModel): Observable<PostResponse<T>> {
-    return this._http.post<PostResponse<T>>(`api/${type}`, model);
-  }
-
-  public searchEquity$(symbol: string): Observable<EquityResponse> {
-    return this._http.get<EquityResponse>('api/market/search-equity', { params: { symbol } });
+  /**
+   * Returns fields for adding an entry in a finance
+   * section
+   *
+   * @param name
+   * @returns
+   */
+  public fetchEntryFields$(name: SectionName): Observable<InputField[]> {
+    return this._http
+      .get<EntryFieldsResponse>(`api/${name}/entry-fields`)
+      .pipe(map(({ result }) => result));
   }
 }

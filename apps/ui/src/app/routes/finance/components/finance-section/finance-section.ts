@@ -3,7 +3,7 @@ import { FinanceTile } from '../finance-tile/finance-tile';
 import { FinanceAddTile } from '../finance-add-tile/finance-add-tile';
 import { FinanceAdd } from '../finance-add/finance-add';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
-import { FinanceStore } from '../../store/finance.store';
+import { FinanceStore, SectionName } from '../../store/finance.store';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { TitleCasePipe } from '@angular/common';
@@ -17,13 +17,11 @@ import { TranslatePipe } from '@ngx-translate/core';
   },
   template: ` <section>
     <summary class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
-      {{ type() | titlecase }}
+      {{ name() | titlecase }}
 
       <div class="flex items-center gap-2">
         <span class="text-sm text-gray-500 font-medium">Total</span>
-        <span class="text-lg font-bold text-white tracking-tight"
-          >{{ finance.total()[type()] }} zł</span
-        >
+        <span class="text-lg font-bold text-white tracking-tight">{{ total() }} zł</span>
       </div>
     </summary>
 
@@ -70,40 +68,31 @@ import { TranslatePipe } from '@ngx-translate/core';
   ],
 })
 export class FinanceSection implements OnInit {
-  public type = input.required<FinanceSection>();
+  public name = input.required<SectionName>();
 
   public finance = inject(FinanceStore);
   private _overlay = inject(OverlayService);
 
   public section = computed(() => {
-    const type = this.type();
-    return this.finance[type]();
+    const name = this.name();
+    return this.finance[name]();
+  });
+
+  public total = computed(() => {
+    return this.section().total;
   });
 
   public ngOnInit(): void {
-    this._fetch();
+    this.finance.fetchEntries(this.name());
   }
 
   public onAddClick(): void {
     this._overlay.openModal({
       component: FinanceAdd,
-      title: 'ADD_NEW_' + this.type().toUpperCase(),
-      description: `ADD_NEW_${this.type().toUpperCase()}_DESCRIPTION`,
+      title: 'ADD_NEW_' + this.name().toUpperCase(),
+      description: `ADD_NEW_${this.name().toUpperCase()}_DESCRIPTION`,
       closeOnBackdrop: false,
-      data: { type: this.type() },
+      data: { name: this.name() },
     });
-  }
-
-  private _fetch(): void {
-    switch (this.type()) {
-      case 'assets':
-        this.finance.fetchAssets();
-        return;
-      case 'liabilities':
-        this.finance.fetchLiabilities();
-        return;
-      case 'income':
-        return;
-    }
   }
 }

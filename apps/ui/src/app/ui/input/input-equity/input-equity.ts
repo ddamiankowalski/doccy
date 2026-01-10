@@ -28,8 +28,9 @@ import {
   tap,
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FinanceHttpService } from '../../../routes/finance/store/finance-http.service';
 import { Equity } from '../../../routes/finance/store/type';
+import { FinanceStore } from '../../../routes/finance/store/finance.store';
+import { MarketService } from '../../../market/services/market.service';
 
 @Component({
   selector: 'dc-input-symbol',
@@ -171,10 +172,10 @@ export class InputEquity implements FormValueControl<string | null>, AfterViewIn
 
   private _inputEl = viewChild.required('inputEl', { read: ElementRef });
   private _destroyRef = inject(DestroyRef);
-  private _http = inject(FinanceHttpService);
   private _document = inject(DOCUMENT);
   private _elementRef = inject(ElementRef);
   private _input$ = new Subject<void>();
+  private _market = inject(MarketService);
 
   public optionLabel = computed(() => {
     return '';
@@ -245,7 +246,7 @@ export class InputEquity implements FormValueControl<string | null>, AfterViewIn
         tap(() => this.inputState.set('loading')),
         debounceTime(1000),
         switchMap((symbol) =>
-          this._http.searchEquity$(symbol).pipe(
+          this._market.searchEquity$(symbol).pipe(
             catchError(() => {
               this.inputState.set('error');
               return EMPTY;

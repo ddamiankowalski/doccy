@@ -1,6 +1,8 @@
 import { patchState, signalStoreFeature, type, withMethods, withState } from '@ngrx/signals';
 import { removeAllEntities, withEntities } from '@ngrx/signals/entities';
 import { FinanceSection, sectionState } from './finance.store';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { tap } from 'rxjs';
 
 export type Payment = {
   uuid: string;
@@ -45,8 +47,18 @@ export const withLiabilities = <_>() =>
         patchState(store, removeAllEntities({ collection: 'payment' }));
       };
 
+      const fetchLiabilitiesEntries = rxMethod<void>(
+        tap(() => console.log('fetching liabilities')),
+      );
+
+      const addLiabilityEntry = (model: Record<string, any>) => {
+        console.log('adding entry', model);
+      };
+
       return {
         _resetLiabilities,
+        fetchLiabilitiesEntries,
+        addLiabilityEntry,
       };
     }),
   );

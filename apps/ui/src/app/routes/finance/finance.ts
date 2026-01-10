@@ -6,9 +6,9 @@ import { FinanceSection } from './components/finance-section/finance-section';
   host: {
     class: '',
   },
-  template: ` <dc-finance-section type="assets" />
-    <dc-finance-section type="liabilities" />
-    <dc-finance-section type="income" />`,
+  template: ` <dc-finance-section name="assets" />
+    <dc-finance-section name="liabilities" />
+    <dc-finance-section name="income" />`,
   imports: [FinanceSection],
 })
 export class Finance {}

@@ -1,6 +1,8 @@
 import { patchState, signalStoreFeature, type, withMethods, withState } from '@ngrx/signals';
 import { removeAllEntities, withEntities } from '@ngrx/signals/entities';
 import { FinanceSection, sectionState } from './finance.store';
+import { tap } from 'rxjs';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 export type Salary = {
   uuid: string;
@@ -45,8 +47,16 @@ export const withIncome = <_>() =>
         patchState(store, removeAllEntities({ collection: 'salary' }));
       };
 
+      const fetchIncomeEntries = rxMethod<void>(tap(() => console.log('fetching income')));
+
+      const addIncomeEntry = (model: Record<string, any>) => {
+        console.log('adding income', model);
+      };
+
       return {
         _resetIncome,
+        fetchIncomeEntries,
+        addIncomeEntry,
       };
     }),
   );
