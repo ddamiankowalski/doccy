@@ -64,6 +64,6 @@ export class Confirm {
   }
 
   public onConfirm(): void {
-    this.clicked$.next({ type: 'cancel', ref: this.ref() });
+    this.clicked$.next({ type: 'confirm', ref: this.ref() });
   }
 }

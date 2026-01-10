@@ -5,7 +5,7 @@ import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar
 import { FinanceEntry, FinanceStore, SectionName } from '../../store/finance.store';
 import { IconButton } from '../../../../ui/button/icon-button/icon-button';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
-import { EMPTY, switchMap } from 'rxjs';
+import { EMPTY, switchMap, tap, catchError } from 'rxjs';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -81,7 +81,13 @@ export class FinanceTile<T extends FinanceEntry> {
           }
 
           const { id } = this.entry();
-          return this.finance.removeEntry$(this.name(), id);
+          return this.finance.removeEntry$(this.name(), id).pipe(
+            catchError(() => {
+              ref.destroy();
+              return EMPTY;
+            }),
+            tap(() => ref.destroy()),
+          );
         }),
       )
       .subscribe();
