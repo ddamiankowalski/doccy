@@ -1,5 +1,5 @@
-const SystemError = require('../error/system-error');
-const logger = require('../logger/logger');
+const SystemError = require('../../error/system-error');
+const logger = require('../../logger/logger');
 
 const fs = require('fs').promises;
 const path = require('path');

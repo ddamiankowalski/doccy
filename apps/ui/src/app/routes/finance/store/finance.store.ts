@@ -66,7 +66,7 @@ export const FinanceStore = signalStore(
       return {
         [type]: { ...state[type], entries: [...state[type].entries, entry] },
       };
-    })
+    }),
   ),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
@@ -83,13 +83,13 @@ export const FinanceStore = signalStore(
         };
 
         patchFields({ ...sectionFieldsState, loading: true });
-        return http.fetchFields$(type).pipe(
+        return http.fetchSectionFields$(type).pipe(
           tapResponse({
             next: ({ fields: metadata }) => patchFields({ ...sectionFieldsState, metadata }),
             error: () => patchFields({ ...sectionFieldsState, error: true }),
-          })
+          }),
         );
-      })
+      }),
     );
 
     /**
@@ -120,9 +120,9 @@ export const FinanceStore = signalStore(
               patchState(store, ({ liabilities }) => ({
                 liabilities: { ...liabilities, loading: false },
               })),
-          })
+          }),
         );
-      })
+      }),
     );
 
     const fetchAssets = rxMethod<void>(
@@ -139,9 +139,9 @@ export const FinanceStore = signalStore(
               })),
             finalize: () =>
               patchState(store, ({ assets }) => ({ assets: { ...assets, loading: false } })),
-          })
+          }),
         );
-      })
+      }),
     );
 
     const addEntry = rxMethod<{ model: FormModel; type: SectionType }>(
@@ -161,9 +161,9 @@ export const FinanceStore = signalStore(
               patchState(store, (state) => ({
                 [type]: { ...state[type], createLoading: false },
               })),
-          })
+          }),
         );
-      })
+      }),
     );
 
     return {
@@ -174,5 +174,5 @@ export const FinanceStore = signalStore(
       _reset,
     };
   }),
-  withUser()
+  withUser(),
 );

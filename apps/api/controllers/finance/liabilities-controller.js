@@ -1,5 +1,5 @@
 const { getModel } = require('../../models/model');
-const { parseFields } = require('../fields-controller');
+const { parseFields } = require('../fields/fields-controller');
 
 /**
  * Creates a new liability

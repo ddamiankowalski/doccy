@@ -1,0 +1,14 @@
+[
+  {
+    "id": "type",
+    "type": "select",
+    "options": [
+      { "value": "bonds", "label": "BONDS" },
+      { "value": "estate", "label": "REAL_ESTATE" },
+      { "value": "stocks", "label": "STOCKS" }
+    ],
+    "required": true,
+    "label": "ASSET_TYPE",
+    "placeholder": "ASSET_TYPE_PLACEHOLDER"
+  }
+]

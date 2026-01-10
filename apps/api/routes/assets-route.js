@@ -15,8 +15,8 @@ router.get("/", async (_, res) => {
   return res.json({ status: 200, result: assets });
 });
 
-router.get("/add-fields", async (_, res) => {
-  const fields = await Assets.getAddFields();
+router.get("/add-section-fields", async (_, res) => {
+  const fields = await Assets.getSectionFields();
   return res.json({ status: 200, result: fields });
 });
 

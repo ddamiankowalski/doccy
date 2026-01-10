@@ -1,5 +1,5 @@
 const { getModel } = require("../../models/model");
-const { parseFields } = require("../fields-controller");
+const { parseFields } = require("../fields/fields-controller");
 
 /**
  * Creates a new asset
@@ -40,13 +40,13 @@ const getAll = async () => {
  * 
  * @returns 
  */
-const getAddFields = async () => {
-  return await parseFields('assets');
+const getSectionFields = async () => {
+  return await parseFields('assets-section');
 }
 
 module.exports = {
   create,
   getAll,
-  getAddFields,
+  getSectionFields,
   getSections
 };

@@ -28,8 +28,8 @@ type EquityResponse = {
 export class FinanceHttpService {
   private _http = inject(HttpClient);
 
-  public fetchFields$(type: SectionType): Observable<FieldsResponse> {
-    return this._http.get<FieldsResponse>(`api/${type}/add-fields`);
+  public fetchSectionFields$(type: SectionType): Observable<FieldsResponse> {
+    return this._http.get<FieldsResponse>(`api/${type}/add-section-fields`);
   }
 
   public fetchAssets$(): Observable<FetchResponse<Asset>> {
