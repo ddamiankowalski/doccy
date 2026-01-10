@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
@@ -51,7 +51,7 @@ import { catchError, EMPTY } from 'rxjs';
           <dc-primary-button
             (clicked)="onAddClick()"
             [isDisabled]="state.invalid()"
-            [isLoading]="section().loading"
+            [isLoading]="isAdding()"
             class="flex-1"
             >{{ 'ADD_' + this.name | uppercase | translate }}</dc-primary-button
           >
@@ -62,23 +62,23 @@ import { catchError, EMPTY } from 'rxjs';
 })
 export class FinanceAdd {
   public modal = inject(Modal);
-
   public finance = inject(FinanceStore);
-  public model = signal({});
 
+  public model = signal({});
+  public isAdding = signal<boolean>(false);
   public fields = signal<EntryFields>({
     error: false,
     loading: true,
     metadata: [],
   });
 
-  public section = computed(() => {
-    console.log(this.name);
-    return this.finance[this.name]();
-  });
-
   constructor() {
     this._fetchFields();
+  }
+
+  get name(): SectionName {
+    const { name } = this.modal.data();
+    return name;
   }
 
   private _fetchFields(): void {
@@ -111,16 +111,13 @@ export class FinanceAdd {
       );
   }
 
-  get name(): SectionName {
-    const { name } = this.modal.data();
-    return name;
-  }
-
   public onCancelClick(): void {
     this.modal.close();
   }
 
   public onAddClick(): void {
-    this.finance.addEntry({ model: this.model(), name: this.name });
+    this.finance.addEntry$(this.name, this.model()).subscribe(() => {
+      this.modal.close();
+    });
   }
 }

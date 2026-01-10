@@ -1,12 +1,13 @@
-import { signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { withUserReset } from '../../user/store/with-user';
 import { withAssets } from './with-assets';
 import { withLiabilities } from './with-liabilities';
 import { withIncome } from './with-income';
-import { Observable, of } from 'rxjs';
+import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
+import { NotificationService } from '../../../ui/notification/services/notification.service';
 
 export type SectionName = 'assets' | 'liabilities' | 'income';
 
@@ -55,6 +56,7 @@ export const FinanceStore = signalStore(
   withIncome(),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
+    const notification = inject(NotificationService);
 
     /**
      * Resets the state
@@ -82,15 +84,21 @@ export const FinanceStore = signalStore(
       }
     };
 
-    const addEntry = ({ name, model }: { name: SectionName; model: Record<string, any> }) => {
-      switch (name) {
-        case 'assets':
-          return store.addAssetEntry(model);
-        case 'liabilities':
-          return store.addLiabilityEntry(model);
-        case 'income':
-          return store.addIncomeEntry(model);
-      }
+    const addEntry$ = (name: SectionName, model: object): Observable<FinanceEntry> => {
+      return http.addEntry$(name, model).pipe(
+        catchError(() => {
+          notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
+          return EMPTY;
+        }),
+        tap((added) => {
+          notification.error('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
+
+          patchState(store, (state) => {
+            const { entries, ...section } = state[name];
+            return { [name]: { ...section, entries: [...entries, added] } };
+          });
+        }),
+      );
     };
 
     const fetchFields$ = (name: SectionName): Observable<InputField[]> => {
@@ -100,7 +108,7 @@ export const FinanceStore = signalStore(
     return {
       _reset,
       fetchEntries,
-      addEntry,
+      addEntry$,
       fetchFields$,
     };
   }),
