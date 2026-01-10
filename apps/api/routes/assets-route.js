@@ -11,13 +11,18 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (_, res) => {
-  const result = await Assets.getAll();
-  return res.json({ status: 200, entries: result });
+  const assets = await Assets.getAll();
+  return res.json({ status: 200, result: assets });
 });
 
 router.get("/add-fields", async (_, res) => {
   const fields = await Assets.getAddFields();
-  return res.json({ status: 200, fields });
+  return res.json({ status: 200, result: fields });
 });
+
+router.get('/sections', async (_, res) => {
+  const sections = await Assets.getSections();
+  return res.json({ status: 200, result: sections });
+})
 
 module.exports = router;

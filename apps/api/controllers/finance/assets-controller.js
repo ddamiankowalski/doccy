@@ -18,6 +18,16 @@ const create = async (type, data) => {
 };
 
 /**
+ * Returns all sections for assets
+ * 
+ * @returns 
+ */
+const getSections = async () => {
+  const model = getModel('assets_sections');
+  return await model.getAll();
+}
+
+/**
  * Retrieve all assets
  */
 const getAll = async () => {
@@ -37,5 +47,6 @@ const getAddFields = async () => {
 module.exports = {
   create,
   getAll,
-  getAddFields
+  getAddFields,
+  getSections
 };
