@@ -22,7 +22,7 @@
           "nullable": false
         },
         {
-          "name": "price",
+          "name": "commission",
           "type": "numeric",
           "nullable": true,
           "default": null

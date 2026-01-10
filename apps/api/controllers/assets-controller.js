@@ -1,23 +1,28 @@
+const SystemError = require("../error/system-error");
 const { getModel } = require("../models/model");
 const { parseFields } = require("./fields-controller");
 
 /**
  * Creates a new asset
  */
-const create = async (data) => {
+const create = async (type, data) => {
   if (!data) {
     return;
   }
 
-  const model = getModel("assets");
-  return await model.create(data);
+  const filtered = Object.fromEntries(
+  Object.entries(data).filter(([_, value]) => value !== null)
+);
+
+  const model = getModel(type);
+  return await model.create(filtered);
 };
 
 /**
  * Retrieve all assets
  */
 const getAll = async () => {
-  const model = getModel("assets");
+  const model = getModel("stocks");
   return await model.getAll();
 };
 
