@@ -2,9 +2,10 @@ import { Component, computed, inject, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
 import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
-import { FinanceEntry } from '../../store/finance.store';
+import { FinanceEntry, FinanceStore, SectionName } from '../../store/finance.store';
 import { IconButton } from '../../../../ui/button/icon-button/icon-button';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
+import { EMPTY, switchMap } from 'rxjs';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -43,7 +44,10 @@ import { OverlayService } from '../../../../ui/overlay/services/overlay.service'
 })
 export class FinanceTile<T extends FinanceEntry> {
   public entry = input.required<T>();
+  public name = input.required<SectionName>();
+
   public overlay = inject(OverlayService);
+  public finance = inject(FinanceStore);
 
   public title = computed(() => {
     const { name } = this.entry();
@@ -69,6 +73,17 @@ export class FinanceTile<T extends FinanceEntry> {
           'You are removing asset entry, this action is irreversible and all data will be lost',
         title: 'Removing asset entry',
       })
-      .subscribe((x) => console.log(x));
+      .pipe(
+        switchMap(({ ref, type }) => {
+          if (type === 'cancel') {
+            ref.destroy();
+            return EMPTY;
+          }
+
+          const { id } = this.entry();
+          return this.finance.removeEntry$(this.name(), id);
+        }),
+      )
+      .subscribe();
   }
 }

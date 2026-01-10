@@ -16,6 +16,8 @@ type EntryAddResponse = {
   result: FinanceEntry;
 } & Response;
 
+type EntryRemoveResponse = {} & Response;
+
 type EntriesResponse<T> = {
   result: T;
 } & Response;
@@ -62,5 +64,16 @@ export class FinanceHttpService {
     return this._http
       .post<EntryAddResponse>(`/api/${name}/entry-add`, model)
       .pipe(map(({ result }) => result));
+  }
+
+  /**
+   * Removes entry from finance
+   *
+   * @param name
+   * @param model
+   * @returns
+   */
+  public removeEntry$(name: SectionName): Observable<EntryRemoveResponse> {
+    return this._http.delete<EntryRemoveResponse>(`/api/${name}/entry-remove`);
   }
 }

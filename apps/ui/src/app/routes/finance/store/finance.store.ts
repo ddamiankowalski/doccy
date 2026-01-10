@@ -93,6 +93,13 @@ export const FinanceStore = signalStore(
       }),
     );
 
+    /**
+     * Adds finance entry
+     *
+     * @param name
+     * @param model
+     * @returns
+     */
     const addEntry$ = (name: SectionName, model: object): Observable<FinanceEntry> => {
       return http.addEntry$(name, model).pipe(
         catchError(() => {
@@ -110,6 +117,30 @@ export const FinanceStore = signalStore(
       );
     };
 
+    /**
+     * Removes finance entry
+     *
+     * @param name
+     * @param id
+     * @returns
+     */
+    const removeEntry$ = (name: SectionName, id: string): Observable<any> => {
+      return http.removeEntry$(name).pipe(
+        catchError(() => {
+          notification.error('ERROR_NOTIFICATION', 'ERROR_REMOVE_ENTRY');
+          return EMPTY;
+        }),
+        tap((added) => {
+          notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_REMOVE_ENTRY');
+
+          patchState(store, (state) => {
+            const { entries, ...section } = state[name];
+            return { [name]: { ...section, entries: entries.filter((entry) => entry.id !== id) } };
+          });
+        }),
+      );
+    };
+
     const fetchFields$ = (name: SectionName): Observable<InputField[]> => {
       return http.fetchEntryFields$(name);
     };
@@ -119,6 +150,7 @@ export const FinanceStore = signalStore(
       fetchEntries,
       addEntry$,
       fetchFields$,
+      removeEntry$,
     };
   }),
   withUserReset(),

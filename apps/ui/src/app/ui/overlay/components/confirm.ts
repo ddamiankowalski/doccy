@@ -3,9 +3,12 @@ import { PrimaryButton } from '../../button/primary-button/primary-button';
 import { SecondaryButton } from '../../button/secondary-button/secondary-button';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Tile } from '../../components/tile/tile';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 export type ConfirmResult = {
   type: 'confirm' | 'cancel';
+  ref: ComponentRef<Confirm>;
 };
 
 export type ConfirmOpts = {
@@ -15,7 +18,7 @@ export type ConfirmOpts = {
 
 @Component({
   selector: 'dc-confirm',
-  imports: [PrimaryButton, SecondaryButton, TranslatePipe, Tile],
+  imports: [PrimaryButton, SecondaryButton, TranslatePipe, Tile, AsyncPipe],
   template: `
     <div
       animate.enter="fade-in"
@@ -29,37 +32,38 @@ export type ConfirmOpts = {
             <span class="text-gray-400 text-xs font-medium">{{ message() }}</span>
           </div>
 
+          @let clicked = clicked$ | async;
           <div class="flex gap-2">
-            <dc-secondary-button class="flex-1" (clicked)="onCancel()">{{
-              'CANCEL' | translate
-            }}</dc-secondary-button>
-            <dc-primary-button class="flex-1" (clicked)="onConfirm()">{{
-              'CONFIRM' | translate
-            }}</dc-primary-button>
+            <dc-secondary-button
+              class="flex-1"
+              (clicked)="onCancel()"
+              [isDisabled]="clicked !== null"
+              >{{ 'CANCEL' | translate }}</dc-secondary-button
+            >
+            <dc-primary-button
+              class="flex-1"
+              (clicked)="onConfirm()"
+              [isLoading]="clicked !== null"
+              >{{ 'CONFIRM' | translate }}</dc-primary-button
+            >
           </div>
         </dc-tile>
       </div>
     </div>
   `,
 })
-export class Confirm<T> {
+export class Confirm {
   public title = input.required<string>();
   public message = input.required<string>();
-  public ref = input.required<ComponentRef<Confirm<T>>>();
+  public ref = input.required<ComponentRef<Confirm>>();
 
-  public result = signal<ConfirmResult | null>(null);
+  public clicked$ = new BehaviorSubject<ConfirmResult | null>(null);
 
   public onCancel(): void {
-    this.result.set({ type: 'cancel' });
-    this._destroy();
+    this.clicked$.next({ type: 'cancel', ref: this.ref() });
   }
 
   public onConfirm(): void {
-    this.result.set({ type: 'confirm' });
-    this._destroy();
-  }
-
-  private _destroy(): void {
-    this.ref().destroy();
+    this.clicked$.next({ type: 'cancel', ref: this.ref() });
   }
 }

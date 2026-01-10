@@ -7,7 +7,7 @@ import {
   Type,
 } from '@angular/core';
 import { Modal } from '../components/modal';
-import { Observable } from 'rxjs';
+import { filter, Observable, take } from 'rxjs';
 import { Confirm, ConfirmOpts, ConfirmResult } from '../components/confirm';
 
 type ModalConfig<T, K = any> = {
@@ -44,23 +44,15 @@ export class OverlayService {
     ref.setInput('message', message);
     ref.setInput('title', title);
 
+    ref.instance.clicked$;
+
     this._appRef.attachView(ref.hostView);
     overlay.append(hostElement);
 
-    return new Observable((observer) => {
-      ref.onDestroy(() => {
-        const result = ref.instance.result();
-
-        if (result === null) {
-          return;
-        }
-
-        observer.next(result);
-        observer.complete();
-      });
-
-      return () => {};
-    });
+    return ref.instance.clicked$.pipe(
+      filter((result) => result !== null),
+      take(1),
+    );
   }
 
   /**
