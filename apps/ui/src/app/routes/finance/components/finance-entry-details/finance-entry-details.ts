@@ -1,7 +1,7 @@
 import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { FinanceAdd } from '../finance-add/finance-add';
-import { FinanceTable } from '../finance-entry-table/finance-entry-table';
+import { FinanceTable } from '../finance-table/finance-table';
 
 @Component({
   selector: 'dc-finance-entry-details',

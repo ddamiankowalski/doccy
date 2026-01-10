@@ -70,8 +70,6 @@ export class FinanceTile<T extends FinanceEntry> {
   public onMoreClicked(): void {
     this.overlay.openModal({
       component: FinanceEntryDetails,
-      title: 'ENTRY_DETAILS_' + this.name().toUpperCase(),
-      description: `ENTRY_DETAILS_${this.name().toUpperCase()}_DESCRIPTION`,
       closeOnBackdrop: false,
       data: { name: this.name() },
     });

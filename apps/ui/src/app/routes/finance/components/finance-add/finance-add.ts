@@ -10,6 +10,9 @@ export class FinanceAdd {
 
   constructor() {
     const ref = this.modal.ref();
-    ref.setInput('title', 'another title');
+    const { name } = this.modal.data();
+
+    ref.setInput('title', 'ENTRY_ADD_' + name.toUpperCase());
+    ref.setInput('description', `ENTRY_ADD_${name.toUpperCase()}_DESCRIPTION`)
   }
 }

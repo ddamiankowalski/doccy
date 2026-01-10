@@ -1,7 +1,8 @@
-import { Component, output } from "@angular/core";
+import { Component, inject, output } from "@angular/core";
 import { PrimaryButton } from "../../../../ui/button/primary-button/primary-button";
 import { SecondaryButton } from "../../../../ui/button/secondary-button/secondary-button";
 import { Table } from "../../../../ui/table/components/table";
+import { Modal } from "../../../../ui/overlay/components/modal";
 
 @Component({
   selector: 'dc-finance-table',
@@ -16,6 +17,15 @@ import { Table } from "../../../../ui/table/components/table";
 })
 export class FinanceTable {
   public add = output<void>();
+  public modal = inject(Modal);
+
+  constructor() {
+    const ref = this.modal.ref();
+    const { name } = this.modal.data();
+
+    ref.setInput('title', 'ENTRY_DETAILS_' + name.toUpperCase());
+    ref.setInput('description', `ENTRY_DETAILS_${name.toUpperCase()}_DESCRIPTION`)
+  }
 
   public onAddClick(): void {
     this.add.emit();
