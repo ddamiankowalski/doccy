@@ -91,7 +91,7 @@ export const FinanceStore = signalStore(
           return EMPTY;
         }),
         tap((added) => {
-          notification.error('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
+          notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_ENTRY');
 
           patchState(store, (state) => {
             const { entries, ...section } = state[name];
