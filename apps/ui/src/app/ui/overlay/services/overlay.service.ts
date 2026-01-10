@@ -7,6 +7,8 @@ import {
   Type,
 } from '@angular/core';
 import { Modal } from '../components/modal';
+import { Observable } from 'rxjs';
+import { Confirm, ConfirmOpts, ConfirmResult } from '../components/confirm';
 
 type ModalConfig<T, K = any> = {
   component: Type<T>;
@@ -24,6 +26,42 @@ export class OverlayService {
 
   private _injector = inject(EnvironmentInjector);
   private _appRef = inject(ApplicationRef);
+
+  public openConfirm$({ title, message }: ConfirmOpts): Observable<ConfirmResult> {
+    const overlay = document.getElementById(this._id);
+    const hostElement = this._createHost();
+
+    if (!overlay) {
+      throw new Error('Could not open modal because host was not found');
+    }
+
+    const ref = createComponent(Confirm, {
+      environmentInjector: this._injector,
+      hostElement,
+    });
+
+    ref.setInput('ref', ref);
+    ref.setInput('message', message);
+    ref.setInput('title', title);
+
+    this._appRef.attachView(ref.hostView);
+    overlay.append(hostElement);
+
+    return new Observable((observer) => {
+      ref.onDestroy(() => {
+        const result = ref.instance.result();
+
+        if (result === null) {
+          return;
+        }
+
+        observer.next(result);
+        observer.complete();
+      });
+
+      return () => {};
+    });
+  }
 
   /**
    * Opens modal
