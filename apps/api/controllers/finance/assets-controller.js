@@ -18,6 +18,17 @@ const create = async (type, data) => {
 };
 
 /**
+ * Adds finance entry with correct type and
+ * name
+ * 
+ * @param {*} type 
+ * @param {*} name 
+ */
+const createEntry = async (type, name) => {
+  const model = getModel('finance_')
+}
+
+/**
  * Returns all sections for assets
  * 
  * @returns 
