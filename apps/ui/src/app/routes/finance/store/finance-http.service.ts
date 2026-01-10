@@ -16,6 +16,10 @@ type EntryAddResponse = {
   result: FinanceEntry;
 } & Response;
 
+type EntriesResponse<T> = {
+  result: T;
+} & Response;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -32,6 +36,18 @@ export class FinanceHttpService {
   public fetchEntryFields$(name: SectionName): Observable<InputField[]> {
     return this._http
       .get<EntryFieldsResponse>(`api/${name}/entry-fields`)
+      .pipe(map(({ result }) => result));
+  }
+
+  /**
+   * Returns all entries for a given section
+   *
+   * @param name
+   * @returns
+   */
+  public fetchEntries$<T extends FinanceEntry>(name: SectionName): Observable<T> {
+    return this._http
+      .get<EntriesResponse<T>>(`api/${name}/entries`)
       .pipe(map(({ result }) => result));
   }
 

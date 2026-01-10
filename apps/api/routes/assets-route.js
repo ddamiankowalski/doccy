@@ -20,6 +20,11 @@ router.get("/entry-fields", async (_, res) => {
   return res.json({ status: 200, result: fields });
 });
 
+router.get("/entries", async (_, res) => {
+  const entries = await Assets.getEntries();
+  return res.json({ status: 200, result: entries });
+})
+
 router.post('/entry-add', async (req, res) => {
   const entry = await Assets.createEntry(req.body);
   return res.json({ status: 200, result: entry });

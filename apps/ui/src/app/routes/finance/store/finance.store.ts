@@ -3,11 +3,12 @@ import { withUserReset } from '../../user/store/with-user';
 import { withAssets } from './with-assets';
 import { withLiabilities } from './with-liabilities';
 import { withIncome } from './with-income';
-import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
+import { catchError, EMPTY, mergeMap, Observable, of, switchMap, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { NotificationService } from '../../../ui/notification/services/notification.service';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 export type SectionName = 'assets' | 'liabilities' | 'income';
 
@@ -73,16 +74,7 @@ export const FinanceStore = signalStore(
      * @param name
      * @returns
      */
-    const fetchEntries = (name: SectionName) => {
-      switch (name) {
-        case 'assets':
-          return store.fetchAssetEntries();
-        case 'liabilities':
-          return store.fetchLiabilitiesEntries();
-        case 'income':
-          return store.fetchIncomeEntries();
-      }
-    };
+    const fetchEntries = rxMethod<SectionName>(mergeMap((name) => http.fetchEntries$(name)));
 
     const addEntry$ = (name: SectionName, model: object): Observable<FinanceEntry> => {
       return http.addEntry$(name, model).pipe(

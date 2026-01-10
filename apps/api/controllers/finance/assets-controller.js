@@ -56,10 +56,16 @@ const getEntryFields = async () => {
   return await parseFields('assets-entry');
 }
 
+const getEntries = async () => {
+  const model = getModel("asset_entries");
+  return await model.getAll();
+}
+
 module.exports = {
   create,
   getAll,
   getEntryFields,
   getSections,
-  createEntry
+  createEntry,
+  getEntries
 };

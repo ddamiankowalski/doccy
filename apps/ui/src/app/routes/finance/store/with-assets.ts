@@ -36,16 +36,8 @@ export const withAssets = <_>() =>
         patchState(store, removeAllEntities({ collection: 'stock' }));
       };
 
-      const fetchAssetEntries = rxMethod<void>(switchMap(() => http.fetchEntries$()));
-
-      const addAssetEntry = (model: Record<string, any>) => {
-        console.log('adding entry', model);
-      };
-
       return {
         _resetAssets,
-        fetchAssetEntries,
-        addAssetEntry,
       };
     }),
   );
