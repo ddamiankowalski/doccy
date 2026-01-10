@@ -15,6 +15,7 @@ export type SectionName = 'assets' | 'liabilities' | 'income';
 export type FinanceEntry = {
   name: string;
   id: string;
+  type: string;
 };
 
 export type FinanceSection = {
