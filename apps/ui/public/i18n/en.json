@@ -49,5 +49,7 @@
   "STOCK_PRICE": "Price of stock",
   "STOCK_PRICE_PLACEHOLDER": "Enter price of stock",
   "COMMISION": "Commission",
-  "COMISSION_PLACEHOLDER": "Enter commision"
+  "COMISSION_PLACEHOLDER": "Enter commision",
+  "ENTRY_DETAILS_ASSETS": "Browse entry details",
+  "ENTRY_DETAILS_ASSETS_DESCRIPTION": "Look through entry details that was added to a given finance entry"
 }

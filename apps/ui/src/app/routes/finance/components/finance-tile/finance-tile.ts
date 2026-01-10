@@ -6,6 +6,7 @@ import { FinanceEntry, FinanceStore, SectionName } from '../../store/finance.sto
 import { IconButton } from '../../../../ui/button/icon-button/icon-button';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 import { EMPTY, switchMap, tap, catchError } from 'rxjs';
+import { FinanceEntryDetails } from '../finance-entry-details/finance-entry-details';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -21,7 +22,7 @@ import { EMPTY, switchMap, tap, catchError } from 'rxjs';
 
         <div class="flex ml-2 gap-2 items-center">
           <div class="flex invisible group-hover/tile:visible gap-1">
-            <dc-icon-button name="ellipsis" />
+            <dc-icon-button (clicked)="onMoreClicked()" name="ellipsis" />
             <dc-icon-button name="plus" />
             <dc-icon-button (clicked)="onTrashClicked()" name="trash" type="error" />
           </div>
@@ -65,6 +66,16 @@ export class FinanceTile<T extends FinanceEntry> {
 
     return 'circle-question-mark';
   });
+
+  public onMoreClicked(): void {
+    this.overlay.openModal({
+      component: FinanceEntryDetails,
+      title: 'ENTRY_DETAILS_' + this.name().toUpperCase(),
+      description: `ENTRY_DETAILS_${this.name().toUpperCase()}_DESCRIPTION`,
+      closeOnBackdrop: false,
+      data: { name: this.name() },
+    });
+  }
 
   public onTrashClicked(): void {
     this.overlay

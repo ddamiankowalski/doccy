@@ -9,15 +9,22 @@ import { LucideAngularModule } from 'lucide-angular';
       (click)="onClick()"
       [disabled]="isDisabled()"
       [ngClass]="[bgClass(), cursorClass(), textClass()]"
-      class="flex w-full items-center justify-center rounded-md transition-colors  text-xs font-medium py-2 px-4"
+      class="flex w-full items-center justify-center rounded-md transition-colors text-xs font-medium py-2 px-4"
     >
-      @if(isLoading()) {
-      <lucide-icon
-        animate.enter="fade-in"
-        animate.leave="fade-out"
-        class="w-3 h-3 mr-1.5 animate-spin"
-        name="loader-circle"
-      />
+      @if (isLoading()) {
+        <lucide-icon
+          animate.enter="fade-in"
+          animate.leave="fade-out"
+          class="w-3.5 h-3.5 mr-1 animate-spin"
+          name="loader-circle"
+        />
+      } @else if (icon(); as icon) {
+        <lucide-icon
+          animate.enter="fade-in"
+          animate.leave="fade-out"
+          class="w-3.5 h-3.5 mr-1"
+          [name]="icon"
+        />
       }
       <ng-content />
     </button>
@@ -43,6 +50,7 @@ export class PrimaryButton {
 
   public isDisabled = input<boolean>(false);
   public isLoading = input<boolean>(false);
+  public icon = input<string | null>(null);
 
   public onClick(): void {
     if (this.isDisabled()) {
