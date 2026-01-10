@@ -14,7 +14,7 @@ export type SectionName = 'assets' | 'liabilities' | 'income';
 
 export type FinanceEntry = {
   name: string;
-  uuid: string;
+  id: string;
 };
 
 export type FinanceSection = {
@@ -83,9 +83,9 @@ export const FinanceStore = signalStore(
             patchState(store, { [name]: { error: true } });
             return EMPTY;
           }),
-          tap((added) => {
-            patchState(store, (state) => ({
-              [name]: { error: false, loading: false, entries: [...state[name].entries, added] },
+          tap((entries) => {
+            patchState(store, () => ({
+              [name]: { error: false, loading: false, entries },
             }));
           }),
         );
