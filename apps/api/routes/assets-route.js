@@ -31,7 +31,9 @@ router.post('/entry-add', async (req, res) => {
 })
 
 router.get('/add-fields', async (req, res) => {
-  const entry = await Assets.getEntryFields(req.body);
+  const { type } = req.params;
+
+  const entry = await Assets.getAddFields(type);
   return res.json({ status: 200, result: entry });
 })
 

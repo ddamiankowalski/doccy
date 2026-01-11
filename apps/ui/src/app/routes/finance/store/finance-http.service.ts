@@ -52,9 +52,9 @@ export class FinanceHttpService {
    * @param name
    * @returns
    */
-  public fetchFields$(name: SectionName): Observable<InputField[]> {
+  public fetchFields$(name: SectionName, type: string): Observable<InputField[]> {
     return this._http
-      .get<FieldsResponse>(`api/${name}/add-fields`)
+      .get<FieldsResponse>(`api/${name}/add-fields`, { params: { type } })
       .pipe(map(({ result }) => result));
   }
 

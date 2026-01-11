@@ -72,10 +72,10 @@ export class FinanceAdd {
   }
 
   private _fetchFields(): void {
-    const { name } = this.modal.data();
+    const { name, type } = this.modal.data();
 
     this.finance
-      .fetchFields$(name)
+      .fetchFields$(name, type)
       .pipe(
         catchError(() => {
           this.fields.set({

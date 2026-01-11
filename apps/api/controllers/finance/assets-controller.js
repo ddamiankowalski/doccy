@@ -1,3 +1,4 @@
+const SystemError = require("../../error/system-error");
 const { getModel } = require("../../models/model");
 const { parseFields } = require("../fields/fields-controller");
 
@@ -73,8 +74,12 @@ const getEntryFields = async () => {
  * 
  * @returns 
  */
-const getAddFields = async () => {
-  return await parseFields('assets-add');
+const getAddFields = async (type) => {
+  if (!type) {
+    throw new SystemError(403, 'Cannot fetch fields with undefined type');
+  }
+
+  return await parseFields(`add-${type}`);
 }
 
 const getEntries = async () => {

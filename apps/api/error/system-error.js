@@ -13,6 +13,10 @@ class SystemError extends Error {
     logger.error(message);
   }
 
+  get status() {
+    return this.#status;
+  }
+
   /**
    *
    * @returns error payload as javascript object

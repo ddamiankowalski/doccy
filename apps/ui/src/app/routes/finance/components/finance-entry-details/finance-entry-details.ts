@@ -13,7 +13,7 @@ import { FinanceTable } from '../finance-table/finance-table';
         <dc-finance-table (add)="onAddClick()" />
       }
       @case ('add') {
-        <dc-finance-add (goBack)="onGoBack()" emitGoBack />
+        <dc-finance-add emitGoBack (goBack)="onGoBack()" />
       }
     }
   `,
