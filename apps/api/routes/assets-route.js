@@ -30,6 +30,11 @@ router.post('/entry-add', async (req, res) => {
   return res.json({ status: 200, result: entry });
 })
 
+router.get('/add-fields', async (req, res) => {
+  const entry = await Assets.getEntryFields(req.body);
+  return res.json({ status: 200, result: entry });
+})
+
 router.delete('/entry-remove', async (req, res) => {
   const { id } = req.body;
   

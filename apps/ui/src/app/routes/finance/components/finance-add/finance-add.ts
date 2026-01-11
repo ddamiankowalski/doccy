@@ -32,7 +32,9 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 
     <div class="flex gap-2">
       <dc-secondary-button class="flex-1" (clicked)="onBackClick()">Cancel</dc-secondary-button>
-      <dc-primary-button class="flex-1" (clicked)="onSaveClick()">Save</dc-primary-button>
+      <dc-primary-button class="flex-1" (clicked)="onSaveClick()" [isDisabled]="error"
+        >Save</dc-primary-button
+      >
     </div>
   `,
 })

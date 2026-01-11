@@ -160,7 +160,7 @@ export const FinanceStore = signalStore(
      * @returns
      */
     const fetchFields$ = (name: SectionName): Observable<InputField[]> => {
-      return http.fetchEntryFields$(name);
+      return http.fetchFields$(name);
     };
 
     return {

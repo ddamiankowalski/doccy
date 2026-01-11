@@ -67,6 +67,16 @@ const getEntryFields = async () => {
   return await parseFields('assets-entry');
 }
 
+/**
+ * Returns fields for adding an item
+ * in asset entry
+ * 
+ * @returns 
+ */
+const getAddFields = async () => {
+  return await parseFields('assets-add');
+}
+
 const getEntries = async () => {
   const model = getModel("asset_entries");
   return await model.getAll();
@@ -79,5 +89,6 @@ module.exports = {
   getSections,
   createEntry,
   removeEntry,
-  getEntries
+  getEntries,
+  getAddFields
 };
