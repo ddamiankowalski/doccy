@@ -169,8 +169,28 @@ export const FinanceStore = signalStore(
       return http.fetchFields$(name, type);
     };
 
-    const addEntryRecord$ = (model: object): Observable<any> => {
-      return http.addEntryRecord$(model).pipe();
+    /**
+     * Adds record for a given section and entry
+     *
+     * @param name
+     * @param entry
+     * @param model
+     * @returns
+     */
+    const addEntryRecord$ = (
+      name: SectionName,
+      entry: EntryName,
+      model: object,
+    ): Observable<any> => {
+      return http.addEntryRecord$(name, entry, model).pipe(
+        catchError(() => {
+          notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
+          return EMPTY;
+        }),
+        tap(() => {
+          notification.success('success!', 'all goooood');
+        }),
+      );
     };
 
     return {

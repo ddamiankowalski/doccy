@@ -58,17 +58,12 @@ export class FinanceAdd {
   }
 
   public onBackClick(): void {
-    if (this.emitGoBack()) {
-      this.goBack.emit();
-      return;
-    }
-
-    const ref = this.modal.ref();
-    ref.destroy();
+    this._cancel();
   }
 
   public onSaveClick(): void {
-    this.finance.addEntryRecord$();
+    const { name, type } = this.modal.data();
+    this.finance.addEntryRecord$(name, type, this.model()).subscribe(() => this._cancel());
   }
 
   private _fetchFields(): void {
@@ -94,6 +89,16 @@ export class FinanceAdd {
           loading: false,
         }),
       );
+  }
+
+  private _cancel(): void {
+    if (this.emitGoBack()) {
+      this.goBack.emit();
+      return;
+    }
+
+    const ref = this.modal.ref();
+    ref.destroy();
   }
 
   private _setHeader(): void {
