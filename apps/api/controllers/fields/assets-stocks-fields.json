@@ -1,0 +1,9 @@
+[
+  {
+    "id": "ticker",
+    "type": "equity",
+    "required": true,
+    "label": "STOCK_TICKER_NAME",
+    "placeholder": "STOCK_TICKER_NAME_PLACEHOLDER"
+  }
+]

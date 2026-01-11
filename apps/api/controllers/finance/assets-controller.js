@@ -79,7 +79,7 @@ const getAddFields = async (type) => {
     throw new SystemError(403, 'Cannot fetch fields with undefined type');
   }
 
-  return await parseFields(`add-${type}`);
+  return await parseFields(`assets-${type}`);
 }
 
 const getEntries = async () => {

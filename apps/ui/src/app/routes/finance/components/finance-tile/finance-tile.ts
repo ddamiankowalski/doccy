@@ -72,7 +72,7 @@ export class FinanceTile<T extends FinanceEntry> {
     this.overlay.openModal({
       component: FinanceEntryDetails,
       closeOnBackdrop: false,
-      data: { name: this.name() },
+      data: { name: this.name(), type: this.entry().type },
     });
   }
 
@@ -80,7 +80,7 @@ export class FinanceTile<T extends FinanceEntry> {
     this.overlay.openModal({
       component: FinanceAdd,
       closeOnBackdrop: false,
-      data: { name: this.name() },
+      data: { name: this.name(), type: this.entry().type },
     });
   }
 
