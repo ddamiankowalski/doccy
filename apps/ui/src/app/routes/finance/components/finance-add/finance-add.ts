@@ -5,11 +5,31 @@ import { PrimaryButton } from '../../../../ui/button/primary-button/primary-butt
 import { booleanAttribute } from '@angular/core';
 import { FinanceFields, FinanceStore } from '../../store/finance.store';
 import { catchError, EMPTY } from 'rxjs';
+import { InputForm } from '../../../../ui/input/input-form/input-form';
+import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
+import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 
 @Component({
   selector: 'dc-finance-add',
-  imports: [SecondaryButton, PrimaryButton],
+  imports: [SecondaryButton, PrimaryButton, InputForm, Disclaimer, Spinner],
   template: `
+    @let loading = fields().loading;
+    @let error = fields().error;
+    @let metadata = fields().metadata;
+
+    @if (loading) {
+      <dc-spinner class="p-8" />
+    } @else if (error || metadata.length === 0) {
+      <dc-disclaimer
+        class="my-12"
+        icon="bug"
+        title="Error occurred"
+        description="Could not fetch fields for adding a new record"
+      />
+    } @else {
+      <dc-input-form #formElement [metadata]="metadata" [(model)]="model" />
+    }
+
     <div class="flex gap-2">
       <dc-secondary-button class="flex-1" (clicked)="onBackClick()">Cancel</dc-secondary-button>
       <dc-primary-button class="flex-1" (clicked)="onSaveClick()">Save</dc-primary-button>
@@ -23,6 +43,7 @@ export class FinanceAdd {
   public goBack = output();
   public emitGoBack = input(false, { transform: booleanAttribute });
 
+  public model = signal<object>({});
   public fields = signal<FinanceFields>({
     error: false,
     loading: true,
@@ -52,7 +73,7 @@ export class FinanceAdd {
     const { name } = this.modal.data();
 
     this.finance
-      .fetchEntryFields$(name)
+      .fetchFields$(name)
       .pipe(
         catchError(() => {
           this.fields.set({

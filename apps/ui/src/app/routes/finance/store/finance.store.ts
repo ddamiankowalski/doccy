@@ -152,6 +152,13 @@ export const FinanceStore = signalStore(
       return http.fetchEntryFields$(name);
     };
 
+    /**
+     * Fetch fields for creating a new item
+     * in finance entry
+     *
+     * @param name
+     * @returns
+     */
     const fetchFields$ = (name: SectionName): Observable<InputField[]> => {
       return http.fetchEntryFields$(name);
     };
@@ -161,6 +168,7 @@ export const FinanceStore = signalStore(
       fetchEntries,
       addEntry$,
       fetchEntryFields$,
+      fetchFields$,
       removeEntry$,
     };
   }),
