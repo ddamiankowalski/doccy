@@ -188,7 +188,7 @@ export const FinanceStore = signalStore(
           return EMPTY;
         }),
         tap(() => {
-          notification.success('success!', 'all goooood');
+          notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_RECORD');
         }),
       );
     };

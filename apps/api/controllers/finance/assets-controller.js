@@ -42,6 +42,19 @@ const removeEntry = async (id) => {
 }
 
 /**
+ * Creates record in assets for a given
+ * entry type
+ * 
+ * @param {*} entry 
+ * @param {*} model 
+ * @returns 
+ */
+const createRecord = async (entry, data) => {
+  const model = getModel(entry);
+  return model.create(data);
+}
+
+/**
  * Returns all sections for assets
  * 
  * @returns 
@@ -95,5 +108,6 @@ module.exports = {
   createEntry,
   removeEntry,
   getEntries,
-  getAddFields
+  getAddFields,
+  createRecord
 };

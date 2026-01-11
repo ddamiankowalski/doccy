@@ -19,6 +19,7 @@
   "VALUE_PLACEHOLDER": "Enter value of asset",
   "SUCCESS_NOTIFICATION": "Success!",
   "SUCCESS_ADD_ENTRY": "You successfully added a new entry.",
+  "SUCCESS_ADD_RECORD": "You successfully added a new record.",
   "SUCCESS_REMOVE_ENTRY": "You successfully removed an entry.",
   "NEW_ENTRY": "Create new entry",
   "ADD_ASSETS": "Add asset",
