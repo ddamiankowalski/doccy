@@ -47,18 +47,8 @@ export const withLiabilities = <_>() =>
         patchState(store, removeAllEntities({ collection: 'payment' }));
       };
 
-      const fetchLiabilitiesEntries = rxMethod<void>(
-        tap(() => console.log('fetching liabilities')),
-      );
-
-      const addLiabilityEntry = (model: Record<string, any>) => {
-        console.log('adding entry', model);
-      };
-
       return {
         _resetLiabilities,
-        fetchLiabilitiesEntries,
-        addLiabilityEntry,
       };
     }),
   );

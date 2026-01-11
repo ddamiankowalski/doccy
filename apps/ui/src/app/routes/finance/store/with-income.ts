@@ -49,14 +49,9 @@ export const withIncome = <_>() =>
 
       const fetchIncomeEntries = rxMethod<void>(tap(() => console.log('fetching income')));
 
-      const addIncomeEntry = (model: Record<string, any>) => {
-        console.log('adding income', model);
-      };
-
       return {
         _resetIncome,
         fetchIncomeEntries,
-        addIncomeEntry,
       };
     }),
   );

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { FinanceFields, FinanceEntry, SectionName } from './finance.store';
+import { FinanceFields, FinanceEntry, SectionName, EntryName, EntryRecord } from './finance.store';
 import { map, Observable } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 
@@ -18,6 +18,10 @@ type FieldsResponse = {
 
 type EntryAddResponse = {
   result: FinanceEntry;
+} & Response;
+
+type EntryRecordResponse = {
+  result: EntryRecord;
 } & Response;
 
 type EntryRemoveResponse = {} & Response;
@@ -80,6 +84,24 @@ export class FinanceHttpService {
   public addEntry$(name: SectionName, model: object): Observable<FinanceEntry> {
     return this._http
       .post<EntryAddResponse>(`/api/${name}/entry-add`, model)
+      .pipe(map(({ result }) => result));
+  }
+
+  /**
+   * Adds record for given entry
+   *
+   * @param name
+   * @param entry
+   * @param model
+   * @returns
+   */
+  public addEntryRecord$(
+    name: SectionName,
+    entry: EntryName,
+    model: object,
+  ): Observable<EntryRecord> {
+    return this._http
+      .post<EntryRecordResponse>(`api/${name}/entry-record`, model, { params: { entry } })
       .pipe(map(({ result }) => result));
   }
 

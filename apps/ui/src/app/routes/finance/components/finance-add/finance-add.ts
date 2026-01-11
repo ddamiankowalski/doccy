@@ -68,7 +68,7 @@ export class FinanceAdd {
   }
 
   public onSaveClick(): void {
-    console.log('save!');
+    this.finance.addEntryRecord$();
   }
 
   private _fetchFields(): void {

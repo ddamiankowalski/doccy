@@ -5,5 +5,13 @@
     "required": true,
     "label": "STOCK_TICKER_NAME",
     "placeholder": "STOCK_TICKER_NAME_PLACEHOLDER"
+  },
+  {
+    "id": "price",
+    "type": "number",
+    "mode": "currency",
+    "required": true,
+    "label": "STOCK_PRICE",
+    "placeholder": "STOCK_PRICE_PLACEHOLDER"
   }
 ]

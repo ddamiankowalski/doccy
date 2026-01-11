@@ -12,10 +12,16 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 export type SectionName = 'assets' | 'liabilities' | 'income';
 
+export type EntryName = string;
+
 export type FinanceEntry = {
   name: string;
   id: string;
   type: string;
+};
+
+export type EntryRecord = {
+  id: string;
 };
 
 export type FinanceSection = {
@@ -163,6 +169,10 @@ export const FinanceStore = signalStore(
       return http.fetchFields$(name, type);
     };
 
+    const addEntryRecord$ = (model: object): Observable<any> => {
+      return http.addEntryRecord$(model).pipe();
+    };
+
     return {
       _reset,
       fetchEntries,
@@ -170,6 +180,7 @@ export const FinanceStore = signalStore(
       fetchEntryFields$,
       fetchFields$,
       removeEntry$,
+      addEntryRecord$,
     };
   }),
   withUserReset(),
