@@ -3,7 +3,7 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 import { PrimaryButton } from '../../../../ui/button/primary-button/primary-button';
 import { SecondaryButton } from '../../../../ui/button/secondary-button/secondary-button';
 import { Modal } from '../../../../ui/overlay/components/modal';
-import { EntryFields, FinanceStore, SectionName } from '../../store/finance.store';
+import { FinanceFields, FinanceStore, SectionName } from '../../store/finance.store';
 import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 import { InputForm } from '../../../../ui/input/input-form/input-form';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -66,7 +66,7 @@ export class FinanceAddEntry {
 
   public model = signal({});
   public isAdding = signal<boolean>(false);
-  public fields = signal<EntryFields>({
+  public fields = signal<FinanceFields>({
     error: false,
     loading: true,
     metadata: [],
@@ -90,7 +90,7 @@ export class FinanceAddEntry {
     });
 
     this.finance
-      .fetchFields$(name)
+      .fetchEntryFields$(name)
       .pipe(
         catchError(() => {
           this.fields.set({

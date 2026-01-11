@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { EntryFields, FinanceEntry, SectionName } from './finance.store';
+import { FinanceFields, FinanceEntry, SectionName } from './finance.store';
 import { map, Observable } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 
@@ -9,6 +9,10 @@ type Response = {
 };
 
 type EntryFieldsResponse = {
+  result: InputField[];
+} & Response;
+
+type FieldsResponse = {
   result: InputField[];
 } & Response;
 
@@ -38,6 +42,19 @@ export class FinanceHttpService {
   public fetchEntryFields$(name: SectionName): Observable<InputField[]> {
     return this._http
       .get<EntryFieldsResponse>(`api/${name}/entry-fields`)
+      .pipe(map(({ result }) => result));
+  }
+
+  /**
+   * Returns fields for adding an item for
+   * finance entry
+   *
+   * @param name
+   * @returns
+   */
+  public fetchFields$(name: SectionName): Observable<InputField[]> {
+    return this._http
+      .get<FieldsResponse>(`api/${name}/add-fields`)
       .pipe(map(({ result }) => result));
   }
 

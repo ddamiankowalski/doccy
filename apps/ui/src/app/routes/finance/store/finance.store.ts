@@ -25,7 +25,7 @@ export type FinanceSection = {
   entries: FinanceEntry[];
 };
 
-export type EntryFields = {
+export type FinanceFields = {
   metadata: InputField[];
   error: boolean;
   loading: boolean;
@@ -141,6 +141,17 @@ export const FinanceStore = signalStore(
       );
     };
 
+    /**
+     * Fetch fields for creating a new entry in any
+     * finance section
+     *
+     * @param name
+     * @returns
+     */
+    const fetchEntryFields$ = (name: SectionName): Observable<InputField[]> => {
+      return http.fetchEntryFields$(name);
+    };
+
     const fetchFields$ = (name: SectionName): Observable<InputField[]> => {
       return http.fetchEntryFields$(name);
     };
@@ -149,7 +160,7 @@ export const FinanceStore = signalStore(
       _reset,
       fetchEntries,
       addEntry$,
-      fetchFields$,
+      fetchEntryFields$,
       removeEntry$,
     };
   }),
