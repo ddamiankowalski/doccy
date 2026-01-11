@@ -183,9 +183,9 @@ export const FinanceStore = signalStore(
       model: object,
     ): Observable<any> => {
       return http.addEntryRecord$(name, entry, model).pipe(
-        catchError(() => {
+        catchError((err) => {
           notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
-          return EMPTY;
+          throw err;
         }),
         tap(() => {
           notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_RECORD');

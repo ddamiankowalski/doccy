@@ -28,14 +28,22 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
       />
     } @else {
       <dc-input-form #formElement [metadata]="metadata" [(model)]="model" />
-    }
 
-    <div class="flex gap-2">
-      <dc-secondary-button class="flex-1" (clicked)="onBackClick()">Cancel</dc-secondary-button>
-      <dc-primary-button class="flex-1" (clicked)="onSaveClick()" [isDisabled]="error"
-        >Save</dc-primary-button
-      >
-    </div>
+      @if (formElement.form) {
+        @let state = formElement.form();
+
+        <div class="flex gap-2">
+          <dc-secondary-button class="flex-1" (clicked)="onBackClick()">Cancel</dc-secondary-button>
+          <dc-primary-button
+            class="flex-1"
+            (clicked)="onSaveClick()"
+            [isDisabled]="error || state.invalid()"
+            [isLoading]="isAdding()"
+            >Save</dc-primary-button
+          >
+        </div>
+      }
+    }
   `,
 })
 export class FinanceAdd {
@@ -46,6 +54,7 @@ export class FinanceAdd {
   public emitGoBack = input(false, { transform: booleanAttribute });
 
   public model = signal<object>({});
+  public isAdding = signal<boolean>(false);
   public fields = signal<FinanceFields>({
     error: false,
     loading: true,
@@ -63,7 +72,20 @@ export class FinanceAdd {
 
   public onSaveClick(): void {
     const { name, type } = this.modal.data();
-    this.finance.addEntryRecord$(name, type, this.model()).subscribe(() => this._cancel());
+    this.isAdding.set(true);
+
+    this.finance
+      .addEntryRecord$(name, type, this.model())
+      .pipe(
+        catchError(() => {
+          this.isAdding.set(false);
+          return EMPTY;
+        }),
+      )
+      .subscribe(() => {
+        this.isAdding.set(false);
+        this._cancel();
+      });
   }
 
   private _fetchFields(): void {
