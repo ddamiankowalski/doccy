@@ -51,5 +51,7 @@
   "COMMISION": "Commission",
   "COMISSION_PLACEHOLDER": "Enter commision",
   "ENTRY_DETAILS_ASSETS": "Browse entry details",
-  "ENTRY_DETAILS_ASSETS_DESCRIPTION": "Look through entry details that was added to a given finance entry"
+  "ENTRY_DETAILS_ASSETS_DESCRIPTION": "Look through entry details that was added to a given finance entry",
+  "ENTRY_ADD_ASSETS": "Add new",
+  "ENTRY_ADD_ASSETS_DESCRIPTION": "To add new item please fill out the form below"
 }

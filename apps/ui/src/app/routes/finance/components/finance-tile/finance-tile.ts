@@ -7,6 +7,7 @@ import { IconButton } from '../../../../ui/button/icon-button/icon-button';
 import { OverlayService } from '../../../../ui/overlay/services/overlay.service';
 import { EMPTY, switchMap, tap, catchError } from 'rxjs';
 import { FinanceEntryDetails } from '../finance-entry-details/finance-entry-details';
+import { FinanceAdd } from '../finance-add/finance-add';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -23,7 +24,7 @@ import { FinanceEntryDetails } from '../finance-entry-details/finance-entry-deta
         <div class="flex ml-2 gap-2 items-center">
           <div class="flex invisible group-hover/tile:visible gap-1">
             <dc-icon-button (clicked)="onMoreClicked()" name="ellipsis" />
-            <dc-icon-button name="plus" />
+            <dc-icon-button (clicked)="onAddClicked()" name="plus" />
             <dc-icon-button (clicked)="onTrashClicked()" name="trash" type="error" />
           </div>
 
@@ -70,6 +71,14 @@ export class FinanceTile<T extends FinanceEntry> {
   public onMoreClicked(): void {
     this.overlay.openModal({
       component: FinanceEntryDetails,
+      closeOnBackdrop: false,
+      data: { name: this.name() },
+    });
+  }
+
+  public onAddClicked(): void {
+    this.overlay.openModal({
+      component: FinanceAdd,
       closeOnBackdrop: false,
       data: { name: this.name() },
     });
