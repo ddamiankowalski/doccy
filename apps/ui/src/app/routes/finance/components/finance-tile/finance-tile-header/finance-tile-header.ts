@@ -2,10 +2,11 @@ import { Component, computed, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { FinanceEntry, SectionName } from '../../../store/finance.store';
 import { FinanceTileHeaderActions } from '../finance-tile-header-actions/finance-tile-header-actions';
+import { FinanceTileHeaderSuffix } from '../finance-tile-header-suffix/finance-tile-header-suffix';
 
 @Component({
   selector: 'dc-finance-tile-header',
-  imports: [LucideAngularModule, FinanceTileHeaderActions],
+  imports: [LucideAngularModule, FinanceTileHeaderActions, FinanceTileHeaderSuffix],
   template: ` <div class="flex justify-between items-start mb-4">
     <div
       class="flex justify-center items-center min-w-9 min-h-9 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors"
@@ -22,12 +23,7 @@ import { FinanceTileHeaderActions } from '../finance-tile-header-actions/finance
         }
       }
 
-      <div
-        class="flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full text-emerald-400 bg-emerald-400/10"
-      >
-        <lucide-icon class="self-center h-3 w-3" name="trending-up"></lucide-icon>
-        1.25%
-      </div>
+      <dc-finance-tile-header-suffix />
     </div>
   </div>`,
 })
