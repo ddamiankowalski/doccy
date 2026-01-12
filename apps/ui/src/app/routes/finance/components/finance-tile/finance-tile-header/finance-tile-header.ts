@@ -14,7 +14,9 @@ import { FinanceTileHeaderActions } from '../finance-tile-header-actions/finance
     </div>
 
     <div class="flex ml-2 gap-2 items-center">
-      @switch (name()) {
+      @let name = entry().name;
+
+      @switch (name) {
         @default {
           <dc-finance-tile-header-actions [entry]="entry()" />
         }
@@ -30,7 +32,6 @@ import { FinanceTileHeaderActions } from '../finance-tile-header-actions/finance
   </div>`,
 })
 export class FinanceTileHeader {
-  public name = input.required<SectionName>();
   public entry = input.required<FinanceEntry>();
 
   public icon = computed<string>(() => {

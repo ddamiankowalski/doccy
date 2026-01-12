@@ -10,7 +10,7 @@ import { FinanceTileHeader } from './finance-tile-header/finance-tile-header';
   imports: [LucideAngularModule, Tile, ProgressBar, FinanceTileHeader],
   template: `
     <dc-tile class="group/tile">
-      <dc-finance-tile-header [name]="name()" />
+      <dc-finance-tile-header [entry]="entry()" />
 
       <h3 class="text-gray-400 text-sm font-medium mb-1">{{ title() }}</h3>
       <div class="text-2xl font-semibold text-white tracking-tight mb-4">$850,000</div>
