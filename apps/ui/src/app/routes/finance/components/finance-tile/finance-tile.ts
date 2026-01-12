@@ -5,16 +5,16 @@ import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar
 import { FinanceEntry, SectionName } from '../../store/finance.store';
 import { FinanceTileHeader } from './finance-tile-header/finance-tile-header';
 import { FinanceTileDisplay } from './finance-tile-display/finance-tile-display';
+import { FinanceTileFooter } from './finance-tile-footer/finance-tile-footer';
 
 @Component({
   selector: 'dc-finance-tile',
-  imports: [LucideAngularModule, Tile, ProgressBar, FinanceTileHeader, FinanceTileDisplay],
+  imports: [LucideAngularModule, Tile, FinanceTileHeader, FinanceTileDisplay, FinanceTileFooter],
   template: `
     <dc-tile class="group/tile">
       <dc-finance-tile-header [entry]="entry()" />
       <dc-finance-tile-display [entry]="entry()" />
-
-      <dc-progress-bar class="mt-auto" [value]="65" description="House down payment" />
+      <dc-finance-tile-footer />
     </dc-tile>
   `,
 })
