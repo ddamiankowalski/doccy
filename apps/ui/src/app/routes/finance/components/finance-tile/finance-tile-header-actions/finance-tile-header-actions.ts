@@ -52,7 +52,7 @@ export class FinanceTileHeaderActions {
           }
 
           const { id } = this.entry();
-          return this._finance.removeEntry$(this.entry().name, id).pipe(
+          return this._finance.removeEntry$(this.entry().section, id).pipe(
             catchError(() => {
               ref.destroy();
               return EMPTY;
