@@ -9,7 +9,7 @@ import { KeyValuePipe } from '@angular/common';
   template: ` @for (item of entry() | keyvalue; track item.key) {
     @if (item.value !== undefined) {
       @switch (item.key) {
-        @case ('houseDownPayment') {
+        @case ('s') {
           <dc-progress-bar class="mt-auto" [value]="65" description="House down payment" />
         }
 

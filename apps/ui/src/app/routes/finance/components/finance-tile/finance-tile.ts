@@ -14,7 +14,7 @@ import { FinanceTileFooter } from './finance-tile-footer/finance-tile-footer';
     <dc-tile class="group/tile">
       <dc-finance-tile-header [entry]="entry()" />
       <dc-finance-tile-display [entry]="entry()" />
-      <dc-finance-tile-footer />
+      <dc-finance-tile-footer [entry]="entry()" />
     </dc-tile>
   `,
 })
