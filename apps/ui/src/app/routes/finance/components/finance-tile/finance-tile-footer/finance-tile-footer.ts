@@ -6,9 +6,9 @@ import { KeyValuePipe } from '@angular/common';
 @Component({
   selector: 'dc-finance-tile-footer',
   imports: [ProgressBar, KeyValuePipe],
-  template: ` @for (item of entry() | keyvalue; track item.key) {
-    @if (item.value !== undefined) {
-      @switch (item.key) {
+  template: ` @for (entry of entry() | keyvalue; track entry.key) {
+    @if (entry.value !== undefined) {
+      @switch (entry.key) {
         @case ('s') {
           <dc-progress-bar class="mt-auto" [value]="65" description="House down payment" />
         }

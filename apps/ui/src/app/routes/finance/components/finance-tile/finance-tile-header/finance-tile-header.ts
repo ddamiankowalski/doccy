@@ -23,7 +23,7 @@ import { FinanceTileHeaderSuffix } from '../finance-tile-header-suffix/finance-t
         }
       }
 
-      <dc-finance-tile-header-suffix />
+      <dc-finance-tile-header-suffix [entry]="entry()" />
     </div>
   </div>`,
 })
