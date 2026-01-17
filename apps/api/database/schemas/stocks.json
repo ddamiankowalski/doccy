@@ -28,7 +28,7 @@
           "default": null
         },
         {
-          "name": "asset_id",
+          "name": "assetId",
           "type": "uuid",
           "nullable": false,
           "references": "asset_entries",

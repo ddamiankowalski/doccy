@@ -34,13 +34,13 @@ const removeEntry = async id => {
  * entry type
  *
  * @param {*} type
- * @param {*} entryId
+ * @param {*} assetId
  * @param {*} model
  * @returns
  */
-const createRecord = async (type, entryId, data) => {
-  const model = getModel(entry);
-  return model.create(data);
+const createRecord = async (type, assetId, data) => {
+  const model = getModel(type);
+  return model.create({ ...data, assetId });
 };
 
 /**
