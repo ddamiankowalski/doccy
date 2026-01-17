@@ -15,7 +15,7 @@ import { FinanceEntry } from '../../../store/finance.store';
 
       <div class="flex justify-between gap-4 pt-4 border-t border-white/5">
         @if (profit === null) {
-          <span class="text-sm font-normal text-gray-400">No summary available</span>
+          <span class="text-xs font-normal text-gray-400">No summary available</span>
         } @else {
           <div class="flex flex-col">
             <div class="text-xs text-gray-500 mb-1">Day change</div>
