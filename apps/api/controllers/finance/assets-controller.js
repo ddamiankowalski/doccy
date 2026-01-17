@@ -29,7 +29,9 @@ const create = async (type, data) => {
  */
 const createEntry = async data => {
   const model = getModel('asset_entries');
-  return await model.create(data);
+  const entry = await model.create(data);
+  
+  return await _getDetailedEntry(entry);
 };
 
 /**
@@ -106,16 +108,20 @@ const getEntries = async () => {
   const model = getModel('asset_entries');
   const entries = await model.getAll();
 
-  return await Promise.all(entries.map(async entry => {
-    const { type } = entry;
+  return await Promise.all(
+    entries.map(entry => _getDetailedEntry(entry))
+  );
+};
 
-    switch (type) {
-      case 'stocks':
-        return Stocks.getStocks(entry);
-      default:
-        return entry;
-    }
-  }))
+const _getDetailedEntry = async entry => {
+  const { type } = entry;
+
+  switch (type) {
+    case 'stocks':
+      return Stocks.getStocks(entry);
+    default:
+      return entry;
+  }
 };
 
 module.exports = {
