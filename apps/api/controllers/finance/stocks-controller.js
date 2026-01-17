@@ -10,7 +10,7 @@ const getStocks = async (entry) => {
   const { id } = entry;
 
   const model = getModel('stocks');
-  const stocks = await model.getWhere({ asset_id: id })
+  const stocks = await model.getWhere({ assetId: id })
 
   return {
     ...entry,
