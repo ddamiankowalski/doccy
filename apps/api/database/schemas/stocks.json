@@ -32,7 +32,9 @@
           "type": "uuid",
           "nullable": false,
           "references": "asset_entries",
-          "key": "id"
+          "key": "id",
+          "onDelete": "CASCADE",
+          "onUpdate": "CASCADE"
         }
       ]
     }

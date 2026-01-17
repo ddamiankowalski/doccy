@@ -59,12 +59,17 @@ const _isNullable = ({ nullable }) => {
   return "";
 };
 
-const _getReference = ({ references, key }, columnName) => {
-  if (!references || !key) {
-    return "";
-  }
+const _getReference = (
+  { references, key, onDelete, onUpdate },
+) => {
+  if (!references || !key) return "";
 
-  return `REFERENCES ${references}(${key})`;
+  let clause = `REFERENCES ${references}(${key})`;
+
+  if (onDelete) clause += ` ON DELETE ${onDelete}`;
+  if (onUpdate) clause += ` ON UPDATE ${onUpdate}`;
+
+  return clause;
 };
 
 const _getDefault = (metadata) => {
