@@ -20,6 +20,14 @@ export type FinanceEntry = {
   type: string;
   name: string;
   profit?: number;
+  stocks?: Stock[];
+};
+
+export type Stock = {
+  id: string;
+  ticker: string;
+  price: number;
+  commission: number;
 };
 
 export type EntryRecord = {

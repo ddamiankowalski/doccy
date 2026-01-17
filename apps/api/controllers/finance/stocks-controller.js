@@ -1,18 +1,23 @@
+const { getModel } = require("../../models/model");
+
 /**
  * Returns stock entry
  * 
  * @param {*} entry 
  * @returns 
  */
-const getEntry = (entry) => {
-  const profit = 2;
+const getStocks = async (entry) => {
+  const { id } = entry;
+
+  const model = getModel('stocks');
+  const stocks = await model.getWhere({ asset_id: id })
 
   return {
     ...entry,
-    profit
+    stocks 
   };
 }
 
 module.exports = {
-  getEntry,
+  getStocks,
 }

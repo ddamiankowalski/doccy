@@ -17,6 +17,38 @@ const getModel = name => {
     },
 
     /**
+     * Returns all entries with where
+     * condition
+     * 
+     * @param {*} conditions 
+     * @returns 
+     */
+    getWhere: async (conditions = {}) => {
+      const entries = Object.entries(conditions);
+
+      if (!entries.length) {
+        return await db.query(`SELECT * FROM ${name}`);
+      }
+
+      const whereClause = entries
+        .map(([key], i) => `${key} = $${i + 1}`)
+        .join(' AND ');
+
+      const values = entries.map(([_, value]) => value);
+
+      const query = `SELECT * FROM ${name} WHERE ${whereClause};`;
+
+      try {
+        return await db.query(query, values);
+      } catch (err) {
+        throw new SystemError(
+          400,
+          'Could not retrieve entries from database - ' + err.message
+        );
+      }
+    },
+
+    /**
      * Removes an entry for a given model
      *
      * @param {*} id
