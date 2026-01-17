@@ -31,6 +31,7 @@ export class FinanceTileHeader {
   public entry = input.required<FinanceEntry>();
 
   public icon = computed<string>(() => {
-    return 'house';
+    const { icon } = this.entry();
+    return icon;
   });
 }

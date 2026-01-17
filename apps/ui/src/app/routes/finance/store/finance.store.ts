@@ -17,9 +17,11 @@ export type EntryName = string;
 export type FinanceEntry = {
   id: string;
   section: SectionName;
+  icon: string;
   type: string;
   name: string;
   profit?: number;
+  value?: number;
   stocks?: Stock[];
 };
 

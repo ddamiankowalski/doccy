@@ -15,6 +15,7 @@ const getStocks = async (entry) => {
   return {
     ...entry,
     stocks,
+    icon: 'dollar-sign',
     profit: _calculateProfit(stocks)
   };
 }
