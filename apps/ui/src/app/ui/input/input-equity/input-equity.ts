@@ -199,6 +199,14 @@ export class InputEquity implements FormValueControl<string | null>, AfterViewIn
         ev.stopPropagation();
         this.isOpen.set(false);
       });
+
+    fromEvent<KeyboardEvent>(this._elementRef.nativeElement, 'keydown')
+      .pipe(takeUntilDestroyed())
+      .subscribe((ev) => {
+        if (ev.key === 'Tab') {
+          this.isOpen.set(false);
+        }
+      });
   }
 
   public ngAfterViewInit(): void {
@@ -227,7 +235,7 @@ export class InputEquity implements FormValueControl<string | null>, AfterViewIn
   }
 
   public onBlur(): void {
-    this.touched.set(true);
+    console.log(document.activeElement);
   }
 
   public onInput(): void {
