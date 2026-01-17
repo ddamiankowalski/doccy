@@ -5,22 +5,6 @@ const { parseFields } = require('../fields/fields-controller');
 const Stocks = require('./stocks-controller');
 
 /**
- * Creates a new asset
- */
-const create = async (type, data) => {
-  if (!data) {
-    return;
-  }
-
-  const filtered = Object.fromEntries(
-    Object.entries(data).filter(([_, value]) => value !== null)
-  );
-
-  const model = getModel(type);
-  return await model.create(filtered);
-};
-
-/**
  * Adds finance entry with correct type and
  * name
  *
@@ -69,14 +53,6 @@ const getSections = async () => {
 };
 
 /**
- * Retrieve all assets
- */
-const getAll = async () => {
-  const model = getModel('stocks');
-  return await model.getAll();
-};
-
-/**
  * Parses the JSON and returns it
  *
  * @returns
@@ -109,7 +85,10 @@ const getEntries = async () => {
   const entries = await model.getAll();
 
   return await Promise.all(
-    entries.map(entry => _getDetailedEntry(entry))
+    entries.map(async entry => ({
+     ...await _getDetailedEntry(entry),
+     section: 'assets' 
+    }))
   );
 };
 
@@ -125,8 +104,6 @@ const _getDetailedEntry = async entry => {
 };
 
 module.exports = {
-  create,
-  getAll,
   getEntryFields,
   getSections,
   createEntry,

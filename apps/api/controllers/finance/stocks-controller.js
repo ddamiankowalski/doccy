@@ -9,6 +9,8 @@ const { getModel } = require("../../models/model");
 const getStocks = async (entry) => {
   const { id } = entry;
 
+  console.log(entry)
+
   const model = getModel('stocks');
   const stocks = await model.getWhere({ asset_id: id })
 
