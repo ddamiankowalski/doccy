@@ -52,6 +52,7 @@ export class FinanceTileHeaderActions {
           }
 
           const { id } = this.entry();
+          console.log(this.entry());
           return this._finance.removeEntry$(this.entry().section, id).pipe(
             catchError(() => {
               ref.destroy();

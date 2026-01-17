@@ -13,7 +13,7 @@ import { FinanceEntry } from '../../../store/finance.store';
     @if (entryInfo.profit !== undefined) {
       @let profit = entryInfo.profit;
 
-      <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+      <div class="flex justify-between gap-4 pt-4 border-t border-white/5">
         @if (profit === null) {
           <span class="text-sm font-normal text-gray-400">No summary available</span>
         } @else {
