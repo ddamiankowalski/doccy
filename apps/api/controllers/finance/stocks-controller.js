@@ -20,7 +20,7 @@ const getStocks = async (entry) => {
 }
 
 const _calculateProfit = (stocks) => {
-  return undefined;
+  return null;
 
   /**
    * TODO: Calculate profit based on market prices
