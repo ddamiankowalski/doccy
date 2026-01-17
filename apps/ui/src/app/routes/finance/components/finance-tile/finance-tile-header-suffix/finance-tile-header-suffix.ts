@@ -8,12 +8,12 @@ import { FinanceEntry } from '../../../store/finance.store';
   template: `
     @let entryInfo = entry();
 
-    @if (entryInfo.profit; as profit) {
+    @if (entryInfo.profit !== undefined) {
       <div
         class="flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full text-emerald-400 bg-emerald-400/10"
       >
         <lucide-icon class="self-center h-3 w-3" name="trending-up"></lucide-icon>
-        {{ profit }}%
+        {{ entryInfo.profit }}%
       </div>
     }
   `,

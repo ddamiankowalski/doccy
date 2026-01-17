@@ -14,8 +14,18 @@ const getStocks = async (entry) => {
 
   return {
     ...entry,
-    stocks 
+    stocks,
+    profit: _calculateProfit(stocks)
   };
+}
+
+const _calculateProfit = (stocks) => {
+  return undefined;
+
+  /**
+   * TODO: Calculate profit based on market prices
+   */
+  return stocks.reduce((sum, stock) => stock.profit + sum, 0);
 }
 
 module.exports = {
