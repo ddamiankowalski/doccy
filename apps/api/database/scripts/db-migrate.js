@@ -2,6 +2,8 @@ const db = require("../db");
 const logger = require("../../logger/logger");
 const parser = require("./db-schema-parser");
 
+const _quoteIdent = (name) => `"${name.replace(/"/g, '""')}"`;
+
 /**
  * Creates tables in postgres database
  * 
@@ -15,12 +17,12 @@ const createTables = async (schemas) => {
     }
 
     const fields = columns.map(({ name, type, ...metadata }) => {
-      return `${name} ${_getTypeQuery(type, metadata, name)} 
+      return `${_quoteIdent(name)} ${_getTypeQuery(type, metadata, name)} 
         ${_isPrimary(metadata)} 
         ${_isNullable(metadata)} 
         ${_isUnique(metadata)} 
         ${_getDefault(metadata)} 
-        ${_getReference(metadata, name)}`.trim();
+        ${_getReference(metadata)}`.trim();
     });
 
     _createTable(name, _addSuffix(fields, composite_pk));

@@ -206,7 +206,8 @@ export const FinanceStore = signalStore(
           notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
           throw err;
         }),
-        tap(() => {
+        tap((e) => {
+          console.log(e);
           notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_RECORD');
         }),
       );
