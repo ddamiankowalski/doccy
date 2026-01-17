@@ -20,9 +20,15 @@ export type FinanceEntry = {
   icon: string;
   type: string;
   name: string;
-  profit?: number;
+  profit?: Profit;
   value?: number;
   stocks?: Stock[];
+};
+
+export type Profit = {
+  daily: number;
+  dailyPercentage: number;
+  total: number;
 };
 
 export type Stock = {
