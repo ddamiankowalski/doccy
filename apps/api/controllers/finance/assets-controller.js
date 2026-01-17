@@ -2,6 +2,8 @@ const SystemError = require("../../error/system-error");
 const { getModel } = require("../../models/model");
 const { parseFields } = require("../fields/fields-controller");
 
+const Stocks = require('./stocks-controller');
+
 /**
  * Creates a new asset
  */
@@ -95,9 +97,25 @@ const getAddFields = async (type) => {
   return await parseFields(`assets-${type}`);
 }
 
+/**
+ * Returns all assets entries
+ * 
+ * @returns 
+ */
 const getEntries = async () => {
   const model = getModel("asset_entries");
-  return await model.getAll();
+  const entries = await model.getAll();
+
+  return entries.map(entry => {
+    const { type } = entry;
+
+    switch (type) {
+      case 'stocks':
+        return Stocks.getEntry(entry);
+      default:
+        return entry;
+    }
+  })
 }
 
 module.exports = {

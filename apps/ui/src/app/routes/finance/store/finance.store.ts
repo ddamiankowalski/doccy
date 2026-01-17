@@ -19,6 +19,7 @@ export type FinanceEntry = {
   section: SectionName;
   type: string;
   name: string;
+  profit?: number;
 };
 
 export type EntryRecord = {
