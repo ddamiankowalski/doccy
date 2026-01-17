@@ -33,11 +33,12 @@ const removeEntry = async id => {
  * Creates record in assets for a given
  * entry type
  *
- * @param {*} entry
+ * @param {*} type
+ * @param {*} entryId
  * @param {*} model
  * @returns
  */
-const createRecord = async (entry, data) => {
+const createRecord = async (type, entryId, data) => {
   const model = getModel(entry);
   return model.create(data);
 };

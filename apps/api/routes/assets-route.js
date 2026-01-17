@@ -34,9 +34,9 @@ router.delete('/entry-remove', async (req, res) => {
 
 router.post('/entry-record', async (req, res) => {
   const model = req.body;
-  const { entry } = req.query;
+  const { type, entryId } = req.query;
 
-  const record = await Assets.createRecord(entry, model);
+  const record = await Assets.createRecord(type, entryId, model);
   return res.json({ status: 200, result: record });
 })
 

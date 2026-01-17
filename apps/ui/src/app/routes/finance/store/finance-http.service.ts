@@ -91,17 +91,18 @@ export class FinanceHttpService {
    * Adds record for given entry
    *
    * @param name
-   * @param entry
+   * @param type
    * @param model
    * @returns
    */
   public addEntryRecord$(
     name: SectionName,
-    entry: EntryName,
+    type: EntryName,
+    entryId: string,
     model: object,
   ): Observable<EntryRecord> {
     return this._http
-      .post<EntryRecordResponse>(`api/${name}/entry-record`, model, { params: { entry } })
+      .post<EntryRecordResponse>(`api/${name}/entry-record`, model, { params: { type, entryId } })
       .pipe(map(({ result }) => result));
   }
 

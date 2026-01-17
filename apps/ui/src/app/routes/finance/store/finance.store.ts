@@ -190,17 +190,18 @@ export const FinanceStore = signalStore(
     /**
      * Adds record for a given section and entry
      *
-     * @param name
-     * @param entry
+     * @param section
+     * @param type
      * @param model
      * @returns
      */
     const addEntryRecord$ = (
-      name: SectionName,
-      entry: EntryName,
+      section: SectionName,
+      type: EntryName,
+      entryId: string,
       model: object,
     ): Observable<any> => {
-      return http.addEntryRecord$(name, entry, model).pipe(
+      return http.addEntryRecord$(section, type, entryId, model).pipe(
         catchError((err) => {
           notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
           throw err;

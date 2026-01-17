@@ -72,12 +72,12 @@ export class FinanceAdd {
 
   public onSaveClick(): void {
     const { entry } = this.modal.data();
-    const { section, type } = entry;
+    const { section, type, id } = entry;
 
     this.isAdding.set(true);
 
     this.finance
-      .addEntryRecord$(section, type, this.model())
+      .addEntryRecord$(section, type, id, this.model())
       .pipe(
         catchError(() => {
           this.isAdding.set(false);
