@@ -24,10 +24,6 @@ type FieldsResponse = {
   result: InputField[];
 } & Response;
 
-type EntryAddResponse = {
-  result: FinanceEntry;
-} & Response;
-
 type EntryRecordResponse = {
   result: EntryRecord;
 } & Response;
@@ -113,9 +109,9 @@ export class FinanceHttpService {
    * @param model
    * @returns
    */
-  public addEntry$(name: SectionName, model: object): Observable<FinanceEntry> {
+  public addEntry$(name: SectionName, model: object): Observable<Entry> {
     return this._http
-      .post<EntryAddResponse>(`/api/${name}/entry-add`, model)
+      .post<EntryResponse>(`/api/${name}/entry-add`, model)
       .pipe(map(({ result }) => result));
   }
 

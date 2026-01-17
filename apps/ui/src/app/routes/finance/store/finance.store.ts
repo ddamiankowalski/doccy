@@ -23,6 +23,7 @@ export type FinanceEntry = {
   profit?: Profit;
   value?: number;
   stocks?: Stock[];
+  loading: boolean;
 };
 
 export type Profit = {
@@ -109,6 +110,7 @@ export const FinanceStore = signalStore(
             return EMPTY;
           }),
           tap((entries) => {
+            console.log(entries);
             patchState(store, () => ({
               [name]: { error: false, loading: false, entries },
             }));
@@ -124,7 +126,7 @@ export const FinanceStore = signalStore(
      * @param model
      * @returns
      */
-    const addEntry$ = (name: SectionName, model: object): Observable<FinanceEntry> => {
+    const addEntry$ = (name: SectionName, model: object) => {
       return http.addEntry$(name, model).pipe(
         catchError(() => {
           notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
@@ -135,7 +137,7 @@ export const FinanceStore = signalStore(
 
           patchState(store, (state) => {
             const { entries, ...section } = state[name];
-            return { [name]: { ...section, entries: [...entries, added] } };
+            return { [name]: { ...section, entries: [...entries, { ...added, loading: false }] } };
           });
         }),
       );
