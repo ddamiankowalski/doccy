@@ -1,6 +1,8 @@
 const db = require('../database/db');
 const SystemError = require('../error/system-error');
 
+const _quoteIdent = (name) => `"${name.replace(/"/g, '""')}"`;
+
 /**
  * Returns model object that retrieves
  *
@@ -27,11 +29,11 @@ const getModel = name => {
       const entries = Object.entries(conditions);
 
       if (!entries.length) {
-        return await db.query(`SELECT * FROM ${name}`);
+        return await db.query(`SELECT * FROM ${_quoteIdent(name)}`);
       }
 
       const whereClause = entries
-        .map(([key], i) => `${key} = $${i + 1}`)
+        .map(([key], i) => `${_quoteIdent(key)} = $${i + 1}`)
         .join(' AND ');
 
       const values = entries.map(([_, value]) => value);
@@ -102,7 +104,7 @@ const getModel = name => {
       }
 
       const placeholders = entries.map((_, i) => `$${i + 1}`).join(', ');
-      const keys = entries.map(([key]) => key).join(', ');
+      const keys = entries.map(([key]) => _quoteIdent(key)).join(', ');
       const values = entries.map(([_, value]) => value);
 
       const query = `INSERT INTO ${name} (${keys}) VALUES (${placeholders}) RETURNING *;`;
