@@ -1,8 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { FinanceFields, FinanceEntry, SectionName, EntryName, EntryRecord } from './finance.store';
+import {
+  FinanceFields,
+  FinanceEntry,
+  SectionName,
+  EntryName,
+  EntryRecord,
+  Profit,
+} from './finance.store';
 import { map, Observable } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
+import { Stock } from './with-assets';
 
 type Response = {
   status: number;
@@ -26,9 +34,24 @@ type EntryRecordResponse = {
 
 type EntryRemoveResponse = {} & Response;
 
-type EntriesResponse<T> = {
-  result: T;
+type EntriesResponse = {
+  result: Entry[];
 } & Response;
+
+type EntryResponse = {
+  result: Entry;
+} & Response;
+
+type Entry = {
+  id: string;
+  section: SectionName;
+  icon: string;
+  type: string;
+  name: string;
+  profit?: Profit;
+  value?: number;
+  stocks?: Stock[];
+};
 
 @Injectable({
   providedIn: 'root',
@@ -68,10 +91,19 @@ export class FinanceHttpService {
    * @param name
    * @returns
    */
-  public fetchEntries$<T extends FinanceEntry>(name: SectionName): Observable<T> {
-    return this._http
-      .get<EntriesResponse<T>>(`api/${name}/entries`)
-      .pipe(map(({ result }) => result));
+  public fetchEntries$(name: SectionName): Observable<Entry[]> {
+    return this._http.get<EntriesResponse>(`api/${name}/entries`).pipe(map(({ result }) => result));
+  }
+
+  /**
+   * Fetches one entry
+   *
+   * @param name
+   * @param id
+   * @returns
+   */
+  public fetchEntry$(name: SectionName, id: string): Observable<Entry> {
+    return this._http.get<EntryResponse>(`api/${name}/entry`).pipe(map(({ result }) => result));
   }
 
   /**

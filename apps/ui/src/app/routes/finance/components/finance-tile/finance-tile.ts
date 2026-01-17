@@ -1,7 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { Tile } from '../../../../ui/components/tile/tile';
-import { ProgressBar } from '../../../../ui/components/progress-bar/progress-bar';
 import { FinanceEntry, SectionName } from '../../store/finance.store';
 import { FinanceTileHeader } from './finance-tile-header/finance-tile-header';
 import { FinanceTileDisplay } from './finance-tile-display/finance-tile-display';
