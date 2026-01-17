@@ -24,6 +24,6 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   logger.log(`Restarted the server successfully on port ${PORT}`);
-  migrate({ clear: false});
+  migrate({ clear: true});
 });
 

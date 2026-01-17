@@ -26,6 +26,13 @@
           "type": "numeric",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "asset_id",
+          "type": "uuid",
+          "nullable": false,
+          "references": "asset_entries",
+          "key": "id"
         }
       ]
     }

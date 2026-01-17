@@ -15,11 +15,12 @@ const createTables = async (schemas) => {
     }
 
     const fields = columns.map(({ name, type, ...metadata }) => {
-      return `${name}  ${_getTypeQuery(type, metadata, name)} ${_isPrimary(
-        metadata
-      )} ${_isNullable(metadata)} ${_isUnique(metadata)} ${_getDefault(
-        metadata
-      )}`;
+      return `${name} ${_getTypeQuery(type, metadata, name)} 
+        ${_isPrimary(metadata)} 
+        ${_isNullable(metadata)} 
+        ${_isUnique(metadata)} 
+        ${_getDefault(metadata)} 
+        ${_getReference(metadata, name)}`.trim();
     });
 
     _createTable(name, _addSuffix(fields, composite_pk));
@@ -56,6 +57,14 @@ const _isNullable = ({ nullable }) => {
   }
 
   return "";
+};
+
+const _getReference = ({ references, key }, columnName) => {
+  if (!references || !key) {
+    return "";
+  }
+
+  return `REFERENCES ${references}(${key})`;
 };
 
 const _getDefault = (metadata) => {

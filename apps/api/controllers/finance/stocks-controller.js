@@ -5,8 +5,12 @@
  * @returns 
  */
 const getEntry = (entry) => {
+  const profit = 2;
 
-  return {};
+  return {
+    ...entry,
+    profit
+  };
 }
 
 module.exports = {
