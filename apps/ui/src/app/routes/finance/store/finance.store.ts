@@ -1,4 +1,4 @@
-import { getState, patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { withUserReset } from '../../user/store/with-user';
 import { withAssets } from './with-assets';
 import { withLiabilities } from './with-liabilities';
@@ -6,7 +6,7 @@ import { withIncome } from './with-income';
 import { catchError, EMPTY, mergeMap, Observable, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
-import { EntryResponse, FinanceHttpService } from './finance-http.service';
+import { FinanceHttpService } from './finance-http.service';
 import { NotificationService } from '../../../ui/notification/services/notification.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
@@ -109,25 +109,18 @@ export const FinanceStore = signalStore(
             patchState(store, { [name]: { error: true } });
             return EMPTY;
           }),
-          tap((entries) => {
-            setTimeout(() => {
-              console.log(getState(store));
-            }, 500);
-
+          tap((response) => {
             patchState(store, () => ({
-              [name]: { error: false, loading: false, entries },
+              [name]: {
+                error: false,
+                loading: false,
+                entries: response.map((res) => ({ ...res, loading: false })),
+              },
             }));
           }),
         );
       }),
     );
-
-    const _createEntry = (response: EntryResponse): FinanceEntry => {
-      return {
-        ...response,
-        loading: false,
-      };
-    };
 
     /**
      * Adds finance entry
