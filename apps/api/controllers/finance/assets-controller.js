@@ -85,10 +85,7 @@ const getEntries = async () => {
   const entries = await model.getAll();
 
   return await Promise.all(
-    entries.map(async entry => ({
-     ...await _getDetailedEntry(entry),
-     section: 'assets' 
-    }))
+    entries.map(async entry => _getDetailedEntry(entry))
   );
 };
 
@@ -97,9 +94,13 @@ const _getDetailedEntry = async entry => {
 
   switch (type) {
     case 'stocks':
-      return Stocks.getStocks(entry);
-    default:
-      return entry;
+      entry = await Stocks.getStocks(entry);
+      break;
+  }
+
+  return {
+    ...entry,
+    section: 'assets',
   }
 };
 

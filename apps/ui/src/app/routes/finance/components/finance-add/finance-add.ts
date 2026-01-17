@@ -71,11 +71,13 @@ export class FinanceAdd {
   }
 
   public onSaveClick(): void {
-    const { name, type } = this.modal.data();
+    const { entry } = this.modal.data();
+    const { section, type } = entry;
+
     this.isAdding.set(true);
 
     this.finance
-      .addEntryRecord$(name, type, this.model())
+      .addEntryRecord$(section, type, this.model())
       .pipe(
         catchError(() => {
           this.isAdding.set(false);
@@ -89,10 +91,11 @@ export class FinanceAdd {
   }
 
   private _fetchFields(): void {
-    const { name, type } = this.modal.data();
+    const { entry } = this.modal.data();
+    const { section, type } = entry;
 
     this.finance
-      .fetchFields$(name, type)
+      .fetchFields$(section, type)
       .pipe(
         catchError(() => {
           this.fields.set({
@@ -125,9 +128,11 @@ export class FinanceAdd {
 
   private _setHeader(): void {
     const ref = this.modal.ref();
-    const { name } = this.modal.data();
 
-    ref.setInput('title', 'ENTRY_ADD_' + name.toUpperCase());
-    ref.setInput('description', `ENTRY_ADD_${name.toUpperCase()}_DESCRIPTION`);
+    const { entry } = this.modal.data();
+    const { section } = entry;
+
+    ref.setInput('title', 'ENTRY_ADD_' + section.toUpperCase());
+    ref.setInput('description', `ENTRY_ADD_${section.toUpperCase()}_DESCRIPTION`);
   }
 }
