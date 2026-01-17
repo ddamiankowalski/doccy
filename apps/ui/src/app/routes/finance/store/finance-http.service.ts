@@ -1,44 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import {
-  FinanceFields,
-  FinanceEntry,
-  SectionName,
-  EntryName,
-  EntryRecord,
-  Profit,
-} from './finance.store';
+import { SectionName, EntryName, EntryRecord, Profit, Stock } from './finance.store';
 import { map, Observable } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
-import { Stock } from './with-assets';
 
-type Response = {
+/**
+ * Generic response for http
+ * requests
+ */
+type Response<T = {}> = {
   status: number;
+  result: T;
 };
 
-type EntryFieldsResponse = {
-  result: InputField[];
-} & Response;
-
-type FieldsResponse = {
-  result: InputField[];
-} & Response;
-
-type EntryRecordResponse = {
-  result: EntryRecord;
-} & Response;
-
-type EntryRemoveResponse = {} & Response;
-
-type EntriesResponse = {
-  result: Entry[];
-} & Response;
-
-type EntryResponse = {
-  result: Entry;
-} & Response;
-
-type Entry = {
+export type EntryResponse = {
   id: string;
   section: SectionName;
   icon: string;
@@ -64,7 +39,7 @@ export class FinanceHttpService {
    */
   public fetchEntryFields$(name: SectionName): Observable<InputField[]> {
     return this._http
-      .get<EntryFieldsResponse>(`api/${name}/entry-fields`)
+      .get<Response<InputField[]>>(`api/${name}/entry-fields`)
       .pipe(map(({ result }) => result));
   }
 
@@ -77,7 +52,7 @@ export class FinanceHttpService {
    */
   public fetchFields$(name: SectionName, type: string): Observable<InputField[]> {
     return this._http
-      .get<FieldsResponse>(`api/${name}/add-fields`, { params: { type } })
+      .get<Response<InputField[]>>(`api/${name}/add-fields`, { params: { type } })
       .pipe(map(({ result }) => result));
   }
 
@@ -87,8 +62,10 @@ export class FinanceHttpService {
    * @param name
    * @returns
    */
-  public fetchEntries$(name: SectionName): Observable<Entry[]> {
-    return this._http.get<EntriesResponse>(`api/${name}/entries`).pipe(map(({ result }) => result));
+  public fetchEntries$(name: SectionName): Observable<EntryResponse[]> {
+    return this._http
+      .get<Response<EntryResponse[]>>(`api/${name}/entries`)
+      .pipe(map(({ result }) => result));
   }
 
   /**
@@ -98,8 +75,10 @@ export class FinanceHttpService {
    * @param id
    * @returns
    */
-  public fetchEntry$(name: SectionName, id: string): Observable<Entry> {
-    return this._http.get<EntryResponse>(`api/${name}/entry`).pipe(map(({ result }) => result));
+  public fetchEntry$(name: SectionName, id: string): Observable<EntryResponse> {
+    return this._http
+      .get<Response<EntryResponse>>(`api/${name}/entry`)
+      .pipe(map(({ result }) => result));
   }
 
   /**
@@ -109,9 +88,9 @@ export class FinanceHttpService {
    * @param model
    * @returns
    */
-  public addEntry$(name: SectionName, model: object): Observable<Entry> {
+  public addEntry$(name: SectionName, model: object): Observable<EntryResponse> {
     return this._http
-      .post<EntryResponse>(`/api/${name}/entry-add`, model)
+      .post<Response<EntryResponse>>(`/api/${name}/entry-add`, model)
       .pipe(map(({ result }) => result));
   }
 
@@ -128,9 +107,11 @@ export class FinanceHttpService {
     type: EntryName,
     entryId: string,
     model: object,
-  ): Observable<EntryRecord> {
+  ): Observable<EntryResponse> {
     return this._http
-      .post<EntryRecordResponse>(`api/${name}/entry-record`, model, { params: { type, entryId } })
+      .post<
+        Response<EntryResponse>
+      >(`api/${name}/entry-record`, model, { params: { type, entryId } })
       .pipe(map(({ result }) => result));
   }
 
@@ -141,7 +122,7 @@ export class FinanceHttpService {
    * @param model
    * @returns
    */
-  public removeEntry$(name: SectionName, id: string): Observable<EntryRemoveResponse> {
-    return this._http.delete<EntryRemoveResponse>(`/api/${name}/entry-remove`, { body: { id } });
+  public removeEntry$(name: SectionName, id: string): Observable<Response> {
+    return this._http.delete<Response>(`/api/${name}/entry-remove`, { body: { id } });
   }
 }

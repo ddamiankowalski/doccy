@@ -1,14 +1,8 @@
 import { patchState, signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import { removeAllEntities, withEntities } from '@ngrx/signals/entities';
-import { FinanceSection, sectionState } from './finance.store';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { FinanceSection, sectionState, Stock } from './finance.store';
 import { inject } from '@angular/core';
 import { AssetsHttpService } from './assets-http.service';
-import { switchMap } from 'rxjs';
-
-export type Stock = {
-  uuid: string;
-};
 
 /**
  * Assets store delegate
