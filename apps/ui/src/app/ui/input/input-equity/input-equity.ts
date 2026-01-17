@@ -53,7 +53,6 @@ import { MarketService } from '../../../market/services/market.service';
           [id]="inputId()"
           [placeholder]="placeholder() | translate"
           (focus)="onFocus()"
-          (blur)="onBlur()"
           (input)="onInput()"
           autocomplete="off"
           type="text"
@@ -232,10 +231,6 @@ export class InputEquity implements FormValueControl<string | null>, AfterViewIn
     setTimeout(() => {
       this._inputEl().nativeElement.focus();
     }, 100);
-  }
-
-  public onBlur(): void {
-    console.log(document.activeElement);
   }
 
   public onInput(): void {
