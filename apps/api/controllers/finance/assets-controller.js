@@ -101,7 +101,7 @@ const getEntry = async (id) => {
     throw new SystemError(404, `Could not find entry by id: "${id}"`)
   }
 
-  return entry;
+  return _getDetailedEntry(entry);
 }
 
 const _getDetailedEntry = async entry => {

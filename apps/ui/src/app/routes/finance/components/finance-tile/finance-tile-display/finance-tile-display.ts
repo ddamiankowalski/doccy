@@ -11,10 +11,10 @@ import { LucideAngularModule } from 'lucide-angular';
 
     <h3 class="text-gray-400 text-sm font-medium mb-1">{{ title }}</h3>
 
-    @if (value !== undefined) {
+    @if (value !== null) {
       <div class="text-2xl font-semibold text-white tracking-tight mb-4">{{ value }} zł</div>
     } @else {
-      <div class="text-base font-medium text-white tracking-tight mb-4">No stocks added</div>
+      <div class="text-base font-medium text-white tracking-tight mb-4">No items added</div>
     }
   `,
 })
