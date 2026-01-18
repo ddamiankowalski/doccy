@@ -3,7 +3,7 @@ import { withUserReset } from '../../user/store/with-user';
 import { withAssets } from './with-assets';
 import { withLiabilities } from './with-liabilities';
 import { withIncome } from './with-income';
-import { catchError, EMPTY, mergeMap, Observable, tap } from 'rxjs';
+import { catchError, EMPTY, mergeMap, Observable, switchMap, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
@@ -211,8 +211,39 @@ export const FinanceStore = signalStore(
           notification.error('ERROR_NOTIFICATION', 'ERROR_ADD_ENTRY');
           throw err;
         }),
-        tap((e) => {
+        tap(() => {
           notification.success('SUCCESS_NOTIFICATION', 'SUCCESS_ADD_RECORD');
+        }),
+      );
+    };
+
+    /**
+     * Fetches a single entry in a given section
+     *
+     * @param name
+     * @param id
+     * @returns
+     */
+    const fetchEntry$ = (name: SectionName, id: string) => {
+      return http.fetchEntry$(name, id).pipe(
+        tap((response) => {
+          patchState(store, (state) => {
+            const { entries } = state[name];
+
+            return {
+              [name]: {
+                error: false,
+                loading: false,
+                entries: entries.map((entry) => {
+                  if (entry.id === response.id) {
+                    return { ...response, loading: false };
+                  }
+
+                  return { ...entry, loading: false };
+                }),
+              },
+            };
+          });
         }),
       );
     };
@@ -221,6 +252,7 @@ export const FinanceStore = signalStore(
       _reset,
       fetchEntries,
       addEntry$,
+      fetchEntry$,
       fetchEntryFields$,
       fetchFields$,
       removeEntry$,

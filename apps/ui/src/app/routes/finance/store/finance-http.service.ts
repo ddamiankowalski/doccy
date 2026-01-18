@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { SectionName, EntryName, EntryRecord, Profit, Stock } from './finance.store';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 
 /**
@@ -77,7 +77,7 @@ export class FinanceHttpService {
    */
   public fetchEntry$(name: SectionName, id: string): Observable<EntryResponse> {
     return this._http
-      .get<Response<EntryResponse>>(`api/${name}/entry`)
+      .get<Response<EntryResponse>>(`api/${name}/entry`, { params: { id } })
       .pipe(map(({ result }) => result));
   }
 
@@ -112,7 +112,10 @@ export class FinanceHttpService {
       .post<
         Response<EntryResponse>
       >(`api/${name}/entry-record`, model, { params: { type, entryId } })
-      .pipe(map(({ result }) => result));
+      .pipe(
+        tap((x) => console.log(x)),
+        map(({ result }) => result),
+      );
   }
 
   /**
