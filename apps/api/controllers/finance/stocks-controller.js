@@ -28,7 +28,7 @@ const _getValue = stocks => {
     return null;
   }
 
-  return stocks.reduce((value, stock) => value + stock.price, 0);
+  return stocks.reduce((value, stock) => value + parseFloat(stock.price), 0);
 }
 
 const _calculateProfit = (stocks) => {
