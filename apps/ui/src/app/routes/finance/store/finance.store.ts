@@ -6,7 +6,7 @@ import { withIncome } from './with-income';
 import { catchError, EMPTY, mergeMap, Observable, switchMap, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
-import { FinanceHttpService } from './finance-http.service';
+import { FinanceHttpService, Response } from './finance-http.service';
 import { NotificationService } from '../../../ui/notification/services/notification.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Events, injectDispatch, on, withEventHandlers, withReducer } from '@ngrx/signals/events';
@@ -156,7 +156,7 @@ export const FinanceStore = signalStore(
      * @param id
      * @returns
      */
-    const removeEntry$ = (name: SectionName, id: string): Observable<any> => {
+    const removeEntry$ = (name: SectionName, id: string): Observable<Response> => {
       return http.removeEntry$(name, id).pipe(
         catchError((err) => {
           notification.error('ERROR_NOTIFICATION', 'ERROR_REMOVE_ENTRY');

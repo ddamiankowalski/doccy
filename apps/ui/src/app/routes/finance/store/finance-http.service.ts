@@ -8,7 +8,7 @@ import { InputField } from '../../../ui/input/input-form/type';
  * Generic response for http
  * requests
  */
-type Response<T = {}> = {
+export type Response<T = {}> = {
   status: number;
   result: T;
 };
