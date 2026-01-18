@@ -240,7 +240,7 @@ export const FinanceStore = signalStore(
         }),
         tap((response) => {
           const { id, section } = response;
-          _updateEntry(id, section, { ...response, loading: false });
+          _updateEntry(id, section, { ...response, loading: false, error: false });
         }),
       );
     };
