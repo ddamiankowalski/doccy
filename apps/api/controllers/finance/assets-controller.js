@@ -90,6 +90,14 @@ const getEntries = async () => {
   );
 };
 
+/**
+ * Returns given entry by id
+ */
+const getEntry = async (id) => {
+  const model = getModel('asset_entries');
+  return await model.findOne({ id });
+}
+
 const _getDetailedEntry = async entry => {
   const { type } = entry;
 
@@ -112,5 +120,6 @@ module.exports = {
   removeEntry,
   getEntries,
   getAddFields,
+  getEntry,
   createRecord,
 };

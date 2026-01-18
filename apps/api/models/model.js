@@ -19,6 +19,41 @@ const getModel = name => {
     },
 
     /**
+     * Returns a single entry matching conditions
+     *
+     * @param {*} conditions
+     * @returns
+     */
+    findOne: async (conditions = {}) => {
+      const entries = Object.entries(conditions);
+
+      if (!entries.length) {
+        throw new SystemError(
+          400,
+          'findOne requires at least one condition'
+        );
+      }
+
+      const whereClause = entries
+        .map(([key], i) => `${_quoteIdent(key)} = $${i + 1}`)
+        .join(' AND ');
+
+      const values = entries.map(([_, value]) => value);
+
+      const query = `SELECT * FROM ${name} WHERE ${whereClause} LIMIT 1;`;
+
+      try {
+        const [result] = await db.query(query, values);
+        return result || null;
+      } catch (err) {
+        throw new SystemError(
+          400,
+          'Could not retrieve entry from database - ' + err.message
+        );
+      }
+    },
+
+    /**
      * Returns all entries with where
      * condition
      * 

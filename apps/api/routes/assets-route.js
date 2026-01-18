@@ -13,6 +13,12 @@ router.get("/entries", async (_, res) => {
   return res.json({ status: 200, result: entries });
 })
 
+router.get('/entry', async (_, res) => {
+  const { id } = req.query;
+  const entry = await Assets.getEntry(id);
+  return res.json({ status: 200, result: entry });
+})
+
 router.post('/entry-add', async (req, res) => {
   const entry = await Assets.createEntry(req.body);
   return res.json({ status: 200, result: entry });
