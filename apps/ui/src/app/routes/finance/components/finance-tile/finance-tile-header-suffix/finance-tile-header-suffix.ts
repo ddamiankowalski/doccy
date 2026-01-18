@@ -9,7 +9,7 @@ import { NgClass } from '@angular/common';
   template: `
     @let entryInfo = entry();
 
-    @if (entryInfo.profit !== undefined) {
+    @if (entryInfo.profit) {
       @let profit = entryInfo.profit.daily;
 
       <div
