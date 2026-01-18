@@ -6,6 +6,7 @@ import { FinanceTileHeader } from './finance-tile-header/finance-tile-header';
 import { FinanceTileDisplay } from './finance-tile-display/finance-tile-display';
 import { FinanceTileFooter } from './finance-tile-footer/finance-tile-footer';
 import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
+import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
 
 @Component({
   selector: 'dc-finance-tile',
@@ -16,15 +17,23 @@ import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
     FinanceTileDisplay,
     FinanceTileFooter,
     Spinner,
+    Disclaimer,
   ],
   template: `
     <dc-tile class="group/tile">
-      @if (entry().loading === false) {
+      @if (entry().error) {
+        <dc-disclaimer
+          class="my-12"
+          icon="bug"
+          title="Error occurred"
+          description="Could not fetch fields for adding a new record"
+        />
+      } @else if (entry().loading) {
+        <dc-spinner />
+      } @else {
         <dc-finance-tile-header [entry]="entry()" />
         <dc-finance-tile-display [entry]="entry()" />
         <dc-finance-tile-footer [entry]="entry()" />
-      } @else {
-        <dc-spinner />
       }
     </dc-tile>
   `,

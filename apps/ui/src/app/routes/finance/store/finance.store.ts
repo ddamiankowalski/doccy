@@ -119,7 +119,7 @@ export const FinanceStore = signalStore(
               [name]: {
                 error: false,
                 loading: false,
-                entries: response.map((res) => ({ ...res, loading: false })),
+                entries: response.map((res) => ({ ...res, loading: false, error: false })),
               },
             }));
           }),
