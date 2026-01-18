@@ -10,7 +10,7 @@ import { NgClass } from '@angular/common';
     @let entryInfo = entry();
 
     @if (entryInfo.profit !== undefined) {
-      @let profit = entryInfo.profit;
+      @let profit = entryInfo.profit.daily;
 
       <div
         class="flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full"
