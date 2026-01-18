@@ -8,6 +8,6 @@ import { SectionName } from './finance.store';
 export const financeEvents = eventGroup({
   source: 'FinanceStore',
   events: {
-    recordUpdate: type<{ id: string; section: SectionName }>(),
+    recordUpdate: type<{ id: string; entryId: string; section: SectionName }>(),
   },
 });
