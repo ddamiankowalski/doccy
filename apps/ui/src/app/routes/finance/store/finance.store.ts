@@ -85,8 +85,9 @@ export const FinanceStore = signalStore(
   withIncome(),
   withMethods((store) => {
     const http = inject(FinanceHttpService);
-    const dispatch = injectDispatch(financeEvents);
     const notification = inject(NotificationService);
+
+    const dispatch = injectDispatch(financeEvents);
 
     /**
      * Resets the state
