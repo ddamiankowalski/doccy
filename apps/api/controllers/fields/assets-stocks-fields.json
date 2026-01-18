@@ -18,6 +18,7 @@
     "id": "dateAdded",
     "type": "date",
     "required": true,
-    "label": "DATE_ADDED"
+    "label": "DATE_ADDED",
+    "placeholder": "DATE_ADDED_PLACEHOLDER"
   }
 ]

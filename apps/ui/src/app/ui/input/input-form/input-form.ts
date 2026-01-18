@@ -79,7 +79,12 @@ import { InputDate } from '../input-date/input-date';
                 />
               }
               @case ('date') {
-                <dc-input-date [field]="field" [label]="label" [inputId]="id" />
+                <dc-input-date
+                  [field]="field"
+                  [label]="label"
+                  [inputId]="id"
+                  [placeholder]="placeholder"
+                />
               }
             }
           }
