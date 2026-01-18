@@ -3,13 +3,13 @@ import { withUserReset } from '../../user/store/with-user';
 import { withAssets } from './with-assets';
 import { withLiabilities } from './with-liabilities';
 import { withIncome } from './with-income';
-import { catchError, EMPTY, mergeMap, Observable, tap } from 'rxjs';
+import { catchError, EMPTY, mergeMap, Observable, switchMap, tap } from 'rxjs';
 import { InputField } from '../../../ui/input/input-form/type';
 import { inject } from '@angular/core';
 import { FinanceHttpService } from './finance-http.service';
 import { NotificationService } from '../../../ui/notification/services/notification.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { injectDispatch } from '@ngrx/signals/events';
+import { Events, injectDispatch, on, withEventHandlers, withReducer } from '@ngrx/signals/events';
 import { financeEvents } from './finance-events';
 
 export type SectionName = 'assets' | 'liabilities' | 'income';
@@ -261,6 +261,15 @@ export const FinanceStore = signalStore(
       fetchFields$,
       removeEntry$,
       addEntryRecord$,
+    };
+  }),
+  withEventHandlers((store, events = inject(Events)) => {
+    const { recordUpdate } = financeEvents;
+
+    return {
+      refreshEntry$: events
+        .on(recordUpdate)
+        .pipe(switchMap(({ payload }) => store.fetchEntry$(payload.section, payload.id))),
     };
   }),
   withUserReset(),
