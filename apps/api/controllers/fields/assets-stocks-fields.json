@@ -13,5 +13,11 @@
     "required": true,
     "label": "STOCK_PRICE",
     "placeholder": "STOCK_PRICE_PLACEHOLDER"
+  },
+  {
+    "id": "dateAdded",
+    "type": "date",
+    "required": true,
+    "label": "DATE_ADDED"
   }
 ]
