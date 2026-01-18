@@ -112,10 +112,7 @@ export class FinanceHttpService {
       .post<
         Response<EntryResponse>
       >(`api/${name}/entry-record`, model, { params: { type, entryId } })
-      .pipe(
-        tap((x) => console.log(x)),
-        map(({ result }) => result),
-      );
+      .pipe(map(({ result }) => result));
   }
 
   /**

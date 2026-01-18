@@ -232,9 +232,12 @@ export const FinanceStore = signalStore(
     const fetchEntry$ = (section: SectionName, id: string) => {
       _updateEntry(id, section, { loading: true });
 
+      console.log(store.assets.entries().find((e) => e.id == id)?.loading);
+
       return http.fetchEntry$(section, id).pipe(
         tap((response) => {
           const { id, section } = response;
+          console.log(id);
           _updateEntry(id, section, { ...response, loading: false });
         }),
       );
@@ -277,7 +280,7 @@ export const FinanceStore = signalStore(
     return {
       refreshEntry$: events
         .on(recordUpdate)
-        .pipe(switchMap(({ payload }) => store.fetchEntry$(payload.section, payload.id))),
+        .pipe(switchMap(({ payload }) => store.fetchEntry$(payload.section, payload.entryId))),
     };
   }),
   withUserReset(),
