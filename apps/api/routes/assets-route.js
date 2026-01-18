@@ -13,7 +13,7 @@ router.get("/entries", async (_, res) => {
   return res.json({ status: 200, result: entries });
 })
 
-router.get('/entry', async (_, res) => {
+router.get('/entry', async (req, res) => {
   const { id } = req.query;
   const entry = await Assets.getEntry(id);
   return res.json({ status: 200, result: entry });
