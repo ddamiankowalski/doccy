@@ -5,15 +5,27 @@ import { FinanceEntry, SectionName } from '../../store/finance.store';
 import { FinanceTileHeader } from './finance-tile-header/finance-tile-header';
 import { FinanceTileDisplay } from './finance-tile-display/finance-tile-display';
 import { FinanceTileFooter } from './finance-tile-footer/finance-tile-footer';
+import { Spinner } from '../../../../ui/loader/components/spinner/spinner';
 
 @Component({
   selector: 'dc-finance-tile',
-  imports: [LucideAngularModule, Tile, FinanceTileHeader, FinanceTileDisplay, FinanceTileFooter],
+  imports: [
+    LucideAngularModule,
+    Tile,
+    FinanceTileHeader,
+    FinanceTileDisplay,
+    FinanceTileFooter,
+    Spinner,
+  ],
   template: `
     <dc-tile class="group/tile">
-      <dc-finance-tile-header [entry]="entry()" />
-      <dc-finance-tile-display [entry]="entry()" />
-      <dc-finance-tile-footer [entry]="entry()" />
+      @if (entry().loading === false) {
+        <dc-finance-tile-header [entry]="entry()" />
+        <dc-finance-tile-display [entry]="entry()" />
+        <dc-finance-tile-footer [entry]="entry()" />
+      } @else {
+        <dc-spinner />
+      }
     </dc-tile>
   `,
 })
