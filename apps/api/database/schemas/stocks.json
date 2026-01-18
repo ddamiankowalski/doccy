@@ -18,12 +18,12 @@
         },
         {
           "name": "price",
-          "type": "numeric",
+          "type": "double",
           "nullable": false
         },
         {
           "name": "commission",
-          "type": "numeric",
+          "type": "double",
           "nullable": true,
           "default": null
         },
