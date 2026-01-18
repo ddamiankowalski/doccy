@@ -14,7 +14,9 @@ import { LucideAngularModule } from 'lucide-angular';
       <lucide-icon class="h-6 w-6" [name]="icon()"></lucide-icon>
     </div>
 
-    <h3 class="text-lg font-semibold text-white mb-2">{{ title() }}</h3>
+    @if (title(); as title) {
+      <h3 class="text-lg font-semibold text-white mb-2">{{ title }}</h3>
+    }
 
     @if (description(); as description) {
       <p class="text-gray-400 font-normal text-sm">{{ description }}</p>
@@ -25,6 +27,6 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class Disclaimer {
   public icon = input.required<string>();
-  public title = input.required<string>();
+  public title = input<string>();
   public description = input<string>();
 }

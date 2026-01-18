@@ -16,7 +16,7 @@ type IconButtonType = 'normal' | 'error';
       [ngClass]="[textClass()]"
       (click)="clicked.emit()"
     >
-      <div class="flex text-xs gap-1 items-center">
+      <div class="flex text-xs gap-1.5 items-center">
         <ng-content />
       </div>
     </button>
