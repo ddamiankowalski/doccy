@@ -54,5 +54,9 @@
   "ENTRY_DETAILS_ASSETS": "Browse entry details",
   "ENTRY_DETAILS_ASSETS_DESCRIPTION": "Look through entry details that was added to a given finance entry",
   "ENTRY_ADD_ASSETS": "Add new",
-  "ENTRY_ADD_ASSETS_DESCRIPTION": "To add new item please fill out the form below"
+  "ENTRY_ADD_ASSETS_DESCRIPTION": "To add new item please fill out the form below",
+  "AMOUNT": "Amount",
+  "AMOUNT_PLACEHOLDER": "Amount placeholder",
+  "DATE_ADDED": "Date added",
+  "DATE_ADDED_PLACEHOLDER": "Select date of buying stock"
 }

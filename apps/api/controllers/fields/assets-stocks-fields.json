@@ -15,6 +15,13 @@
     "placeholder": "STOCK_PRICE_PLACEHOLDER"
   },
   {
+    "id": "amount",
+    "type": "number",
+    "required": true,
+    "label": "AMOUNT",
+    "placeholder": "AMOUNT_PLACEHOLDER"
+  },
+  {
     "id": "dateAdded",
     "type": "date",
     "required": true,
