@@ -225,32 +225,39 @@ export const FinanceStore = signalStore(
     /**
      * Fetches a single entry in a given section
      *
-     * @param name
+     * @param section
      * @param id
      * @returns
      */
-    const fetchEntry$ = (name: SectionName, id: string) => {
-      return http.fetchEntry$(name, id).pipe(
+    const fetchEntry$ = (section: SectionName, id: string) => {
+      _updateEntry(id, section, { loading: true });
+
+      return http.fetchEntry$(section, id).pipe(
         tap((response) => {
-          patchState(store, (state) => {
-            const { entries } = state[name];
-
-            return {
-              [name]: {
-                error: false,
-                loading: false,
-                entries: entries.map((entry) => {
-                  if (entry.id === response.id) {
-                    return { ...response, loading: false };
-                  }
-
-                  return { ...entry, loading: false };
-                }),
-              },
-            };
-          });
+          const { id, section } = response;
+          _updateEntry(id, section, { ...response, loading: false });
         }),
       );
+    };
+
+    const _updateEntry = (id: string, section: SectionName, patch: Partial<FinanceEntry>) => {
+      patchState(store, (state) => {
+        const { entries } = state[section];
+
+        return {
+          ...state,
+          [section]: {
+            ...state[section],
+            entries: entries.map((entry) => {
+              if (id === entry.id) {
+                return { ...entry, ...patch };
+              }
+
+              return { ...entry };
+            }),
+          },
+        };
+      });
     };
 
     return {
