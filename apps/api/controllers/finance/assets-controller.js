@@ -95,7 +95,13 @@ const getEntries = async () => {
  */
 const getEntry = async (id) => {
   const model = getModel('asset_entries');
-  return await model.findOne({ id });
+  const entry = await model.findOne({ id });
+
+  if(!entry) {
+    throw new SystemError(404, `Could not find entry by id: "${id}"`)
+  }
+
+  return entry;
 }
 
 const _getDetailedEntry = async entry => {
