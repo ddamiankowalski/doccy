@@ -26,6 +26,7 @@ export type FinanceEntry = {
   value?: number;
   stocks?: Stock[];
   loading: boolean;
+  error: boolean;
 };
 
 export type Profit = {
@@ -232,12 +233,13 @@ export const FinanceStore = signalStore(
     const fetchEntry$ = (section: SectionName, id: string) => {
       _updateEntry(id, section, { loading: true });
 
-      console.log(store.assets.entries().find((e) => e.id == id)?.loading);
-
       return http.fetchEntry$(section, id).pipe(
+        catchError(() => {
+          _updateEntry(id, section, { loading: false, error: true });
+          return EMPTY;
+        }),
         tap((response) => {
           const { id, section } = response;
-          console.log(id);
           _updateEntry(id, section, { ...response, loading: false });
         }),
       );
