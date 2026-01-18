@@ -22,12 +22,7 @@ import { Disclaimer } from '../../../../ui/components/disclaimer/disclaimer';
   template: `
     <dc-tile class="group/tile">
       @if (entry().error) {
-        <dc-disclaimer
-          class="my-12"
-          icon="bug"
-          title="Error occurred"
-          description="Could not fetch fields for adding a new record"
-        />
+        <dc-disclaimer class="my-4" icon="bug" title="Error occurred" />
       } @else if (entry().loading) {
         <dc-spinner />
       } @else {
