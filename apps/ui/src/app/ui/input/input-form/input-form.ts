@@ -16,6 +16,7 @@ import { toSchema } from './utils/to-schema';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { InputEquity } from '../input-equity/input-equity';
+import { InputDate } from '../input-date/input-date';
 
 @Component({
   selector: 'dc-input-form',
@@ -30,6 +31,7 @@ import { InputEquity } from '../input-equity/input-equity';
     TranslatePipe,
     LucideAngularModule,
     InputEquity,
+    InputDate,
   ],
   template: `
     @if (form) {
@@ -75,6 +77,9 @@ import { InputEquity } from '../input-equity/input-equity';
                   [label]="label"
                   [inputId]="id"
                 />
+              }
+              @case ('date') {
+                <dc-input-date [field]="field" [label]="label" [inputId]="id" />
               }
             }
           }

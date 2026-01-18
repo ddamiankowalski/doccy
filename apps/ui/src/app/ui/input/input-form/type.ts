@@ -1,7 +1,7 @@
 import { InputNumberMode } from '../input-number/input-number';
 import { SelectOption } from '../input-select/input-select';
 
-export type InputType = 'text' | 'number' | 'select' | 'equity';
+export type InputType = 'text' | 'number' | 'select' | 'equity' | 'date';
 
 export type InputField = {
   id: string;
